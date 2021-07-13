@@ -1,7 +1,36 @@
-body {
-  padding: 50px;
+html, body {
+  height:100%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0px;
 }
+
+.container {
+  /* height: 100%; */
+  /* Gradient adapted from: https://www.schemecolor.com/sky-blue-gradient.php */
+  /* background-image: linear-gradient(to right bottom, #97ebf4, #a1edf7, #aaeff9, #b4f1fb, #bdf3fd, #c7f4fe, #d1f6ff, #dbf7ff, #e7f8ff, #f2f9ff, #fafcff, #ffffff); */
+  background-image: linear-gradient(to right top, #e3e6ec, #d7e6f4, #c4e7fa, #aee9fa, #97ebf4);
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 33%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+pwa-auth::part(signInButton) {
+  background-color: #247da1;
+  color: white;
+  width: 100%;
+}
+
+
 
 a {
   color: #00B7FF;
