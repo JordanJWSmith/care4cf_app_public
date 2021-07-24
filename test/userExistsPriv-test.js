@@ -1,8 +1,8 @@
-var login = require('../routes/appDatabase/login.js');
-// var requireLogin = login.requireLogin;
+var login = require('../routes/privDatabase/userExistsPriv.js');
 var expect = require('chai').expect;
 
-describe('#login()', function() {
+
+describe('#userExistsPriv()', function() {
     var args = Array.prototype.slice.call(arguments);
 
     context('with non-string arguments', function() {
@@ -18,10 +18,10 @@ describe('#login()', function() {
         })
     })
 
-    context('with non-existent token', function() {
+    context('with non-existent email', function() {
         it('should return false', async function() {
             expect(
-                await login('testToken12345').then(
+                await login('testemail12345').then(
                     function(results) {
                         return results.logIn
                     }
@@ -42,5 +42,16 @@ describe('#login()', function() {
             ).to.be.false;
         })
     })
-})
 
+    context('with correct argument', function() {
+        it('should return true', async function() {
+            expect(
+                await login('ucabjjw@ucl.ac.uk').then(
+                    function(results) {
+                        return results.logIn
+                    }
+                )
+            ).to.be.true;
+        })
+    })
+})

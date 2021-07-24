@@ -13,12 +13,18 @@ module.exports = async function(email) {
         var data = [email];
         var results = await readPrivData(checkLogin, data);
         
-        console.log('userExistsPriv results:', results);
+        // console.log('userExistsPriv results:', results);
         // console.log('userExists check: ', results.length > 0);
 
-        return { 
-           logIn: (results.length > 0),
-           userID: results[0].userID 
+        if (results.length > 0) {
+            return { 
+                logIn: (results.length > 0),
+                userID: results[0].userID 
+             }
+        } else {
+            return {
+                logIn: false 
+            } 
         }
     }
     
