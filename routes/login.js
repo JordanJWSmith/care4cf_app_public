@@ -4,7 +4,9 @@ var readData = require('./readData');
 module.exports = async function(cookieToken) {
 
     if (!cookieToken) {
-        return false;
+        return {
+            logIn: false
+        }
 
     } else if (typeof cookieToken !== "string")  {
         console.log('cookieToken error: ', cookieToken);
