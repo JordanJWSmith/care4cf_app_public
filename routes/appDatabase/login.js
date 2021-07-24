@@ -3,18 +3,19 @@ var readData = require('./readData');
 
 module.exports = async function(cookieToken) {
 
-    if (!cookieToken) {
+    if ((!cookieToken) || (typeof cookieToken !== "string")) {
         return {
             logIn: false
         }
 
-    } else if (typeof cookieToken !== "string")  {
-        console.log('cookieToken error: ', cookieToken);
-        // throw new TypeError('Cookie should be string.');
-        return {
-            logIn: false
-        }
-    } else {
+    // } else if (typeof cookieToken !== "string")  {
+    //     console.log('cookieToken error: ', cookieToken);
+    //     // throw new TypeError('Cookie should be string.');
+    //     return {
+    //         logIn: false
+    //     }
+    } 
+    else {
         // var checkLogin = 'SELECT * FROM users WHERE msalToken = "' + cookieToken + '"';
         var checkLogin = "SELECT userID FROM users WHERE msalToken = ?";
         var data = [cookieToken];
