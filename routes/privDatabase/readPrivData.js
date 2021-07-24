@@ -1,4 +1,4 @@
-var db = require('../database');
+var db = require('./databasePriv');
 
 module.exports = function (query, data){
     return new Promise( ( resolve, reject ) => {

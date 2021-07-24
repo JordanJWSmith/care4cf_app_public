@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var login = require('./login');
-var userExistsPriv = require('./userExistsPriv');
-var userExists = require('./userExists');
-const updateToken = require('./updateToken');
-const newUser = require('./newUser');
+var login = require('./appDatabase/login');
+var userExistsPriv = require('./privDatabase/userExistsPriv');
+var userExists = require('./appDatabase/userExists');
+const updateToken = require('./appDatabase/updateToken');
+const newUser = require('./appDatabase/newUser');
 
 router.get('/', function (req, res, next) {
     var cookieToken = req.cookies.accessToken;
