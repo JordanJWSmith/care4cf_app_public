@@ -18,9 +18,9 @@ router.get('/', function(req, res, next) {
           res.render('index', {title: 'Welcome user '+ results.userID})
         } else {
           getTechniques()
-          .then(function(results) {
+          .then(function(techResults) {
             // console.log(results);
-            res.render('newSchedule', {title: 'What\'s your normal airway clearance routine?', techniques: JSON.stringify(results)})
+            res.render('newSchedule', {title: 'Welcome, user ' + results.userID +'.', user: results.userID, techniques: JSON.stringify(techResults)})
           })
             
         }

@@ -9,122 +9,139 @@
     </head>
     <body>
         <h1><%= title %></h1>
+        <p>What's your normal airway clearance routine?</p>
         
-        <!-- <form action="/action_page.php"> -->
-            <!-- <label for="activities">Choose a car:</label> -->
-            <!-- <select name="techniques" id="techniques">
-                <option value="" selected disabled hidden>Airway Clearance Technique</option>
-            <optgroup label="Device-Free">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-            </optgroup>
-            <optgroup label="Device Dependent">
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-            </optgroup>
-            </select>
-            <br><br>
-            <input type="submit" value="Submit">
-        </form> -->
 
-        <!-- <p><%= techniques %></p> -->
         <div id="mainAction">
             <form action="/action_page_tbd" id="activityForm">
-                <div id="formBox">
-                <select id="dropdown" onchange="subtitleExists()">
-                </select>
-                <br>
-                </div>
-                <div id="secondFormBox">
-                </div>
+                <div id='techniques'>
+                    <div id="formBox0">
+                        <select id="dropdown0" onchange="subtitleExists(0)">
+                            <option value="" selected disabled hidden>Airway Clearance Technique</option>
+                        </select>
+                        <br>
+                    </div>
+                    <div id="secondFormBox0">
+                    </div>
+                </div>  
                 <input type="submit" value="Submit">
             </form>
         </div>  
 
-        <!-- <div id="secondAction">
-            <form id="secondForm" action="another_action_page_tbd">
-
-            </form>
-        </div> -->
-
 
         <script>
-            var options = <%- techniques %>;
-            var techList = [];
-            var typeList = [] ;
-            for (var i = 0; i < options['results'].length; i++) {
-                // console.log(options['results'][i]);
-                if (!typeList.includes(options['results'][i].techniqueType)) {
-                    typeList.push(options['results'][i].techniqueType);
-                    document.getElementById("dropdown").innerHTML += '<optgroup label=' + options['results'][i].techniqueType + '>';
-                }
-                if (!techList.includes(options['results'][i].title)) {
-                    techList.push(options['results'][i].title);
-                    document.getElementById("dropdown").innerHTML += '<option value=' + options['results'][i].techniqueID + '>' + options['results'][i].title + '</option>';
+            function populateBox(n) {
+                var options = <%- techniques %>;
+                var techList = [];
+                var typeList = [] ;
+                for (var i = 0; i < options['results'].length; i++) {
+                    // console.log(options['results'][i]);
+                    if (!typeList.includes(options['results'][i].techniqueType)) {
+                        typeList.push(options['results'][i].techniqueType);
+                        var og = document.createElement('optgroup');
+                        og.label = options['results'][i].techniqueType;
+                        // og.innerHTML = 'label=' + options['results'][i].techniqueType;
+                        // dropdownLabel = '<optgroup label=' + options['results'][i].techniqueType + '>'
+                        document.getElementById("dropdown"+n).appendChild(og);
+                    }
+                    if (!techList.includes(options['results'][i].title)) {
+                        techList.push(options['results'][i].title);
+                        var o = document.createElement('option');
+                        o.value = options['results'][i].techniqueID;
+                        o.innerHTML = options['results'][i].title;
+                        // dropdownOptions = '<option value=' + options['results'][i].techniqueID + '>' + options['results'][i].title + '</option>';
+                        document.getElementById("dropdown"+n).appendChild(o);
+                    }
                 }
             }
-        </script>
 
-        <script>
-            function subtitleExists() {
-                var value = document.getElementById("dropdown").value;
+            populateBox(0);
+            
+            function subtitleExists(n) {
+                var value = document.getElementById("dropdown"+n).value;
+                console.log('chosen value: ', value);
                 var options = <%- techniques %>;
                 // for each row in results
                 for (var i = 0; i < options['results'].length; i++) {
-                    // console.log('from dict: ', options['results'][i].title);
-                    // console.log('value: ', value);
-                    // console.log(options['results'][i]);
-
+                   
                     // if the ID matches the ID of selected value
                     if (options['results'][i].techniqueID == value) {
                         var subtitle = options['results'][i].subtitle;
-                        // console.log('title: ',  options['results'][i].title);
-                        // console.log('subtitle: ', options['results'][i].subtitle);
-                        // console.log('nullCheck: ', (options['results'][i].subtitle == null));
-
+                     
                         // Check to see if there's a subtitle. If there is, we need another box
                         if (!(subtitle == null)) {
                             var title = options['results'][i].title;
-                            return addBox(title);
-                            // var subValue = options['results'][i].techniqueID;
-                            // subtitleList = [];
-                            // var title = options['results'][i].title;
-                            // for (var i = 0; i < options['results'].length; i++) {
-                            //     if (options['results'][i].title == title) {
-                            //         console.log('subtitle: ', options['results'][i].subtitle)
-                            //         subtitleList.push(options['results'][i].subtitle);
-                            //     }
-                            // }
-                            // document.getElementById("secondForm").innerHTML = '<select id="secondDropdown"></select>';
-                            // console.log(subtitleList);
-                            // for (var i=0; i<subtitleList.length; i++) {
-                            //     document.getElementById("secondDropdown").innerHTML += '<option value=' + subValue + '>' + subtitleList[i] + '</option>';
-                            // }
+                            return addBox(title, n);
                         }
                         else {
-                            document.getElementById("secondFormBox").innerHTML = "";
+                            document.getElementById("secondFormBox"+n).innerHTML = "";
                         }
                     } 
                 }
             }
 
-            function addBox(title) {
-                // if (subtitleExists()) {
-                    // document.getElementById("secondForm").innerHTML = '<select id="secondDropdown"></select>';
-                    document.getElementById("secondFormBox").innerHTML = '<select id="secondDropdown"></select>';
-                    for (var i = 0; i < options['results'].length; i++) {
-                        var subtitle = options['results'][i].subtitle;
-                        var subValue = options['results'][i].techniqueID;
-                        // console.log('subtitle: ', subtitle);
-                        // console.log('subVaalue: ', subValue);
-                        if (options['results'][i].title == title) {
-                            // console.log('title: ', title);
-                            document.getElementById("secondDropdown").innerHTML += '<option value=' + subValue + '>' + subtitle + '</option>';
-                        }
+            function addBox(title, n) {
+                var options = <%- techniques %>;
+                document.getElementById("secondFormBox"+n).innerHTML = '<select id="secondDropdown'+n+'"></select>';
+                // var secondDropdownHTML = '<option value="" selected disabled hidden>Type of '+title+'</option>';
+                var ot = document.createElement('option');
+                ot.value = ""
+                ot.selected = true;
+                ot.disabled = true;
+                ot.hidden = true;
+                ot.innerHTML = 'Type of ' + title;
+                document.getElementById("secondDropdown"+n).appendChild(ot);
+                for (var i = 0; i < options['results'].length; i++) {
+                    var subtitle = options['results'][i].subtitle;
+                    var subValue = options['results'][i].techniqueID;
+                    if (options['results'][i].title == title) {
+                        var o = document.createElement('option');
+                        o.value = subValue;
+                        o.innerHTML = subtitle;
+                        // var secondDropdownHTMLOptions = '<option value=' + subValue + '>' + subtitle + '</option>';
+                        document.getElementById("secondDropdown"+n).appendChild(o);
                     }
-                // }
+                }
+            }
+
+            function addNewTechnique(n) {
+                var fb = document.createElement('div');
+                fb.id = 'formBox'+n;
+                var sfb = document.createElement('div');
+                sfb.id = 'secondFormBox'+n;
+                document.getElementById('techniques').appendChild(fb);
+                document.getElementById('techniques').appendChild(sfb);
+
+                var s = document.createElement('select');
+                s.id = 'dropdown'+n;
+                // s.onchange = "subtitleExists("+n+")";
+                s.setAttribute("onchange", "subtitleExists("+n+")");
+                console.log(s);
+                document.getElementById('formBox'+n).appendChild(s);
+
+                var o = document.createElement('option');
+                o.value = "";
+                o.selected = true;
+                o.disabled = true;
+                o.hidden = true;
+                o.innerHTML = 'Airway Clearance Technique';
+                document.getElementById('dropdown'+n).appendChild(o);
+                // document.getElementById("techniques").appendChild('<div id="formBox'+n+'"></div>');
+                // document.getElementById("techniques").appendChild('<div id="secondFormBox'+n+'"></div>');
+                // document.getElementById("formBox"+n).appendChild('<select id="dropdown'+n+'" onchange="subtitleExists('+n+')"><option value="" selected disabled hidden>Airway Clearance Technique</option></select>');
+                populateBox(n);
+            }
+
+            var counter = 0;
+            function incrementCounter() {
+                counter++;
+                // console.log(counter);
+                addNewTechnique(counter);
             }
         </script>
+
+        <br>
+        <button onclick="incrementCounter()">Increment counter</button>
 
 
 
