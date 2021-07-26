@@ -1,5 +1,7 @@
 var express = require('express');
 const login = require('./appDatabase/login');
+const checkForNormal = require('./appDatabase/checkForNormal')
+const getTechniques = require('./appDatabase/getTechniques')
 var router = express.Router();
 
 
@@ -9,9 +11,21 @@ router.get('/', function(req, res, next) {
     if (!results.logIn) {
       console.log('user not logged in at index. Redirecting to login...')
       res.redirect('/loginUser');
-      // res.send('Not logged in')
     } else {
-      res.render('index', {title: 'Welcome user '+ results.userID})
+      checkForNormal(results.userID)
+      .then(function(checkResults) {
+        if (checkResults.scheduleExists) {
+          res.render('index', {title: 'Welcome user '+ results.userID})
+        } else {
+          getTechniques()
+          .then(function(results) {
+            // console.log(results);
+            res.render('newSchedule', {title: 'What\'s your normal airway clearance routine?', techniques: JSON.stringify(results)})
+          })
+            
+        }
+      })
+      
     }
   })
   // res.render('index', {title: 'Welcome'});
