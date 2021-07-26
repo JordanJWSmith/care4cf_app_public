@@ -13,27 +13,74 @@
         
 
         <div id="mainAction">
-            <form action="/action_page_tbd" id="activityForm">
+            <form action="/scheduleData" method="POST" id="activityForm">
+                
                 <div id='techniques'>
                     <div id="formBox0">
-                        <select id="dropdown0" onchange="subtitleExists(0)">
+                        <select id="dropdown0" name="act0" onchange="subtitleExists(0)" required>
                             <option value="" selected disabled hidden>Airway Clearance Technique</option>
                         </select>
                         <br>
                     </div>
                     <div id="secondFormBox0">
                     </div>
-                </div>  
+                
+                </div>
+
+                <button type="button" onclick="incrementCounter()">Add Technique</button>
+
+                <div id=removeButtonDiv>
+                </div>
+
+                <br><br>
+
+                <div id="duration">
+                    <select id='durationDropdown' name="duration" required>
+                        <option value="" selected disabled hidden>Duration per Session</option>
+                    </select>
+                </div>
+
+                <br><br>
+
+                <div id="frequency">
+                    <select id='frequencyDropdown' name="frequency" required>
+                        <option value="" selected disabled hidden>Frequency per Day</option>
+                        <option value=1>Once</option>
+                        <option value=2>Twice</option>
+                        <option value=3>Three times</option>
+                    </select>
+                </div>
+
+                <br><br>
+
+                <div id="adjuncts">
+                    <div id="adjunctDiv0">
+                        <select id="adjunctDropdown0" name="adjuncts0" onchange="populateAdjunctTimeBox(0)">
+                            <option value="" selected disabled hidden>Adjunct Medication</option>
+                        </select>
+                    </div>
+                    <div id="adjunctTimeDiv0">
+
+                    </div>
+                    
+                </div>
+                <button type="button" onclick="incrementAdjunctCounter()">Add Adjunct</button>
+                <div id=removeAdjunctButtonDiv>
+                    <!-- <button type="button" onclick="removeAdjunct()">Remove Adjunct</button> -->
+                </div>
+                
+                <br><br>
+
                 <input type="submit" value="Submit">
             </form>
         </div>  
 
 
         <script>
-            function populateBox(n) {
+            function populateTechniquesBox(n) {
                 var options = <%- techniques %>;
                 var techList = [];
-                var typeList = [] ;
+                var typeList = [];
                 for (var i = 0; i < options['results'].length; i++) {
                     // console.log(options['results'][i]);
                     if (!typeList.includes(options['results'][i].techniqueType)) {
@@ -55,7 +102,7 @@
                 }
             }
 
-            populateBox(0);
+            populateTechniquesBox(0);
             
             function subtitleExists(n) {
                 var value = document.getElementById("dropdown"+n).value;
@@ -82,7 +129,7 @@
 
             function addBox(title, n) {
                 var options = <%- techniques %>;
-                document.getElementById("secondFormBox"+n).innerHTML = '<select id="secondDropdown'+n+'"></select>';
+                document.getElementById("secondFormBox"+n).innerHTML = '<select id="secondDropdown'+n+'" name=subact'+n+' required></select>';
                 // var secondDropdownHTML = '<option value="" selected disabled hidden>Type of '+title+'</option>';
                 var ot = document.createElement('option');
                 ot.value = ""
@@ -114,9 +161,10 @@
 
                 var s = document.createElement('select');
                 s.id = 'dropdown'+n;
-                // s.onchange = "subtitleExists("+n+")";
+                s.required = true;
+                s.name = 'act'+n;
                 s.setAttribute("onchange", "subtitleExists("+n+")");
-                console.log(s);
+                // console.log(s);
                 document.getElementById('formBox'+n).appendChild(s);
 
                 var o = document.createElement('option');
@@ -126,22 +174,140 @@
                 o.hidden = true;
                 o.innerHTML = 'Airway Clearance Technique';
                 document.getElementById('dropdown'+n).appendChild(o);
-                // document.getElementById("techniques").appendChild('<div id="formBox'+n+'"></div>');
-                // document.getElementById("techniques").appendChild('<div id="secondFormBox'+n+'"></div>');
-                // document.getElementById("formBox"+n).appendChild('<select id="dropdown'+n+'" onchange="subtitleExists('+n+')"><option value="" selected disabled hidden>Airway Clearance Technique</option></select>');
-                populateBox(n);
+                populateTechniquesBox(n);
             }
 
             var counter = 0;
+
+
             function incrementCounter() {
                 counter++;
-                // console.log(counter);
+                console.log('counter: ', counter);
                 addNewTechnique(counter);
+                if (counter > 0) {
+                    document.getElementById("removeButtonDiv").innerHTML = '<button type="button" id="removeButton"  onclick="removeTechnique()" >Remove Technique</button>';
+                }
             }
+
+            function removeTechnique() {
+                if (counter > 0) {
+                    document.getElementById("formBox"+counter).innerHTML = "";
+                    document.getElementById("secondFormBox"+counter).innerHTML = "";
+                    counter--;
+                    if (counter == 0) {
+                        document.getElementById("removeButtonDiv").innerHTML = "";
+                    }
+                    // console.log('counter: ', counter);
+                }
+                
+            }
+
+            
+
+            function populateDurationsBox() {
+                var durations = <%- durations %>;
+                for (var i = 0; i < durations['results'].length; i++) {
+                    var o = document.createElement('option');
+                    o.value = durations['results'][i].durationID;
+                    o.innerHTML = durations['results'][i].duration;
+                    document.getElementById('durationDropdown').appendChild(o);
+                }
+            }
+            // var durations = <%- durations %>;
+            // console.log(durations);
+
+            populateDurationsBox();
+
+            function populateAdjunctsBox(n) {
+                var adjuncts = <%- adjuncts %>;
+                // console.log(adjuncts);
+                for (var i = 0; i < adjuncts['results'].length; i++) {
+                    var o = document.createElement('option');
+                    o.value = adjuncts['results'][i].adjunctID;
+                    o.innerHTML = adjuncts['results'][i].adjunctTitle;
+                    document.getElementById('adjunctDropdown'+n).appendChild(o);
+                }
+            }
+
+            populateAdjunctsBox(0);
+
+            function populateAdjunctTimeBox(n) {
+                var adjunctTimes = <%- adjunctTimes %>;
+                // console.log(adjunctTimes);
+                document.getElementById("adjunctTimeDiv"+n).innerHTML = '<select id="adjunctTime'+n+'" name="adjunctTime'+n+'" required></select>';
+                var ot = document.createElement('option');
+                ot.value = "";
+                ot.selected = true;
+                ot.disabled = true;
+                ot.hidden = true;
+                ot.innerHTML = 'Time of Adjunct';
+                document.getElementById("adjunctTime"+n).appendChild(ot);
+
+                for (var i = 0; i < adjunctTimes['results'].length; i++) {
+                    var o = document.createElement('option');
+                    o.value = adjunctTimes['results'][i].adjunctTimeID;
+                    o.innerHTML = adjunctTimes['results'][i].adjunctTime;
+                    document.getElementById('adjunctTime'+n).appendChild(o);
+                }
+            }
+
+            var adjunctCounter = 0;
+
+            function addAdjunctBox(n) {
+                d = document.createElement('div');
+                d.id = 'adjunctDiv'+n;
+                document.getElementById('adjuncts').appendChild(d);
+
+                s = document.createElement('select');
+                s.id = 'adjunctDropdown'+n;
+                s.name = 'adjuncts'+n;
+                s.setAttribute("onchange", "populateAdjunctTimeBox("+n+")");
+                document.getElementById('adjunctDiv'+n).appendChild(s);
+
+                o = document.createElement('option');
+                o.value = "";
+                o.selected = true;
+                o.disabled = true;
+                o.hidden = true;
+                o.innerHTML = 'Adjunct Medication';
+                document.getElementById('adjunctDropdown'+n).appendChild(o);
+
+
+                dt = document.createElement('div');
+                dt.id = 'adjunctTimeDiv'+n;
+                document.getElementById('adjuncts').appendChild(dt);
+
+                populateAdjunctsBox(n);
+                
+            }
+
+            function incrementAdjunctCounter() {
+                adjunctCounter++;
+                console.log('adjunctCounter: ', adjunctCounter);
+                addAdjunctBox(adjunctCounter);
+                if (adjunctCounter > 0) {
+                    document.getElementById("removeAdjunctButtonDiv").innerHTML = '<button type="button" onclick="removeAdjunct()">Remove Adjunct</button>';
+                }
+            }
+
+            function removeAdjunct() {
+                if (adjunctCounter > 0) {
+                    document.getElementById("adjunctDiv"+adjunctCounter).innerHTML = "";
+                    document.getElementById("adjunctTimeDiv"+adjunctCounter).innerHTML = "";
+                    adjunctCounter--;
+                    console.log('adjunctCounter: ', adjunctCounter);
+                    if (adjunctCounter == 0) {
+                        document.getElementById("removeAdjunctButtonDiv").innerHTML = "";
+                    }
+                    
+                }
+                
+            }
+
         </script>
 
         <br>
-        <button onclick="incrementCounter()">Increment counter</button>
+        <!-- <button onclick="incrementCounter()">Add Another Technique</button> -->
 
 
 
