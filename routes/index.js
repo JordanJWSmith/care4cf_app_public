@@ -1,7 +1,10 @@
 var express = require('express');
 const login = require('./appDatabase/login');
 const checkForNormal = require('./appDatabase/checkForNormal')
-const getTechniques = require('./appDatabase/getTechniques')
+const getTechniques = require('./appDatabase/getTechniques');
+const getDurations = require('./appDatabase/getDurations');
+const getAdjuncts = require('./appDatabase/getAdjuncts');
+const getAdjunctTimes = require('./appDatabase/getAdjunctTimes');
 var router = express.Router();
 
 
@@ -19,8 +22,27 @@ router.get('/', function(req, res, next) {
         } else {
           getTechniques()
           .then(function(techResults) {
+            getDurations()
+            .then(function(durationResults) {
+              getAdjuncts()
+              .then(function(adjunctResults) {
+                getAdjunctTimes()
+                .then(function(adjunctTimeResults) {
+                  res.render('newSchedule', 
+                  {title: 'Welcome, user ' + results.userID +'.', 
+                  user: results.userID, 
+                  techniques: JSON.stringify(techResults),
+                  durations: JSON.stringify(durationResults),
+                  adjuncts: JSON.stringify(adjunctResults),
+                  adjunctTimes: JSON.stringify(adjunctTimeResults)
+                  })
+                })
+                
+              })
+              
+            })
             // console.log(results);
-            res.render('newSchedule', {title: 'Welcome, user ' + results.userID +'.', user: results.userID, techniques: JSON.stringify(techResults)})
+            
           })
             
         }
@@ -36,6 +58,11 @@ router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express - Jordan' });
 // });
 
+router.post('/scheduleData', function(req, res, next) {
+  const userDetails = req.body;
+  console.log('details: ', userDetails);
+  res.send(userDetails);
+});
 
 
 module.exports = router;
