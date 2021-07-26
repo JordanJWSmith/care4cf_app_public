@@ -5,6 +5,7 @@ const getTechniques = require('./appDatabase/getTechniques');
 const getDurations = require('./appDatabase/getDurations');
 const getAdjuncts = require('./appDatabase/getAdjuncts');
 const getAdjunctTimes = require('./appDatabase/getAdjunctTimes');
+const saveSchedule = require('./appDatabase/saveSchedule');
 var router = express.Router();
 
 
@@ -34,7 +35,8 @@ router.get('/', function(req, res, next) {
                   techniques: JSON.stringify(techResults),
                   durations: JSON.stringify(durationResults),
                   adjuncts: JSON.stringify(adjunctResults),
-                  adjunctTimes: JSON.stringify(adjunctTimeResults)
+                  adjunctTimes: JSON.stringify(adjunctTimeResults),
+                  saveAsNormal: true
                   })
                 })
                 
@@ -59,9 +61,10 @@ router.get('/', function(req, res, next) {
 // });
 
 router.post('/scheduleData', function(req, res, next) {
-  const userDetails = req.body;
-  console.log('details: ', userDetails);
-  res.send(userDetails);
+  const scheduleDetails = req.body;
+  // console.log('details: ', userDetails);
+  saveSchedule(scheduleDetails);
+  res.send(scheduleDetails);
 });
 
 
