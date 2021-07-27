@@ -82,13 +82,13 @@
 
         <script>
 
-            var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            // var today = new Date();
+            // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             // console.log(date);
 
-            console.log('saveAsNormal: ', <%- saveAsNormal %>);
+            // console.log('saveAsNormal: ', <%- saveAsNormal %>);
 
-            document.getElementById("date").innerHTML += "<input type='hidden' name='date' value='" + date + "'>";
+            // document.getElementById("date").innerHTML += "<input type='hidden' name='date' value='" + date + "'>";
             document.getElementById("saveAsNormal").innerHTML += "<input type='hidden' name='saveAsNormal' value='" + <%- saveAsNormal %> + "'>";
             document.getElementById("user").innerHTML += "<input type='hidden' name='user' value='" + <%- user %> + "'>";
 
