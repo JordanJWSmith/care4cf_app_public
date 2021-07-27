@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="manifest" href="/manifest.json">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
+        <!-- <script type="module" src="/pwabuilder-sw-register.js"></script> -->
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <h2 id='date'></h2>
+
+        <button onclick="decrementDate()">Previous Day</button>
+        <div id="nextDay">
+        </div>
+        <br><br>
+
+        <form method="POST" action="/logNewActivity">
+            <button name="activityType" value=0 type="submit">Normal Routine</button>
+            <br>
+            <button name="activityType" value=1 type="submit">Something Different</button>
+            <br>
+            <button name="activityType" value=2 type="submit">No Activities</button>
+            <a id="chosenDate"></a>
+            <a id="user"></a>
+        </form>
+        
+
+        <script>
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+            document.getElementById('date').innerHTML = getDisplayDate(date);
+            document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+            document.getElementById('user').innerHTML = "<input type='hidden' name='user' value='" + <%- user %> + "'>";
+
+
+            function getDisplayDate(date) {
+                newToday = new Date();
+                if (date == newToday.getFullYear()+'-'+(newToday.getMonth()+1)+'-'+newToday.getDate()) {
+                    var displayDate = 'Today';
+                } else {
+                    var displayDate = date;
+                }
+                return displayDate
+            }
+
+            function disableButton(today) {
+                newToday = new Date();
+                newToday.setDate(newToday.getDate()-1);
+                if (today >= newToday) {
+                    document.getElementById('nextDay').innerHTML = '';
+                } else {
+                    document.getElementById('nextDay').innerHTML = '<button onclick="incrementDate()" >Next Day</button>';
+                }
+            }
+            
+            function decrementDate() {
+                today.setDate(today.getDate()-1);
+                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+                document.getElementById('date').innerHTML = getDisplayDate(date);
+                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='token' value='" + date + "'>";
+                disableButton(today);   
+            }
+
+            function incrementDate() { 
+                today.setDate(today.getDate()+1);
+                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+                document.getElementById('date').innerHTML = getDisplayDate(date);
+                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='token' value='" + date + "'>";
+                disableButton(today);
+            }
+            
+
+            // console.log('today: ', today);
+            // today.setDate(today.getDate() -28);
+            // console.log(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()));
+            // console.log('date:', date);
+            // console.log(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1));
+            // console.log('displayDate: ', displayDate)
+            
+
+        </script>
+
+        
+
+        
+
+
+        <br><br>
+        <script>
+            function deleteAllCookies() {
+              var cookies = document.cookie.split(";");
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = cookies[i];
+                  var eqPos = cookie.indexOf("=");
+                  var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                  document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+              }
+              location.reload();
+            } 
+        </script>
+      
+        <button onclick="deleteAllCookies()">Log Out</button>
+    </body>
+
+</html>
