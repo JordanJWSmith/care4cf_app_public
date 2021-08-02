@@ -14,6 +14,8 @@ const getRoutineTypes = require('./appDatabase/getRoutineTypes');
 const getNoActivityReasons = require('./appDatabase/getNoActivityReasons');
 const getFrequencies = require('./appDatabase/getFrequencies');
 const getRoutine = require('./appDatabase/getRoutine');
+const checkForDate = require('./appDatabase/checkForDate');
+const getWeekActivities = require('./appDatabase/getWeekActivities');
 var router = express.Router();
 
 
@@ -29,15 +31,20 @@ router.get('/', function(req, res, next) {
         if (checkResults.scheduleExists) {
           getRoutineTypes()
           .then(function(routineResults) {
-            getRoutine(results.userID, '2021-08-02')
-            .then(function(getRoutineResults) {
-              res.render('logActivity', {
+            // getRoutine(results.userID, '2021-08-02')
+            // .then(function(getRoutineResults) {
+              getWeekActivities(results.userID, 0)
+              .then(function(weekResults) {
+                // console.log('routineResults: ', getRoutineResults);
+                res.render('logActivity', {
                 title: 'Welcome user '+ results.userID, 
                 user: results.userID,
-                routineTypes: JSON.stringify(routineResults)
+                routineTypes: JSON.stringify(routineResults),
+                weekActivities: JSON.stringify(weekResults)
+                })
               })
-            }) 
-            
+              
+            // }) 
           })
           
         } else {
@@ -72,7 +79,6 @@ router.get('/', function(req, res, next) {
               })
               
             })
-            // console.log(results);
             
           })
             
@@ -81,13 +87,9 @@ router.get('/', function(req, res, next) {
       
     }
   })
-  // res.render('index', {title: 'Welcome'});
 });
-// /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   // console.log('cookies: ', req.cookies.login);
-//   res.render('index', { title: 'Express - Jordan' });
-// });
+
+
 
 router.post('/scheduleData', async function(req, res, next) {
   const scheduleDetails = req.body;
@@ -101,9 +103,6 @@ router.post('/scheduleData', async function(req, res, next) {
 
   .then(async function(results) {
 
-    // console.log(Object.keys(scheduleDetails));
-    // console.log(Object.keys(scheduleDetails).includes('activityType'));
-    
     if ((Object.keys(scheduleDetails).includes('activityType')) && (Object.keys(scheduleDetails).includes('chosenDate'))) {
       // console.log('index schedID: ', results[1][0]['LAST_INSERT_ID()']);
       var scheduleID = results[1][0]['LAST_INSERT_ID()'];
@@ -114,12 +113,7 @@ router.post('/scheduleData', async function(req, res, next) {
     } else {
       res.redirect('/');
     }
-    
   })
-  
-    
-    
-  // res.send(scheduleDetails);
 });
 
 
@@ -135,26 +129,11 @@ router.post('/logNewActivity', async function(req, res, next) {
 
   } else if (details.activityType == 1) {
     console.log('logging something different');
-    // req.headers['someHeader'] = 'someValue';
-    // res.set({
-    //   'chosenDate': details.chosenDate,
-    //   'activityType': details.activityType
-    // })
-    // res.header('chosenDate', details.chosenDate)
-    // var string = encodeURIComponent('something that would break');
-    // res.redirect('/?valid=' + string);
-    // res.redirect('/somethingDifferent?valid='+string);
-
-    // req.session.chosenDate = '"' +  details.chosenDate  + '"';
     req.session.chosenDate = JSON.stringify(details.chosenDate);
     req.session.activityType =  details.activityType;
     req.session.saveAsNormal = false;
     res.redirect('/somethingDifferent');
     
-    // res.redirect('/somethingDifferent?chosendate='+details.chosenDate+'&activityType='+details.activityType);
-    
-    
-
   } else if (details.activityType == 2) {
     console.log('logging no activities');
     await getNoActivityReasons()
@@ -166,17 +145,6 @@ router.post('/logNewActivity', async function(req, res, next) {
       });
     })
   }
-  // res.send(details);
-
-  // if (req.body.activityType == "0") {
-  //   // await logNormal(details.user, details.chosenDate)
-  //   console.log('activity type 0')
-  // .then(res.send(details));
-  // } else {
-  //   res.send('activity type failed');
-  // }
-  
-  
 });
 
 

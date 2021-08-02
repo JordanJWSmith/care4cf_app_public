@@ -17,31 +17,80 @@
         </div>
         <br><br>
 
-        <form method="POST" action="/logNewActivity">
-            <div id="buttons">
-               
-            </div>
-            
-            <a id="chosenDate"></a>
-            <a id="user"></a>
-        </form>
+        <div id="mainSection">
+
+        </div>
         
 
         <script>
 
             var routineTypes = <%- routineTypes %>;
+            var weekActivities = <%-weekActivities %>;
 
-            for (var i = 0; i < routineTypes['results'].length; i++) {
-                document.getElementById('buttons').innerHTML += '<button name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button>';
-                document.getElementById('buttons').innerHTML += '<br>';
-            }
+            var dayCounter = 0;
 
             var today = new Date();
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
             document.getElementById('date').innerHTML = getDisplayDate(date);
-            console.log('date: ', date);
-            document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
-            document.getElementById('user').innerHTML = "<input type='hidden' name='user' value='" + <%- user %> + "'>";
+
+            populateMainSection()
+
+            function populateMainSection() {
+                if (weekActivities[dayCounter]) {
+                    var activities = JSON.stringify(weekActivities[dayCounter]);
+                    document.getElementById('mainSection').innerHTML = '<div id="routine"></div>';
+                    populateRoutine();
+
+                } else {
+                    document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity"></form>';
+                    document.getElementById('activityForm').innerHTML += '<div id="buttons"></div>';
+                    document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
+                    document.getElementById('activityForm').innerHTML += '<a id="user"></a>';
+                    document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+                    populateButtons();
+                    populateForm();
+                }
+            }
+
+            function populateRoutine() {
+                var stringActivities = JSON.stringify(weekActivities[dayCounter]);
+                var activities = JSON.parse(stringActivities);
+                var keys = Object.keys(activities);
+                for (var i = 0; i < keys.length; i++) {
+                    title = keys[i];
+                    console.log(title);
+                    document.getElementById('routine').innerHTML += '<a id="'+ title +'"></a>';
+                    document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
+                    if (activities[title][0] == '[') {
+                        activitiesList = JSON.parse(activities[title]);
+                        for (var j = 0; j < activitiesList.length; j++) {
+                            if (typeof activitiesList[j] == "object") {
+                                document.getElementById(title).innerHTML += '<dd>' + activitiesList[j][0] + ' (' + activitiesList[j][1] + ') ' + '</dd>';
+                            } else {
+                                document.getElementById(title).innerHTML += '<dd>' + activitiesList[j] + '</dd>';
+                            }
+                        }
+                    } else {
+                        document.getElementById(title).innerHTML += '<dd>' + activities[title] + '</dd>';
+                    }
+                    console.log(activities[title]);
+                }
+            }
+
+
+            function populateButtons() {
+                for (var i = 0; i < routineTypes['results'].length; i++) {
+                document.getElementById('buttons').innerHTML += '<button name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button>';
+                document.getElementById('buttons').innerHTML += '<br>';
+                }
+            }
+
+
+            function populateForm() {
+                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+                document.getElementById('user').innerHTML = "<input type='hidden' name='user' value='" + <%- user %> + "'>";
+            }
+            
 
 
             function getDisplayDate(date) {
@@ -66,29 +115,30 @@
             
             function decrementDate() {
                 today.setDate(today.getDate()-1);
-                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+                date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
 
                 document.getElementById('date').innerHTML = getDisplayDate(date);
-                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+                // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
                 disableButton(today);   
+                dayCounter++;
+                console.log('dayCounter: ', dayCounter);
+                console.log(weekActivities[dayCounter]);
+                populateMainSection()
             }
 
             function incrementDate() { 
                 today.setDate(today.getDate()+1);
-                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+                date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
                 document.getElementById('date').innerHTML = getDisplayDate(date);
-                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+                // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
                 disableButton(today);
+                dayCounter--;
+                console.log('dayCounter: ', dayCounter);
+                console.log(weekActivities[dayCounter]);
+                populateMainSection()
             }
             
 
-            // console.log('today: ', today);
-            // today.setDate(today.getDate() -28);
-            // console.log(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()));
-            // console.log('date:', date);
-            // console.log(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1));
-            // console.log('displayDate: ', displayDate)
-            
 
         </script>
 
