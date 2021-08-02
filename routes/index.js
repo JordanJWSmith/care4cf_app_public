@@ -13,6 +13,7 @@ const logDifferent = require('./appDatabase/logDifferent');
 const getRoutineTypes = require('./appDatabase/getRoutineTypes');
 const getNoActivityReasons = require('./appDatabase/getNoActivityReasons');
 const getFrequencies = require('./appDatabase/getFrequencies');
+const getRoutine = require('./appDatabase/getRoutine');
 var router = express.Router();
 
 
@@ -28,11 +29,15 @@ router.get('/', function(req, res, next) {
         if (checkResults.scheduleExists) {
           getRoutineTypes()
           .then(function(routineResults) {
-            res.render('logActivity', {
-              title: 'Welcome user '+ results.userID, 
-              user: results.userID,
-              routineTypes: JSON.stringify(routineResults)
-            })
+            getRoutine(results.userID, '2021-08-02')
+            .then(function(getRoutineResults) {
+              res.render('logActivity', {
+                title: 'Welcome user '+ results.userID, 
+                user: results.userID,
+                routineTypes: JSON.stringify(routineResults)
+              })
+            }) 
+            
           })
           
         } else {
@@ -106,6 +111,8 @@ router.post('/scheduleData', async function(req, res, next) {
       await logDifferent(scheduleDetails.user, scheduleDetails.chosenDate, scheduleID, scheduleDetails.activityType)
       // res.redirect('/')
       .then(res.redirect('/'))
+    } else {
+      res.redirect('/');
     }
     
   })
