@@ -72,6 +72,8 @@
                 <a id="date"></a>
                 <a id="saveAsNormal"></a>
                 <a id="user"></a>
+                <a id="activityType"></a>
+                <a id="chosenDate"></a>
                 
                 <br><br>
 
@@ -87,6 +89,22 @@
             // console.log(date);
 
             // console.log('saveAsNormal: ', <%- saveAsNormal %>);
+
+            // Add these to forms
+            var activityType = <%- activityType %>;
+            var chosenDate = <%- chosenDate %>;
+            
+            if (activityType) {
+                console.log('activityType: ', activityType);
+                document.getElementById("activityType").innerHTML += "<input type='hidden' name='activityType' value='" +activityType + "'>";
+            }
+            if (chosenDate) {
+                console.log('chosenDate:', chosenDate);
+                document.getElementById("chosenDate").innerHTML += "<input type='hidden' name='chosenDate' value='" +chosenDate + "'>";
+            }
+            
+            
+
 
             // document.getElementById("date").innerHTML += "<input type='hidden' name='date' value='" + date + "'>";
             document.getElementById("saveAsNormal").innerHTML += "<input type='hidden' name='saveAsNormal' value='" + <%- saveAsNormal %> + "'>";

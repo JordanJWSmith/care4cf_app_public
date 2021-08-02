@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 const login = require('./appDatabase/login');
 const checkForNormal = require('./appDatabase/checkForNormal')
 const getTechniques = require('./appDatabase/getTechniques');
@@ -8,6 +9,9 @@ const getAdjunctTimes = require('./appDatabase/getAdjunctTimes');
 const saveSchedule = require('./appDatabase/saveSchedule');
 const logNormal = require('./appDatabase/logNormal');
 const logNoActivities = require('./appDatabase/logNoActivities');
+const logDifferent = require('./appDatabase/logDifferent');
+const getRoutineTypes = require('./appDatabase/getRoutineTypes');
+const getNoActivityReasons = require('./appDatabase/getNoActivityReasons');
 var router = express.Router();
 
 
@@ -21,7 +25,15 @@ router.get('/', function(req, res, next) {
       checkForNormal(results.userID)
       .then(function(checkResults) {
         if (checkResults.scheduleExists) {
-          res.render('logActivity', {title: 'Welcome user '+ results.userID, user: results.userID})
+          getRoutineTypes()
+          .then(function(routineResults) {
+            res.render('logActivity', {
+              title: 'Welcome user '+ results.userID, 
+              user: results.userID,
+              routineTypes: JSON.stringify(routineResults)
+            })
+          })
+          
         } else {
           getTechniques()
           .then(function(techResults) {
@@ -38,6 +50,8 @@ router.get('/', function(req, res, next) {
                   durations: JSON.stringify(durationResults),
                   adjuncts: JSON.stringify(adjunctResults),
                   adjunctTimes: JSON.stringify(adjunctTimeResults),
+                  chosenDate: false,
+                  activityType: false,
                   saveAsNormal: true
                   })
                 })
@@ -63,26 +77,79 @@ router.get('/', function(req, res, next) {
 // });
 
 router.post('/scheduleData', async function(req, res, next) {
+  // ADD CONTINGENCY FOR (IF ACTIVITYTYPE & CHOSENDATE) {ADD TO ACTIVITIES} 
   const scheduleDetails = req.body;
+  console.log('scheduleDetails: ', scheduleDetails);
+  // is activitydetail and chosen date in the scheduledetails?
+  // if so, ultimately log in activities table
   // console.log('details: ', userDetails);
   await saveSchedule(scheduleDetails)
-  .then(res.redirect('/'));
+
+  .then(async function(results) {
+
+    console.log(Object.keys(scheduleDetails));
+    console.log(Object.keys(scheduleDetails).includes('activityType'));
+    
+    if ((Object.keys(scheduleDetails).includes('activityType')) && (Object.keys(scheduleDetails).includes('chosenDate'))) {
+      var scheduleID = results[1][0]['LAST_INSERT_ID()'];
+      
+      await logDifferent(scheduleDetails.user, scheduleDetails.chosenDate, scheduleID, scheduleDetails.activityType)
+      // res.redirect('/')
+      .then(res.redirect('/'))
+    }
+    
+  })
+  
+    
+    
   // res.send(scheduleDetails);
 });
+
 
 router.post('/logNewActivity', async function(req, res, next) {
   const details = req.body;
   // console.log('activity type: ', details.activityType);
-  // console.log('date: ', details.chosenDate);
+  console.log('(index) date: ', details.chosenDate, typeof details.chosenDate);
   // console.log('user: ', details.user);
   if (details.activityType == 0) {
     console.log('logging normal activity');
-    await logNormal(details.user, details.chosenDate, details.activityType);
+    await logNormal(details.user, details.chosenDate, details.activityType)
+    .then(res.send(details));
+
+  } else if (details.activityType == 1) {
+    console.log('logging something different');
+    // req.headers['someHeader'] = 'someValue';
+    // res.set({
+    //   'chosenDate': details.chosenDate,
+    //   'activityType': details.activityType
+    // })
+    // res.header('chosenDate', details.chosenDate)
+    // var string = encodeURIComponent('something that would break');
+    // res.redirect('/?valid=' + string);
+    // res.redirect('/somethingDifferent?valid='+string);
+
+    // req.session.chosenDate = '"' +  details.chosenDate  + '"';
+    req.session.chosenDate = JSON.stringify(details.chosenDate);
+    req.session.activityType =  details.activityType;
+    req.session.saveAsNormal = false;
+    res.redirect('/somethingDifferent');
+    
+    // res.redirect('/somethingDifferent?chosendate='+details.chosenDate+'&activityType='+details.activityType);
+    
+    
+
   } else if (details.activityType == 2) {
     console.log('logging no activities');
-    await logNoActivities(details.user, details.chosenDate, details.activityType);
+    await getNoActivityReasons()
+    .then(function(results) {
+      res.render('noActivity', {
+        title: 'Tell us why', 
+        details: JSON.stringify(details), 
+        reasons: JSON.stringify(results)
+      });
+    })
   }
-  res.send(details);
+  // res.send(details);
 
   // if (req.body.activityType == "0") {
   //   // await logNormal(details.user, details.chosenDate)
@@ -93,6 +160,15 @@ router.post('/logNewActivity', async function(req, res, next) {
   // }
   
   
+});
+
+
+router.post('/noActivities', async function(req, res, next) {
+  var reasonID = req.body.reasonID;
+  var details = JSON.parse(req.body.details);
+  await logNoActivities(details.user, details.chosenDate, details.activityType, reasonID)
+  .then(res.redirect('/'))
+
 })
 
 

@@ -6,7 +6,8 @@ var conn = mysql.createPool({
     password: 'Jordan2016Smith',
     database: 'care4cf',
     port: 3306,
-    ssl: true
+    ssl: true,
+    multipleStatements: true
 }); 
 
 

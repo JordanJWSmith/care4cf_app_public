@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="manifest" href="/manifest.json">
+        <!-- <script type="module" src="/pwabuilder-sw-register.js"></script> -->
+    </head>
+    <body>
+
+        <h1><%= title %></h1>
+
+        <form method="POST" action="/noActivities">
+            <select id="reason" name="reasonID" required>
+                <option value="" selected disabled hidden>Reason for no activities</option>
+            </select>
+            
+            <a id="details"></a>
+            <!-- <a id="user"></a> -->
+            <button type='submit'>Submit</button>
+        </form>
+
+        
+        <br>
+        
+
+        <script>
+            var reasons = <%- reasons %>;
+            var details = <%- details %>;
+
+            for (var i = 0; i < reasons['results'].length; i++) {
+                var o = document.createElement('option');
+                o.value = reasons['results'][i].reasonID;
+                o.innerHTML = reasons['results'][i].description;
+                document.getElementById('reason').appendChild(o);
+            }
+
+            console.log('details: ',details);
+            console.log('reasons: ', reasons);
+
+            document.getElementById('details').innerHTML = "<input type='hidden' name='details' value='" + JSON.stringify(details) + "'>";
+
+        </script>
+        
+
+    </body>
+</html>

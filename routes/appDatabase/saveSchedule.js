@@ -20,18 +20,22 @@ module.exports = async function(scheduleDetails) {
     // console.log('saveAsNormal: ', saveAsNormal)
     // console.log('user: ', user);
 
-    var insertSchedule = "INSERT INTO schedules (duration, frequencyID) VALUES (?, ?)";
+    var insertSchedule = "INSERT INTO schedules (duration, frequencyID) VALUES (?, ?); SELECT LAST_INSERT_ID();";
+    // var insertSchedule = "UPDATE schedules SET duration = ?, frequencyID = ? "
     var scheduleValues = [duration, frequency];
 
-    await readData(insertSchedule, scheduleValues).then(
+    var insertIntoSchedules = await readData(insertSchedule, scheduleValues).then(
         async function(insertResults) {
+            // console.log('insertResults:', insertResults);
             var retrieveScheduleID = "SELECT max(scheduleID) FROM schedules";
 
+            // NO LONGER NEEDED
             await readData(retrieveScheduleID).then(
                 async function(schedResults) {
                     var scheduleID = schedResults[0]['max(scheduleID)'];
                     var keys = Object.keys(scheduleDetails);
-
+ 
+                    // CHANGE TO LENGTH OF COUNTER?
                     for (var i = 0; i < keys.length; i++) {
                         if (keys.includes('act'+i)) {
                             if (keys.includes('subact'+i)) {
@@ -55,6 +59,7 @@ module.exports = async function(scheduleDetails) {
                             await readData(insertNormal, normalValues);
                         })
                     }
+                    // return schedResults;
                 }
             )
             .then(async function() {
@@ -69,9 +74,13 @@ module.exports = async function(scheduleDetails) {
                         await readData(insertAdjuncts, adjunctDict[i]);
                     }   
             })
+
+            return insertResults;
         }
     )
 
+    return insertIntoSchedules;
+        // console.log('insertIntoSchedules: ', insertIntoSchedules);
     // console.log('techniqueDict: ', techDict);
     // console.log('adjunctDict: ', adjunctDict);
 }

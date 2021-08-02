@@ -18,20 +18,28 @@
         <br><br>
 
         <form method="POST" action="/logNewActivity">
-            <button name="activityType" value=0 type="submit">Normal Routine</button>
-            <br>
-            <button name="activityType" value=1 type="submit">Something Different</button>
-            <br>
-            <button name="activityType" value=2 type="submit">No Activities</button>
+            <div id="buttons">
+               
+            </div>
+            
             <a id="chosenDate"></a>
             <a id="user"></a>
         </form>
         
 
         <script>
+
+            var routineTypes = <%- routineTypes %>;
+
+            for (var i = 0; i < routineTypes['results'].length; i++) {
+                document.getElementById('buttons').innerHTML += '<button name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button>';
+                document.getElementById('buttons').innerHTML += '<br>';
+            }
+
             var today = new Date();
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
             document.getElementById('date').innerHTML = getDisplayDate(date);
+            console.log('date: ', date);
             document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
             document.getElementById('user').innerHTML = "<input type='hidden' name='user' value='" + <%- user %> + "'>";
 
@@ -59,8 +67,9 @@
             function decrementDate() {
                 today.setDate(today.getDate()-1);
                 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+
                 document.getElementById('date').innerHTML = getDisplayDate(date);
-                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='token' value='" + date + "'>";
+                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
                 disableButton(today);   
             }
 
@@ -68,7 +77,7 @@
                 today.setDate(today.getDate()+1);
                 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
                 document.getElementById('date').innerHTML = getDisplayDate(date);
-                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='token' value='" + date + "'>";
+                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
                 disableButton(today);
             }
             
