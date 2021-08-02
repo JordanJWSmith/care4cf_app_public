@@ -12,6 +12,7 @@ const logNoActivities = require('./appDatabase/logNoActivities');
 const logDifferent = require('./appDatabase/logDifferent');
 const getRoutineTypes = require('./appDatabase/getRoutineTypes');
 const getNoActivityReasons = require('./appDatabase/getNoActivityReasons');
+const getFrequencies = require('./appDatabase/getFrequencies');
 var router = express.Router();
 
 
@@ -43,17 +44,24 @@ router.get('/', function(req, res, next) {
               .then(function(adjunctResults) {
                 getAdjunctTimes()
                 .then(function(adjunctTimeResults) {
-                  res.render('newSchedule', 
-                  {title: 'Welcome, user ' + results.userID +'.', 
-                  user: results.userID, 
-                  techniques: JSON.stringify(techResults),
-                  durations: JSON.stringify(durationResults),
-                  adjuncts: JSON.stringify(adjunctResults),
-                  adjunctTimes: JSON.stringify(adjunctTimeResults),
-                  chosenDate: false,
-                  activityType: false,
-                  saveAsNormal: true
-                  })
+                  getFrequencies()
+                  .then(function(frequencyResults) {
+                    res.render('newSchedule', {
+                      title: 'Welcome, user ' + results.userID +'.', 
+                      user: results.userID, 
+                      techniques: JSON.stringify(techResults),
+                      durations: JSON.stringify(durationResults),
+                      adjuncts: JSON.stringify(adjunctResults),
+                      adjunctTimes: JSON.stringify(adjunctTimeResults),
+                      frequencies: JSON.stringify(frequencyResults),
+                      chosenDate: false,
+                      activityType: false,
+                      saveAsNormal: true
+                    })
+                  }
+                    
+                  )
+                  
                 })
                 
               })
@@ -77,9 +85,12 @@ router.get('/', function(req, res, next) {
 // });
 
 router.post('/scheduleData', async function(req, res, next) {
-  // ADD CONTINGENCY FOR (IF ACTIVITYTYPE & CHOSENDATE) {ADD TO ACTIVITIES} 
   const scheduleDetails = req.body;
   console.log('scheduleDetails: ', scheduleDetails);
+
+  req.session.chosenDate = null;
+  req.session.activityType = null;
+  req.session.saveAsNormal = null;
   // is activitydetail and chosen date in the scheduledetails?
   // if so, ultimately log in activities table
   // console.log('details: ', userDetails);

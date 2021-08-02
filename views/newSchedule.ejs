@@ -45,9 +45,9 @@
                 <div id="frequency">
                     <select id='frequencyDropdown' name="frequency" required>
                         <option value="" selected disabled hidden>Frequency per Day</option>
-                        <option value=1>Once</option>
+                        <!-- <option value=1>Once</option>
                         <option value=2>Twice</option>
-                        <option value=3>Three times</option>
+                        <option value=3>Three times</option>  -->
                     </select>
                 </div>
 
@@ -246,10 +246,21 @@
                     document.getElementById('durationDropdown').appendChild(o);
                 }
             }
-            // var durations = <%- durations %>;
-            // console.log(durations);
 
             populateDurationsBox();
+
+            
+            function populateFrequenciesBox() {
+                var frequencies = <%- frequencies %>;
+                for (var i = 0; i < frequencies['results'].length; i++) {
+                    var o = document.createElement('option');
+                    o.value = frequencies['results'][i].frequencyID;
+                    o.innerHTML = frequencies['results'][i].frequency;
+                    document.getElementById('frequencyDropdown').appendChild(o);
+                }
+            }
+
+            populateFrequenciesBox();
 
             function populateAdjunctsBox(n) {
                 var adjuncts = <%- adjuncts %>;

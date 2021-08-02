@@ -6,19 +6,20 @@ const getTechniques = require('./appDatabase/getTechniques');
 const getDurations = require('./appDatabase/getDurations');
 const getAdjuncts = require('./appDatabase/getAdjuncts');
 const getAdjunctTimes = require('./appDatabase/getAdjunctTimes');
+const getFrequencies = require('./appDatabase/getFrequencies');
 
 
 router.get('/', function (req, res, next) {
     var chosenDate = req.session.chosenDate;
     var activityType = req.session.activityType;
     var saveAsNormal = req.session.saveAsNormal;
-    req.session.chosenDate = null;
-    req.session.activityType = null;
-    req.session.saveAsNormal = null;
+    // req.session.chosenDate = null;
+    // req.session.activityType = null;
+    // req.session.saveAsNormal = null;
     var cookieToken = req.cookies.accessToken;
-    console.log('date:', chosenDate);
-    console.log('activityType:', activityType);
-    console.log('saveAsNormal:', saveAsNormal);
+    // console.log('date:', chosenDate);
+    // console.log('activityType:', activityType);
+    // console.log('saveAsNormal:', saveAsNormal);
     login(cookieToken)
     .then(function(results) {
         console.log('loginUser results: ', results, '. Rendering sign in...');
@@ -33,18 +34,21 @@ router.get('/', function (req, res, next) {
                 .then(function(adjunctResults) {
                     getAdjunctTimes()
                     .then(function(adjunctTimeResults) {
-                        res.render('newSchedule', 
+                        getFrequencies()
+                        .then(function(frequencyResults) {
+                            res.render('newSchedule', 
                         {title: 'What activities did you do?', 
                         user: results.userID, 
                         techniques: JSON.stringify(techResults),
                         durations: JSON.stringify(durationResults),
                         adjuncts: JSON.stringify(adjunctResults),
                         adjunctTimes: JSON.stringify(adjunctTimeResults),
+                        frequencies: JSON.stringify(frequencyResults),
                         chosenDate: chosenDate,
                         activityType: activityType,
-                        // chosenDate: false,
-                        // activityType: false,
                         saveAsNormal: saveAsNormal
+                        })
+                        
                         })
                     })
                     
