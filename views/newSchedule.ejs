@@ -74,6 +74,9 @@
                 <a id="user"></a>
                 <a id="activityType"></a>
                 <a id="chosenDate"></a>
+                <a id="maxCounter">
+                    <input type='hidden' name='maxCounter' value=0>
+                </a>
                 
                 <br><br>
 
@@ -96,7 +99,7 @@
             
             if (activityType) {
                 console.log('activityType: ', activityType);
-                document.getElementById("activityType").innerHTML += "<input type='hidden' name='activityType' value='" +activityType + "'>";
+                document.getElementById("activityType").innerHTML += "<input type='hidden' name='activityType' value='" + activityType + "'>";
             }
             if (chosenDate) {
                 console.log('chosenDate:', chosenDate);
@@ -220,6 +223,7 @@
                 if (counter > 0) {
                     document.getElementById("removeButtonDiv").innerHTML = '<button type="button" id="removeButton"  onclick="removeTechnique()" >Remove Technique</button>';
                 }
+                document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
             }
 
             function removeTechnique() {
@@ -227,6 +231,7 @@
                     document.getElementById("formBox"+counter).innerHTML = "";
                     document.getElementById("secondFormBox"+counter).innerHTML = "";
                     counter--;
+                    document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
                     if (counter == 0) {
                         document.getElementById("removeButtonDiv").innerHTML = "";
                     }
@@ -329,6 +334,7 @@
                 adjunctCounter++;
                 console.log('adjunctCounter: ', adjunctCounter);
                 addAdjunctBox(adjunctCounter);
+                document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
                 if (adjunctCounter > 0) {
                     document.getElementById("removeAdjunctButtonDiv").innerHTML = '<button type="button" onclick="removeAdjunct()">Remove Adjunct</button>';
                 }
@@ -339,6 +345,7 @@
                     document.getElementById("adjunctDiv"+adjunctCounter).innerHTML = "";
                     document.getElementById("adjunctTimeDiv"+adjunctCounter).innerHTML = "";
                     adjunctCounter--;
+                    document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
                     console.log('adjunctCounter: ', adjunctCounter);
                     if (adjunctCounter == 0) {
                         document.getElementById("removeAdjunctButtonDiv").innerHTML = "";
@@ -347,6 +354,8 @@
                 }
                 
             }
+
+
 
         </script>
 

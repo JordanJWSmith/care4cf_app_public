@@ -11,7 +11,54 @@
 
         <h1><%= title %></h1>
         <p> Welcome, user <%= user %></p>
+
+        <dl>
+            <a id="techniques">
+                <dt>Techniques:</dt>
+                    <!-- <dd>- black hot drink</dd> -->
+            </a>
+            <br>
+            <a id="duration">
+                <dt>Duration: <%= duration %></dt>
+                    <!-- <dd>- white cold drink</dd> -->
+            </a>
+            <br>
+            <a id="frequency">
+                <dt>Frequency: <%= frequency %></dt>
+                    <!-- <dd>- white cold drink</dd> -->
+            </a>
+            <br>
+            <a id="adjuncts">
+                <!-- <dt>Adjuncts:</dt> -->
+                    <!-- <dd>- white cold drink</dd> -->
+            </a>
+            
+          </dl>
+
+          <br><br>
+          <a href="/">
+            <button>Log Activity</button>
+        </a>
+
+
+        <script>
+            var techniques = <%- techniques %>;
+            for (var i = 0; i < techniques.length; i++) {
+                document.getElementById('techniques').innerHTML += "<dd>- " + techniques[i] + "</dd>";
+            }
+
+            var adjuncts = <%- adjuncts %>;
+            if (adjuncts) {
+                document.getElementById('adjuncts').innerHTML += "<dt>Adjuncts: </dd>";
+                for (var i = 0; i < adjuncts.length; i++) {
+                document.getElementById('adjuncts').innerHTML += "<dd>- " + adjuncts[i][0] + " (" + adjuncts[i][1] + ")" + "</dd>";
+            }
+            }
+            
         
+        </script>
+  
+
 
     </body>
 </html>

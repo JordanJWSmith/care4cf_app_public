@@ -86,22 +86,21 @@ router.get('/', function(req, res, next) {
 
 router.post('/scheduleData', async function(req, res, next) {
   const scheduleDetails = req.body;
-  console.log('scheduleDetails: ', scheduleDetails);
+  // console.log('scheduleDetails: ', scheduleDetails);
 
   req.session.chosenDate = null;
   req.session.activityType = null;
   req.session.saveAsNormal = null;
-  // is activitydetail and chosen date in the scheduledetails?
-  // if so, ultimately log in activities table
-  // console.log('details: ', userDetails);
+
   await saveSchedule(scheduleDetails)
 
   .then(async function(results) {
 
-    console.log(Object.keys(scheduleDetails));
-    console.log(Object.keys(scheduleDetails).includes('activityType'));
+    // console.log(Object.keys(scheduleDetails));
+    // console.log(Object.keys(scheduleDetails).includes('activityType'));
     
     if ((Object.keys(scheduleDetails).includes('activityType')) && (Object.keys(scheduleDetails).includes('chosenDate'))) {
+      // console.log('index schedID: ', results[1][0]['LAST_INSERT_ID()']);
       var scheduleID = results[1][0]['LAST_INSERT_ID()'];
       
       await logDifferent(scheduleDetails.user, scheduleDetails.chosenDate, scheduleID, scheduleDetails.activityType)
