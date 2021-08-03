@@ -31,7 +31,7 @@ module.exports = async function(userID, offset) {
         // console.log(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate() - i))
     }
 
-    console.log('dateList: ', dateList)
+    // console.log('dateList: ', dateList)
     // console.log('routineList: ', routineList);
     // console.log('startDate: ', startDate);
     return {

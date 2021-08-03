@@ -21,6 +21,7 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
   var cookieToken = req.cookies.accessToken;
+  // console.log('integerCheck:', Number.isInteger(parseInt('5')));
   login(cookieToken).then(function(results) {
     if (!results.logIn) {
       console.log('user not logged in at index. Redirecting to login...')
@@ -164,54 +165,60 @@ router.post('/noActivities', async function(req, res, next) {
 
 router.get('/w/:offset', function(req, res, next) {
   var offset = req.params.offset;
-  var r = req.query.r;
-  console.log('r: ', r);
+  if (!(Number.isInteger(parseInt(offset)))) {
+    console.log('incorrect offset');
+    res.redirect('/');
+  } else {
+    var r = req.query.r;
+    console.log('r: ', r);
 
-  // console.log(typeof offset);
-  // res.send(offset);
-  var cookieToken = req.cookies.accessToken;
-  login(cookieToken).then(function(results) {
-    if (!results.logIn) {
-      console.log('user not logged in at index. Redirecting to login...')
-      res.redirect('/loginUser');
-    } else {
-      checkForNormal(results.userID)
-      .then(function(checkResults) {
-        if (checkResults.scheduleExists) {
-          getRoutineTypes()
-          .then(function(routineResults) {
-            getWeekActivities(results.userID, parseInt(offset))
-              .then(function(weekResults) {
-                // console.log('weekResults: ', weekResults);
-                if (r) {
-                  // console.log('r true');
-                  var dateList = weekResults.dateList.reverse()
-                  var prevDay = "incrementDate()";
-                  var nextDay = "decrementDate()";
-                  
-                } else {
-                  var dateList = weekResults.dateList
-                  var prevDay = "decrementDate()";
-                  var nextDay = "incrementDate()";
-                }
+    // console.log(typeof offset);
+    // res.send(offset);
+    var cookieToken = req.cookies.accessToken;
+    login(cookieToken).then(function(results) {
+      if (!results.logIn) {
+        console.log('user not logged in at index. Redirecting to login...')
+        res.redirect('/loginUser');
+      } else {
+        checkForNormal(results.userID)
+        .then(function(checkResults) {
+          if (checkResults.scheduleExists) {
+            getRoutineTypes()
+            .then(function(routineResults) {
+              getWeekActivities(results.userID, parseInt(offset))
+                .then(function(weekResults) {
+                  // console.log('weekResults: ', weekResults);
+                  if (r) {
+                    // console.log('r true');
+                    var dateList = weekResults.dateList.reverse()
+                    var prevDay = "incrementDate()";
+                    var nextDay = "decrementDate()";
+                    
+                  } else {
+                    var dateList = weekResults.dateList
+                    var prevDay = "decrementDate()";
+                    var nextDay = "incrementDate()";
+                  }
 
-                res.render('logActivity', {
-                  title: 'Welcome user '+ results.userID, 
-                  user: results.userID,
-                  routineTypes: JSON.stringify(routineResults),
-                  weekActivities: JSON.stringify(weekResults.routine),
-                  dateList: JSON.stringify(dateList),
-                  startDate: JSON.stringify(weekResults.startDate),
-                  routineDict: JSON.stringify(weekResults.routineDict),
-                  prevDay: prevDay,
-                  nextDay: nextDay
-                  })
-              })
-          })
-        }
-      })
-    }
-  })
+                  res.render('logActivity', {
+                    title: 'Welcome user '+ results.userID, 
+                    user: results.userID,
+                    routineTypes: JSON.stringify(routineResults),
+                    weekActivities: JSON.stringify(weekResults.routine),
+                    dateList: JSON.stringify(dateList),
+                    startDate: JSON.stringify(weekResults.startDate),
+                    routineDict: JSON.stringify(weekResults.routineDict),
+                    prevDay: prevDay,
+                    nextDay: nextDay
+                    })
+                })
+            })
+          }
+        })
+      }
+    })
+  }
+
 })
 
 
