@@ -36,12 +36,19 @@ router.get('/', function(req, res, next) {
                 // console.log('routineResults: ', getRoutineResults);
                 // console.log('startDate: ', weekResults.startDate);
 
+                var prevDay = "decrementDate()";
+                var nextDay = "incrementDate()";
+
                 res.render('logActivity', {
                 title: 'Welcome user '+ results.userID, 
                 user: results.userID,
                 routineTypes: JSON.stringify(routineResults),
                 weekActivities: JSON.stringify(weekResults.routine),
-                startDate: JSON.stringify(weekResults.startDate)
+                dateList: JSON.stringify(weekResults.dateList),
+                startDate: JSON.stringify(weekResults.startDate),
+                routineDict: JSON.stringify(weekResults.routineDict),
+                prevDay: prevDay,
+                nextDay: nextDay
                 })
               })
           })
@@ -157,6 +164,9 @@ router.post('/noActivities', async function(req, res, next) {
 
 router.get('/w/:offset', function(req, res, next) {
   var offset = req.params.offset;
+  var r = req.query.r;
+  console.log('r: ', r);
+
   // console.log(typeof offset);
   // res.send(offset);
   var cookieToken = req.cookies.accessToken;
@@ -173,12 +183,28 @@ router.get('/w/:offset', function(req, res, next) {
             getWeekActivities(results.userID, parseInt(offset))
               .then(function(weekResults) {
                 // console.log('weekResults: ', weekResults);
+                if (r) {
+                  // console.log('r true');
+                  var dateList = weekResults.dateList.reverse()
+                  var prevDay = "incrementDate()";
+                  var nextDay = "decrementDate()";
+                  
+                } else {
+                  var dateList = weekResults.dateList
+                  var prevDay = "decrementDate()";
+                  var nextDay = "incrementDate()";
+                }
+
                 res.render('logActivity', {
                   title: 'Welcome user '+ results.userID, 
                   user: results.userID,
                   routineTypes: JSON.stringify(routineResults),
                   weekActivities: JSON.stringify(weekResults.routine),
-                  startDate: JSON.stringify(weekResults.startDate)
+                  dateList: JSON.stringify(dateList),
+                  startDate: JSON.stringify(weekResults.startDate),
+                  routineDict: JSON.stringify(weekResults.routineDict),
+                  prevDay: prevDay,
+                  nextDay: nextDay
                   })
               })
           })

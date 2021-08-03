@@ -12,7 +12,8 @@
         <h1><%= title %></h1>
         <h2 id='date'></h2>
 
-        <button onclick="decrementDate()">Previous Day</button>
+        <button onclick= <%= prevDay %> >Previous Day</button>
+        <!-- <button onclick= "decrementDate()">Previous Day</button> -->
         <div id="nextDay">
         </div>
         <br><br>
@@ -26,7 +27,13 @@
 
             var routineTypes = <%- routineTypes %>;
             var weekActivities = <%-weekActivities %>;
+            var dateList = <%- dateList %>
             var startDate = <%- startDate %>;
+            var routineDict = <%- routineDict %>;
+
+            console.log(dateList);
+            // console.log(weekActivities);
+            console.log(routineDict);
 
             var dayCounter = 0;
 
@@ -35,18 +42,22 @@
             const oneDay = 24 * 60 * 60 * 1000;
 
 
-            var today = new Date(startDate);
+            var today = new Date(dateList[dayCounter])
+            // console.log(today);
+            // var today = new Date(startDate);
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
             document.getElementById('date').innerHTML = getDisplayDate(date);
-            console.log(startDate);
+            // console.log(startDate);
 
                 
             populateMainSection()
             disableButton(today);
 
             function populateMainSection() {
-                if (weekActivities[dayCounter]) {
-                    var activities = JSON.stringify(weekActivities[dayCounter]);
+                // if (weekActivities[dayCounter]) {
+                var dateString = dateList[dayCounter];
+                if (routineDict[dateString]) {
+                    // var activities = JSON.stringify(weekActivities[dayCounter]);
                     document.getElementById('mainSection').innerHTML = '<div id="routine"></div>';
                     populateRoutine();
 
@@ -55,36 +66,48 @@
                     document.getElementById('activityForm').innerHTML += '<div id="buttons"></div>';
                     document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
                     document.getElementById('activityForm').innerHTML += '<a id="user"></a>';
-                    document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+                    document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                     populateButtons();
                     populateForm();
                 }
             }
 
             function populateRoutine() {
-                var stringActivities = JSON.stringify(weekActivities[dayCounter]);
-                var activities = JSON.parse(stringActivities);
+                var dateString = dateList[dayCounter];
+               
+                var activities = routineDict[dateString];
+                // console.log('dateString: ', dateString);
+                // console.log('activities: ', activities)
+                // console.log('title: ', activities.title);
+                // var stringActivities = JSON.stringify(weekActivities[dayCounter]);
+                // var activities = JSON.parse(stringActivities);
                 // console.log(activities);
+                // document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
                 document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
-                delete activities.title;
+                // delete activities.title;
+                // delete activities.title;
+                // var keys = Object.keys(activities);
                 var keys = Object.keys(activities);
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
                     // console.log(title);
-                    document.getElementById('routine').innerHTML += '<a id="'+ title +'"></a>';
-                    document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
-                    if (activities[title][0] == '[') {
-                        activitiesList = JSON.parse(activities[title]);
-                        for (var j = 0; j < activitiesList.length; j++) {
-                            if (typeof activitiesList[j] == "object") {
-                                document.getElementById(title).innerHTML += '<dd>' + activitiesList[j][0] + ' (' + activitiesList[j][1] + ') ' + '</dd>';
-                            } else {
-                                document.getElementById(title).innerHTML += '<dd>' + activitiesList[j] + '</dd>';
+                    if (title !== 'title') {
+                        document.getElementById('routine').innerHTML += '<a id="'+ title +'"></a>';
+                        document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
+                        if (activities[title][0] == '[') {
+                            activitiesList = JSON.parse(activities[title]);
+                            for (var j = 0; j < activitiesList.length; j++) {
+                                if (typeof activitiesList[j] == "object") {
+                                    document.getElementById(title).innerHTML += '<dd>' + activitiesList[j][0] + ' (' + activitiesList[j][1] + ') ' + '</dd>';
+                                } else {
+                                    document.getElementById(title).innerHTML += '<dd>' + activitiesList[j] + '</dd>';
+                                }
                             }
+                        } else {
+                            document.getElementById(title).innerHTML += '<dd>' + activities[title] + '</dd>';
                         }
-                    } else {
-                        document.getElementById(title).innerHTML += '<dd>' + activities[title] + '</dd>';
                     }
+                    
                     // console.log(activities[title]);
                 }
             }
@@ -99,7 +122,7 @@
 
 
             function populateForm() {
-                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+                document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                 document.getElementById('user').innerHTML = "<input type='hidden' name='user' value='" + <%- user %> + "'>";
             }
             
@@ -121,46 +144,105 @@
                 if (today >= newToday) {
                     document.getElementById('nextDay').innerHTML = '';
                 } else {
-                    document.getElementById('nextDay').innerHTML = '<button onclick="incrementDate()" >Next Day</button>';
+                    document.getElementById('nextDay').innerHTML = '<button onclick=<%= nextDay %> >Next Day</button>';
+                    // document.getElementById('nextDay').innerHTML = '<button onclick="incrementDate()">Next Day</button>';
                 }
             }
             
             function decrementDate() {
-                today.setDate(today.getDate()-1);
-                date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+                // today.setDate(today.getDate()-1);
+                // date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
 
-                document.getElementById('date').innerHTML = getDisplayDate(date);
-                disableButton(today);   
+                // document.getElementById('date').innerHTML = getDisplayDate(date);
+                // disableButton(today);   
                 dayCounter++;
-                var diffDays = Math.round(Math.abs((today - currentDay) / oneDay));
-                // console.log('diffDays: ', diffDays);
-                console.log('week offset: ', Math.floor(diffDays/7));
-                var weeklyOffset = Math.floor((diffDays)/7);
-                if (dayCounter == 7) {
+                console.log('dayCounter: ', dayCounter)
+
+                if (dayCounter <= (dateList.length-1)) {
+                    document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
+                    var newDay = new Date(dateList[dayCounter]);
+                    disableButton(newDay);
+                    populateMainSection()
+                } else {
+                    var newDay = new Date(dateList[dayCounter-1]);
+                    var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
+                    var weeklyOffset = Math.floor((diffDays)/7);
                     window.location = '/w/'+ weeklyOffset;
                 }
-                // console.log('dayCounter: ', dayCounter);
-                // console.log(weekActivities[dayCounter]);
-                populateMainSection()
+
+                // document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
+                // newDay = new Date(dateList[dayCounter]);
+                // disableButton(newDay);
+                // var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
+                // console.log('diffDays: ', diffDays);
+                // // console.log('week offset: ', Math.floor(diffDays/7));
+                // var weeklyOffset = Math.floor((diffDays)/7);
+                // console.log('weekOffset: ', weeklyOffset);
+                // if (dayCounter > (dateList.length-1)) {
+                // // if (dayCounter == 7) {
+                //     window.location = '/w/'+ weeklyOffset;
+                // }
+                // // console.log('dayCounter: ', dayCounter);
+                // // console.log(weekActivities[dayCounter]);
+                // populateMainSection()
             }
 
             function incrementDate() { 
-                today.setDate(today.getDate()+1);
-                date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
-                document.getElementById('date').innerHTML = getDisplayDate(date);
+
+                // dayCounter--;
+                
+                // today.setDate(today.getDate()+1);
+                // date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
+                // document.getElementById('date').innerHTML = getDisplayDate(date);
                 // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
-                disableButton(today);
+                // disableButton(today);
+                // if (dayCounter == 0) {
+                //     window.location = '/w/'+ weeklyOffset;
+                // }
                 dayCounter--;
-                var diffDays = Math.round(Math.abs((today - currentDay) / oneDay));
-                // console.log('diffDays: ', diffDays);
-                console.log('week offset: ', Math.floor((diffDays)/7));
-                var weeklyOffset = (Math.floor((diffDays)/7)) - 1;
+                console.log('dayCounter: ', dayCounter)
+
                 if (dayCounter == -1) {
-                    window.location = '/w/'+ weeklyOffset;
+                    var newDay = new Date(dateList[dayCounter+1]);
+                    var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
+                    // var weeklyOffset = (Math.floor((diffDays)/7) - 1);
+
+                    // IF (r==1), location = /weeklyOffset+1
+                    // console.log('href: ', window.location.href);
+                    var url_string = window.location.href; //window.location.href
+                    var url = new URL(url_string);
+                    var r = url.searchParams.get("r");
+                    // console.log('r: ', r);
+                    if (r) {
+                        var weeklyOffset = (Math.floor((diffDays)/7));
+                        window.location = '/w/'+ weeklyOffset;
+                    } else {
+                        var weeklyOffset = (Math.floor((diffDays)/7) - 1);
+                        window.location = '/w/'+ weeklyOffset + '?r=1';
+                    }
+                    // console.log(qs);
+                    // console.log('weekOffset: ', weeklyOffset);
+                    // window.location = '/w/'+ weeklyOffset + '?r=1';
+                } else {
+                    document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
+                    var newDay = new Date(dateList[dayCounter]);
+                    disableButton(newDay);
+                    populateMainSection()
                 }
+
+                
+                // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
+                // newDay = new Date(dateList[dayCounter]);
+                // disableButton(newDay);
+                // var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
+                // console.log('diffDays: ', diffDays);
+                // // console.log('week offset: ', Math.floor((diffDays)/7));
+                // var weeklyOffset = (Math.floor((diffDays)/7));
+                // console.log('weekOffset: ', weeklyOffset);
+                
                 // console.log('dayCounter: ', dayCounter);
                 // console.log(weekActivities[dayCounter]);
-                populateMainSection()
+                // populateMainSection()
             }
             
 

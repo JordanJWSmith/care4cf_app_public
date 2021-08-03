@@ -13,6 +13,7 @@ module.exports = async function(userID, offset) {
     // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
 
     var routineList = [];
+    var dateList = [];
     var routineDict = {};
 
     for (var i = 0; i < 7; i++) {
@@ -23,17 +24,20 @@ module.exports = async function(userID, offset) {
         .then(function(routineResult) {
             // console.log(newDate, routineResult);
             routineList.push(routineResult)
+            dateList.push(newDate);
             routineDict[newDate] = routineResult;
         })
         today.setDate(today.getDate()-1);
         // console.log(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate() - i))
     }
 
-    console.log('routineDict: ', routineDict)
+    console.log('dateList: ', dateList)
     // console.log('routineList: ', routineList);
     // console.log('startDate: ', startDate);
     return {
         routine: routineList,
-        startDate: startDate
+        dateList: dateList,
+        startDate: startDate,
+        routineDict: routineDict
     }
 }
