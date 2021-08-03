@@ -55,10 +55,13 @@
             function populateRoutine() {
                 var stringActivities = JSON.stringify(weekActivities[dayCounter]);
                 var activities = JSON.parse(stringActivities);
+                console.log(activities);
+                document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
+                delete activities.title;
                 var keys = Object.keys(activities);
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
-                    console.log(title);
+                    // console.log(title);
                     document.getElementById('routine').innerHTML += '<a id="'+ title +'"></a>';
                     document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
                     if (activities[title][0] == '[') {
@@ -73,7 +76,7 @@
                     } else {
                         document.getElementById(title).innerHTML += '<dd>' + activities[title] + '</dd>';
                     }
-                    console.log(activities[title]);
+                    // console.log(activities[title]);
                 }
             }
 
