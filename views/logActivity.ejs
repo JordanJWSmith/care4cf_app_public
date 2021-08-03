@@ -26,14 +26,23 @@
 
             var routineTypes = <%- routineTypes %>;
             var weekActivities = <%-weekActivities %>;
+            var startDate = <%- startDate %>;
 
             var dayCounter = 0;
 
-            var today = new Date();
+            var currentDay = new Date();
+            var currentDate = currentDay.getFullYear()+'-'+(currentDay.getMonth()+1)+'-'+(currentDay.getDate());
+            const oneDay = 24 * 60 * 60 * 1000;
+
+
+            var today = new Date(startDate);
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
             document.getElementById('date').innerHTML = getDisplayDate(date);
+            console.log(startDate);
 
+                
             populateMainSection()
+            disableButton(today);
 
             function populateMainSection() {
                 if (weekActivities[dayCounter]) {
@@ -55,7 +64,7 @@
             function populateRoutine() {
                 var stringActivities = JSON.stringify(weekActivities[dayCounter]);
                 var activities = JSON.parse(stringActivities);
-                console.log(activities);
+                // console.log(activities);
                 document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
                 delete activities.title;
                 var keys = Object.keys(activities);
@@ -121,11 +130,17 @@
                 date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
 
                 document.getElementById('date').innerHTML = getDisplayDate(date);
-                // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
                 disableButton(today);   
                 dayCounter++;
-                console.log('dayCounter: ', dayCounter);
-                console.log(weekActivities[dayCounter]);
+                var diffDays = Math.round(Math.abs((today - currentDay) / oneDay));
+                // console.log('diffDays: ', diffDays);
+                console.log('week offset: ', Math.floor(diffDays/7));
+                var weeklyOffset = Math.floor((diffDays)/7);
+                if (dayCounter == 7) {
+                    window.location = '/w/'+ weeklyOffset;
+                }
+                // console.log('dayCounter: ', dayCounter);
+                // console.log(weekActivities[dayCounter]);
                 populateMainSection()
             }
 
@@ -136,8 +151,15 @@
                 // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
                 disableButton(today);
                 dayCounter--;
-                console.log('dayCounter: ', dayCounter);
-                console.log(weekActivities[dayCounter]);
+                var diffDays = Math.round(Math.abs((today - currentDay) / oneDay));
+                // console.log('diffDays: ', diffDays);
+                console.log('week offset: ', Math.floor((diffDays)/7));
+                var weeklyOffset = (Math.floor((diffDays)/7)) - 1;
+                if (dayCounter == -1) {
+                    window.location = '/w/'+ weeklyOffset;
+                }
+                // console.log('dayCounter: ', dayCounter);
+                // console.log(weekActivities[dayCounter]);
                 populateMainSection()
             }
             

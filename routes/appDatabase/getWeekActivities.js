@@ -4,10 +4,16 @@ var readData = require('./readData');
 module.exports = async function(userID, offset) {
 
     var today = new Date();
-    today.setDate(today.getDate() - offset)
+    today.setDate(today.getDate() - (offset * 7))
+
+    var start = new Date();
+    start.setDate(start.getDate() - (offset * 7));
+    var startDate = start.getFullYear()+'-'+(start.getMonth()+1)+'-'+(start.getDate())
+    
     // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
 
-    routineList = [];
+    var routineList = [];
+    var routineDict = {};
 
     for (var i = 0; i < 7; i++) {
         // today.setDate(today.getDate()-1);
@@ -17,12 +23,17 @@ module.exports = async function(userID, offset) {
         .then(function(routineResult) {
             // console.log(newDate, routineResult);
             routineList.push(routineResult)
+            routineDict[newDate] = routineResult;
         })
         today.setDate(today.getDate()-1);
         // console.log(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate() - i))
     }
 
+    console.log('routineDict: ', routineDict)
     // console.log('routineList: ', routineList);
-    return routineList;
-
+    // console.log('startDate: ', startDate);
+    return {
+        routine: routineList,
+        startDate: startDate
+    }
 }

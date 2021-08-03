@@ -31,20 +31,19 @@ router.get('/', function(req, res, next) {
         if (checkResults.scheduleExists) {
           getRoutineTypes()
           .then(function(routineResults) {
-            // getRoutine(results.userID, '2021-08-02')
-            // .then(function(getRoutineResults) {
               getWeekActivities(results.userID, 0)
               .then(function(weekResults) {
                 // console.log('routineResults: ', getRoutineResults);
+                // console.log('startDate: ', weekResults.startDate);
+
                 res.render('logActivity', {
                 title: 'Welcome user '+ results.userID, 
                 user: results.userID,
                 routineTypes: JSON.stringify(routineResults),
-                weekActivities: JSON.stringify(weekResults)
+                weekActivities: JSON.stringify(weekResults.routine),
+                startDate: JSON.stringify(weekResults.startDate)
                 })
               })
-              
-            // }) 
           })
           
         } else {
@@ -154,6 +153,39 @@ router.post('/noActivities', async function(req, res, next) {
   await logNoActivities(details.user, details.chosenDate, details.activityType, reasonID)
   .then(res.redirect('/'))
 
+})
+
+router.get('/w/:offset', function(req, res, next) {
+  var offset = req.params.offset;
+  // console.log(typeof offset);
+  // res.send(offset);
+  var cookieToken = req.cookies.accessToken;
+  login(cookieToken).then(function(results) {
+    if (!results.logIn) {
+      console.log('user not logged in at index. Redirecting to login...')
+      res.redirect('/loginUser');
+    } else {
+      checkForNormal(results.userID)
+      .then(function(checkResults) {
+        if (checkResults.scheduleExists) {
+          getRoutineTypes()
+          .then(function(routineResults) {
+            getWeekActivities(results.userID, parseInt(offset))
+              .then(function(weekResults) {
+                // console.log('weekResults: ', weekResults);
+                res.render('logActivity', {
+                  title: 'Welcome user '+ results.userID, 
+                  user: results.userID,
+                  routineTypes: JSON.stringify(routineResults),
+                  weekActivities: JSON.stringify(weekResults.routine),
+                  startDate: JSON.stringify(weekResults.startDate)
+                  })
+              })
+          })
+        }
+      })
+    }
+  })
 })
 
 
