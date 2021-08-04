@@ -46,22 +46,37 @@
             <button>Save a new schedule</button>
         </a>
 
+        <form action="/myRoutines/newNormal" method="POST" name="newNormal">
+            <a id="newNormalUser"></a>
+            <a id="newNormalSchedule"></a>
+        </form>
+
 
 
         <script>
             var routinesString = <%- routines %>;
             var routines = JSON.parse(JSON.stringify(routinesString));
-            console.log(routines);
+
+            var normalSched = <%- normalSched %>;
+            // console.log(normalSched);
+
+            var user = <%- user %>;
+            console.log('user: ', user);
+
 
             function populateRoutineSection() {
                 var keys = Object.keys(routines);
                 for (i=0; i<keys.length; i++) {
                     var schedID = keys[i];
-                    document.getElementById('routineSection').innerHTML += '<button type="button"  class="collapsible">Routine ' + (i+1) + '</button>';
+                    var normalFlag = "";
+                    if (schedID == normalSched) {
+                        normalFlag = " (Normal Schedule)";
+                    }
+
+                    document.getElementById('routineSection').innerHTML += '<button type="button"  class="collapsible" style="text-align:left;">Routine ' + (i+1) + '<span style="float:right;">' + normalFlag + '</span></button>';
                     document.getElementById('routineSection').innerHTML += '<div class="content" id="routine'+i+'"></div>';
-                    // document.getElementById('routine'+i).innerHTML = JSON.stringify(routines[schedID]);
                     populateRoutineInfo(schedID, i);
-                    // console.log('populate routine '+ i +', schedule '+ schedID);
+
                 }
             }
 
@@ -70,29 +85,36 @@
 
             function populateRoutineInfo(scheduleID, ind) {
                 var keys = Object.keys(routines[scheduleID])
-
-                console.log('populate routine '+ ind +', schedule '+ scheduleID);
-                console.log('routine'+(ind+1));
-
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
+                    description = routines[scheduleID][title];
+                    if (description) {
                         document.getElementById('routine'+ind).innerHTML += '<a id="'+ title + ind +'"></a>';
                         document.getElementById(title+ind).innerHTML += '<dt>' + title + ':</dt>';
-                        description = routines[scheduleID][title];
-                        if (description[0] == '[') {
-                            descList = JSON.parse(description);
-                            for (var j=0; j<descList.length; j++) {
-                                if (typeof descList[j] == 'object') {
-                                    document.getElementById(title+ind).innerHTML += '<dd>' + descList[j][0] + ' (' + descList[j][0] + ') </dd>';
-                                } else {
-                                    document.getElementById(title+ind).innerHTML += '<dd>' + descList[j] + '</dd>';
+                            if (description[0] == '[') {
+                                descList = JSON.parse(description);
+                                for (var j=0; j<descList.length; j++) {
+                                    if (typeof descList[j] == 'object') {
+                                        document.getElementById(title+ind).innerHTML += '<dd>' + descList[j][0] + ' (' + descList[j][1] + ') </dd>';
+                                    } else {
+                                        document.getElementById(title+ind).innerHTML += '<dd>' + descList[j] + '</dd>';
+                                    }
                                 }
-                                
+                            } else {
+                                document.getElementById(title+ind).innerHTML += '<dd>' + description + '</dd>';
                             }
-                        } else {
-                            document.getElementById(title+ind).innerHTML += '<dd>' + description + '</dd>';
                         }
                 }
+                if (parseInt(scheduleID) !== normalSched) {
+                    document.getElementById('routine'+ind).innerHTML += '<br><button onclick="makeNormal('+scheduleID+')">Make Normal</button>';
+
+                }
+            }
+
+            function makeNormal(schedID) {
+                document.getElementById('newNormalUser').innerHTML = "<input type='hidden' name='user' value='" + user + "'>";
+                document.getElementById('newNormalSchedule').innerHTML = "<input type='hidden' name='scheduleID' value='" + schedID + "'>";
+                document.forms['newNormal'].submit();
             }
 
             
@@ -101,15 +123,15 @@
             var i;
 
             for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                content.style.display = "none";
-                } else {
-                content.style.display = "block";
-                }
-            });
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                    content.style.display = "none";
+                    } else {
+                    content.style.display = "block";
+                    }
+                });
             }
 
 

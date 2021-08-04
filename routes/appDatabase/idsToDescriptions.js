@@ -15,6 +15,8 @@ function buildQuery(sql, index, colName, res) {
 
 module.exports = async function(routineResults) {
 
+    console.log('routineResults: ', routineResults);
+
     var techDescriptions = "SELECT title, subtitle FROM techdescriptions WHERE ";
     var adjunctDescriptions = "SELECT adjunctTitle FROM adjunctdescriptions WHERE ";
     var adjunctTimeDescriptions = "SELECT adjunctTime FROM adjuncttimes WHERE ";
@@ -25,7 +27,7 @@ module.exports = async function(routineResults) {
     var durFreqQuery = "SELECT d.duration, f.frequency FROM durations d, frequencies f WHERE d.durationID = " + durFreq.duration  + " AND f.frequencyID = " + durFreq.frequencyID  + "; ";
     var descQuery = techQuery.concat(durFreqQuery)
 
-    if (routineResults[2]) {
+    if (routineResults[2].length !== 0) {
         var adjQuery = buildQuery(adjunctDescriptions, 2, 'adjunctID', routineResults);
         var adjTimeQuery = buildQuery(adjunctTimeDescriptions, 2, 'adjunctTimeID', routineResults);
         var descQuery = descQuery.concat(adjQuery).concat(adjTimeQuery);
