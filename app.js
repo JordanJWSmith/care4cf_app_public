@@ -11,6 +11,8 @@ var buttonsRouter = require('./routes/buttons');
 var loginUserRouter = require('./routes/loginUser');
 var somethingDifferentRouter = require('./routes/somethingDifferent');
 var normalRoutineRouter = require('./routes/normalRoutine');
+var myRoutinesRouter = require('./routes/myRoutines');
+var newScheduleRouter = require('./routes/newSchedule');
 
 var app = express();
 
@@ -31,6 +33,8 @@ app.use('/buttons', buttonsRouter);
 app.use('/loginUser', loginUserRouter);
 app.use('/somethingDifferent', somethingDifferentRouter);
 app.use('/normalRoutine', normalRoutineRouter);
+app.use('/myRoutines', myRoutinesRouter);
+app.use('/newSchedule', newScheduleRouter);
 
 
 // catch 404 and forward to error handler

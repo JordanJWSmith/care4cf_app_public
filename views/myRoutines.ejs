@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="manifest" href="/manifest.json">
+        <!-- <script type="module" src="/pwabuilder-sw-register.js"></script> -->
+    </head>
+
+    <style>
+        .collapsible {
+          background-color: #777;
+          color: white;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
+        
+        .active, .collapsible:hover {
+          background-color: #555;
+        }
+        
+        .content {
+          padding: 0 18px;
+          display: none;
+          overflow: hidden;
+          background-color: #f1f1f1;
+        }
+    </style>
+
+    <body>
+        <h1><%= title %></h1>
+      
+
+        <div id="routineSection">
+
+        </div>
+
+        <br><br>
+        <a href="/newSchedule">
+            <button>Save a new schedule</button>
+        </a>
+
+
+
+        <script>
+            var routinesString = <%- routines %>;
+            var routines = JSON.parse(JSON.stringify(routinesString));
+            console.log(routines);
+
+            function populateRoutineSection() {
+                var keys = Object.keys(routines);
+                for (i=0; i<keys.length; i++) {
+                    var schedID = keys[i];
+                    document.getElementById('routineSection').innerHTML += '<button type="button"  class="collapsible">Routine ' + (i+1) + '</button>';
+                    document.getElementById('routineSection').innerHTML += '<div class="content" id="routine'+i+'"></div>';
+                    // document.getElementById('routine'+i).innerHTML = JSON.stringify(routines[schedID]);
+                    populateRoutineInfo(schedID, i);
+                    // console.log('populate routine '+ i +', schedule '+ schedID);
+                }
+            }
+
+            populateRoutineSection();
+
+
+            function populateRoutineInfo(scheduleID, ind) {
+                var keys = Object.keys(routines[scheduleID])
+
+                console.log('populate routine '+ ind +', schedule '+ scheduleID);
+                console.log('routine'+(ind+1));
+
+                for (var i = 0; i < keys.length; i++) {
+                    title = keys[i];
+                        document.getElementById('routine'+ind).innerHTML += '<a id="'+ title + ind +'"></a>';
+                        document.getElementById(title+ind).innerHTML += '<dt>' + title + ':</dt>';
+                        description = routines[scheduleID][title];
+                        if (description[0] == '[') {
+                            descList = JSON.parse(description);
+                            for (var j=0; j<descList.length; j++) {
+                                if (typeof descList[j] == 'object') {
+                                    document.getElementById(title+ind).innerHTML += '<dd>' + descList[j][0] + ' (' + descList[j][0] + ') </dd>';
+                                } else {
+                                    document.getElementById(title+ind).innerHTML += '<dd>' + descList[j] + '</dd>';
+                                }
+                                
+                            }
+                        } else {
+                            document.getElementById(title+ind).innerHTML += '<dd>' + description + '</dd>';
+                        }
+                }
+            }
+
+            
+
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            }
+
+
+        </script>
+
+    </body>
+</html>
