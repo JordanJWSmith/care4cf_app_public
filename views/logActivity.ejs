@@ -156,7 +156,7 @@
                 // document.getElementById('date').innerHTML = getDisplayDate(date);
                 // disableButton(today);   
                 dayCounter++;
-                console.log('dayCounter: ', dayCounter)
+                // console.log('dayCounter: ', dayCounter)
 
                 if (dayCounter <= (dateList.length-1)) {
                     document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
@@ -165,8 +165,11 @@
                     populateMainSection()
                 } else {
                     var newDay = new Date(dateList[dayCounter-1]);
-                    var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
+                    // console.log('newDay: ', newDay)
+                    var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
+                    // console.log('diffDays: ', diffDays)
                     var weeklyOffset = Math.floor((diffDays)/7);
+                    // console.log('weeklyOffset: ', weeklyOffset)
                     window.location = '/w/'+ weeklyOffset;
                 }
 
@@ -200,11 +203,11 @@
                 //     window.location = '/w/'+ weeklyOffset;
                 // }
                 dayCounter--;
-                console.log('dayCounter: ', dayCounter)
+                // console.log('dayCounter: ', dayCounter)
 
                 if (dayCounter == -1) {
                     var newDay = new Date(dateList[dayCounter+1]);
-                    var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
+                    var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
                     // var weeklyOffset = (Math.floor((diffDays)/7) - 1);
 
                     // IF (r==1), location = /weeklyOffset+1
