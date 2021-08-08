@@ -13,6 +13,17 @@ router.get('/', function (req, res, next) {
     var chosenDate = req.session.chosenDate;
     var activityType = req.session.activityType;
     var saveAsNormal = req.session.saveAsNormal;
+    var savedScheds = req.session.savedScheds;
+    // console.log('savedScheds:' , savedScheds);
+
+    // USE THIS AS FLAG TO RENDER SAVED SCHEDULE OPTIONS
+    if (savedScheds) {
+        console.log('savedScheds:' , savedScheds);
+        var sched = true;
+    } else {
+        console.log('No savedScheds:' , savedScheds);
+        var sched = false;
+    }
     // req.session.chosenDate = null;
     // req.session.activityType = null;
     // req.session.saveAsNormal = null;
@@ -46,7 +57,8 @@ router.get('/', function (req, res, next) {
                         frequencies: JSON.stringify(frequencyResults),
                         chosenDate: chosenDate,
                         activityType: activityType,
-                        saveAsNormal: saveAsNormal
+                        saveAsNormal: saveAsNormal,
+                        sched: sched
                         })
                         
                         })

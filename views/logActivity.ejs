@@ -7,6 +7,7 @@
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
         <!-- <script type="module" src="/pwabuilder-sw-register.js"></script> -->
+        <script type="text/javascript" src="/javascripts/logout.js"></script> 
     </head>
     <body>
         <h1><%= title %></h1>
@@ -62,13 +63,26 @@
                     populateRoutine();
 
                 } else {
-                    document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity"></form>';
-                    document.getElementById('activityForm').innerHTML += '<div id="buttons"></div>';
-                    document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
-                    document.getElementById('activityForm').innerHTML += '<a id="user"></a>';
-                    document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
-                    populateButtons();
-                    populateForm();
+                    console.log('currentDate:', currentDate );
+                    console.log('dateString:', dateString );
+                    var dateStringDate = new Date(dateString);
+                    var diffDays = Math.round(Math.abs((dateStringDate - currentDay) / oneDay));
+                    console.log('difference: ', diffDays);
+                    if (diffDays > 3) {
+                        document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
+                    } else {
+                        document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity"></form>';
+                        document.getElementById('activityForm').innerHTML += '<div id="buttons"></div>';
+                        document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
+                        document.getElementById('activityForm').innerHTML += '<a id="user"></a>';
+                        document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
+                        populateButtons();
+                        populateForm();
+                    }
+                    // var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
+                    // console.log('difference: ', )
+
+                    
                 }
             }
 
@@ -258,19 +272,42 @@
 
 
         <br><br>
-        <script>
+        <!-- <script>
             function deleteAllCookies() {
               var cookies = document.cookie.split(";");
+            //   console.log(cookies);
               for (var i = 0; i < cookies.length; i++) {
                   var cookie = cookies[i];
                   var eqPos = cookie.indexOf("=");
                   var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                  console.log('name: ', name);
                   document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                //   console.log(document.cookie);
               }
               location.reload();
+            // window.location.href = "/";
             } 
 
-        </script>
+            function deleteAllCookies2 () {
+                var cookies = document.cookie.split("; ");
+                console.log(cookies);
+                for (var c = 0; c < cookies.length; c++) {
+                    var d = window.location.hostname.split(".");
+                    while (d.length > 0) {
+                        var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path=';
+                        var p = location.pathname.split('/');
+                        document.cookie = cookieBase + '/';
+                        while (p.length > 0) {
+                            document.cookie = cookieBase + p.join('/');
+                            p.pop();
+                        };
+                        d.shift();
+                    }
+                }
+                location.reload();
+            };
+
+        </script> -->
 
         <br><br>
         <a href="/normalRoutine">
@@ -278,7 +315,7 @@
         </a>
 
         <br><br>
-        <button onclick="deleteAllCookies()">Log Out</button>
+        <button onclick="logout()">Log Out</button>
     </body>
 
 </html>

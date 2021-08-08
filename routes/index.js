@@ -139,6 +139,7 @@ router.post('/logNewActivity', async function(req, res, next) {
     req.session.chosenDate = JSON.stringify(details.chosenDate);
     req.session.activityType =  details.activityType;
     req.session.saveAsNormal = false;
+    req.session.savedScheds = true;
     res.redirect('/somethingDifferent');
     
   } else if (details.activityType == 2) {

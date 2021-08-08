@@ -35,7 +35,8 @@ router.get('/', function (req, res, next) {
                         frequencies: JSON.stringify(frequencyResults),
                         chosenDate: false,
                         activityType: false,
-                        saveAsNormal: true
+                        saveAsNormal: true,
+                        sched: false
                         })
                     }
                         

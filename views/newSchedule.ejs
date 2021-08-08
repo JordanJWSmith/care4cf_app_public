@@ -6,6 +6,7 @@
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <!-- <script type="module" src="/pwabuilder-sw-register.js"></script> -->
+        <script type="text/javascript" src="/javascripts/logout.js"></script> 
     </head>
     <body>
         <h1><%= title %></h1>
@@ -96,6 +97,8 @@
             // Add these to forms
             var activityType = <%- activityType %>;
             var chosenDate = <%- chosenDate %>;
+
+            var savedSched = <%- sched %>;
             
             if (activityType) {
                 console.log('activityType: ', activityType);
@@ -364,7 +367,7 @@
 
 
 
-        <script>
+        <!-- <script>
             function deleteAllCookies() {
               var cookies = document.cookie.split(";");
               for (var i = 0; i < cookies.length; i++) {
@@ -375,10 +378,10 @@
               }
               location.reload();
             } 
-          </script>
+          </script> -->
           <br><br>
       
-          <button onclick="deleteAllCookies()">Log Out</button>
+          <button onclick="logout()">Log Out</button>
 
     </body>
 </html>
