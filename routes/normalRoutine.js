@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
         } else {
             getNormalRoutine(results.userID)
             .then(function(routineResults) {
-                console.log(routineResults);
+                // console.log(routineResults);
 
                 res.render('normalRoutine', {
                     title: 'My Routine', 

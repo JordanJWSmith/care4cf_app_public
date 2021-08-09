@@ -105,7 +105,9 @@
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
                     // console.log(title);
-                    if (title !== 'title') {
+                    if ((title !== 'title') && (activities[title])) {
+                        console.log('title: ', title);
+                        console.log('content: ', activities[title]);
                         document.getElementById('routine').innerHTML += '<a id="'+ title +'"></a>';
                         document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
                         if (activities[title][0] == '[') {

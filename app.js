@@ -13,6 +13,7 @@ var somethingDifferentRouter = require('./routes/somethingDifferent');
 var normalRoutineRouter = require('./routes/normalRoutine');
 var myRoutinesRouter = require('./routes/myRoutines');
 var newScheduleRouter = require('./routes/newSchedule');
+var logFromRoutinesRouter = require('./routes/logFromRoutines');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/somethingDifferent', somethingDifferentRouter);
 app.use('/normalRoutine', normalRoutineRouter);
 app.use('/myRoutines', myRoutinesRouter);
 app.use('/newSchedule', newScheduleRouter);
+app.use('/logFromRoutines', logFromRoutinesRouter);
 
 
 // catch 404 and forward to error handler

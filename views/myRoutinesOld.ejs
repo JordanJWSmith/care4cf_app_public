@@ -42,44 +42,20 @@
         </div>
 
         <br><br>
-        <% if (!somethingDifferent) { %>
-            <a href="/newSchedule">
-                <button>Save a new schedule</button>
-            </a> 
-            <% } else { %>
-        <a href="/somethingDifferent/logNew">
-            <button>Something else</button>
+        <a href="/newSchedule">
+            <button>Save a new schedule</button>
         </a>
-        <% } %>
 
-        <% if (!somethingDifferent) { %>
-            <form action="/myRoutines/newNormal" method="POST" name="newNormal">
-                <a id="newNormalUser"></a>
-                <a id="newNormalSchedule"></a>
-            </form>
-        <% } else { %>
-            <form action="/somethingDifferent/logActivity" method="POST" name="logActivity">
-                <a id="logChosenDate"></a>
-                <a id="logUserID"></a>
-                <a id="logScheduleID"></a>
-            </form>
-        <% } %>
+        <form action="/myRoutines/newNormal" method="POST" name="newNormal">
+            <a id="newNormalUser"></a>
+            <a id="newNormalSchedule"></a>
+        </form>
 
 
 
         <script>
             var routinesString = <%- routines %>;
             var routines = JSON.parse(JSON.stringify(routinesString));
-
-            <% if (somethingDifferent) { %>
-                // console.log('myRoutine page');
-                var somethingDifferent = true;
-                var chosenDate = [ <%- chosenDate %> ];
-                // console.log(chosenDate.length);
-                if (chosenDate.length == 0) {
-                    window.location = "/";
-                }
-            <% } %>
 
             var normalSched = <%- normalSched %>;
             // console.log(normalSched);
@@ -129,28 +105,16 @@
                             }
                         }
                 }
-                <% if (!somethingDifferent) { %>
-                    if (parseInt(scheduleID) !== normalSched) {
-                        document.getElementById('routine'+ind).innerHTML += '<br><button onclick="makeNormal('+scheduleID+')">Make Normal</button>';
+                if (parseInt(scheduleID) !== normalSched) {
+                    document.getElementById('routine'+ind).innerHTML += '<br><button onclick="makeNormal('+scheduleID+')">Make Normal</button>';
 
-                    }
-                <% } else { %>
-                    document.getElementById('routine'+ind).innerHTML += '<br><button onclick="logSchedule('+scheduleID+')">Log Routine</button>';
-                <% } %>
-                
+                }
             }
 
             function makeNormal(schedID) {
                 document.getElementById('newNormalUser').innerHTML = "<input type='hidden' name='user' value='" + user + "'>";
                 document.getElementById('newNormalSchedule').innerHTML = "<input type='hidden' name='scheduleID' value='" + schedID + "'>";
                 document.forms['newNormal'].submit();
-            }
-
-            function logSchedule(schedID) {
-                document.getElementById('logChosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + chosenDate[0] + "'>";
-                document.getElementById('logScheduleID').innerHTML = "<input type='hidden' name='scheduleID' value = '" + schedID +"'>";
-                document.getElementById('logUserID').innerHTML = "<input type='hidden' name='userID' value = '" + user +"'>";
-                document.forms['logActivity'].submit();
             }
 
             
