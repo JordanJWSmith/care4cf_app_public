@@ -36,6 +36,7 @@ router.get('/', function(req, res, next) {
               .then(function(weekResults) {
                 // console.log('routineResults: ', getRoutineResults);
                 // console.log('startDate: ', weekResults.startDate);
+                // console.log('routineDict: ', weekResults.routineDict);
 
                 var prevDay = "decrementDate()";
                 var nextDay = "incrementDate()";
