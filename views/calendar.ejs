@@ -17,6 +17,8 @@
 
         <!-- Calendar adapted from https://codepen.io/nitroduck/pen/pmQoOY -->
 
+        <h1><% title %></h1>
+
         <div class="calendar" id="main">
             <!-- <div class="jumbotron"> -->
                 <p class="text-center" style="text-align: center; font-size: 5vw;">
@@ -52,6 +54,11 @@
                 <p id="modalText"></p>
             </div>
         </div>
+
+        <br><br>
+        <a href="/">
+            <button>Log Activity</button>
+        </a>
 
         <script>
             var activities = <%- activities %>;

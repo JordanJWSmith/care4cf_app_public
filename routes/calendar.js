@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
             .then(function(activitiesResults) {
                 // console.log('activitiesResults: ', activitiesResults);
                 res.render('calendar', {
-                    title: 'Calendar',
+                    title: 'My History',
                     activities: JSON.stringify(activitiesResults)
                 })
             })
