@@ -7,8 +7,6 @@ module.exports = async function(userID, offset) {
         return false;
     } else {
 
-    
-
         var today = new Date();
         today.setDate(today.getDate() - (offset * 7))
 

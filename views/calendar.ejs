@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="manifest" href="/manifest.json">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    </head>
+    <style>
+        body {
+            margin: 50px;
+        }
+        .jumbotron {
+            background: #fff;
+        }
+        .fa {
+            font-size: 0.5em;
+        }
+        table {
+            width: 100%;
+        }
+        th {
+            text-align: center;
+        }
+        td {
+            width: 120px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px !important;
+            font-size: 1.5em;
+        }
+        td,
+        #year {
+            font-family: monospace;
+        }
+        .hover {
+            background: #eee;
+        }
+        #about {
+            font-size: 5em !important;
+            position: absolute;
+            top: -35px;
+            right: 15px;
+        }
+        #about a {
+            text-decoration: none;
+        }
+
+    </style>
+    
+    <body>
+
+        <!-- Calendar adapted from https://codepen.io/nitroduck/pen/pmQoOY -->
+
+        <div class="container" id="main">
+            <div class="jumbotron">
+                <h1 class="text-center">
+                <a id="left" href="#">
+                    <i> &#8592; </i>
+                </a>
+                <span>&nbsp;</span>
+                <span id="month"> </span>
+                <span>&nbsp;</span>
+                <span id="year"> </span>
+                <span>&nbsp;</span>
+                <a id="right" href="#">
+                    <!-- <i> &#8594; </i> -->
+                    <!-- <i class="fas fa-chevron-right"></i> -->
+                </a>
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <table class="table"></table>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                var currentDate = new Date();
+                //   console.log('currentDate: ', currentDate);
+                //   console.log('current month: ', currentDate.getMonth());
+                //   console.log('current year: ', currentDate.getFullYear());
+                function generateCalendar(d) {
+                    function monthDays(month, year) {
+                        console.log('monthDays month: ', month);
+                        var result = [];
+                        var days = new Date(year, month, 0).getDate();
+                        for (var i = 1; i <= days; i++) {
+                            result.push(i);
+                        }
+                        return result;
+                    }
+                    Date.prototype.monthDays = function() {
+                        var d = new Date(this.getFullYear(), this.getMonth() + 1, 0);
+                        return d.getDate();
+                    };
+                    var details = {
+                        // totalDays: monthDays(d.getMonth(), d.getFullYear()),
+                        totalDays: d.monthDays(),
+                        weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    };
+                    var start = new Date(d.getFullYear(), d.getMonth()).getDay();
+                    console.log(d.getFullYear());
+                    console.log(d.getMonth());
+
+                    var cal = [];
+                    var day = 1;
+                    for (var i = 0; i <= 6; i++) {
+                        cal.push(['<tr>']);
+                        for (var j = 0; j < 7; j++) {
+                            if (i === 0) {
+                                cal[i].push('<td>' + details.weekDays[j] + '</td>');
+                                
+                            } else if (day > details.totalDays) {
+                            cal[i].push('<td>&nbsp;</td>');
+                            } else {
+                                if (i === 1 && j < start) {
+                                    cal[i].push('<td>&nbsp;</td>');
+                                } else {
+                                    // console.log('day? ', day);
+                                    console.log(d.getFullYear() + '-' + d.getMonth() + "-" + day);
+                                    cal[i].push('<td class="day">' + day++ + '</td>');
+                                    
+                                }
+                            }
+                        }
+                        cal[i].push('</tr>');
+                    }
+                    cal = cal.reduce(function(a, b) {
+                        return a.concat(b);
+                    }, []).join('');
+                    $('table').append(cal);
+                    $('#month').text(details.months[d.getMonth()]);
+                    $('#year').text(d.getFullYear());
+                    $('td.day').mouseover(function() {
+                        $(this).addClass('hover');
+                    }).mouseout(function() {
+                        $(this).removeClass('hover');
+                    });
+                }
+
+                $('#left').click(function() {
+                    $('table').text('');
+                    actualDate = new Date();
+                    document.getElementById('right').innerHTML = "<i> &#8594; </i>";
+                        if (currentDate.getMonth() === 0) {
+                            currentDate = new Date(currentDate.getFullYear() - 1, 11);
+                            generateCalendar(currentDate);
+                        } else {
+                            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
+                            generateCalendar(currentDate);
+                        }
+                });
+                $('#right').click(function() {
+                    $('table').html('<tr></tr>');
+                    actualDate = new Date();
+                        if (currentDate.getMonth() === 11) {
+                            currentDate = new Date(currentDate.getFullYear() + 1, 0); 
+                            if ((currentDate.getMonth() == actualDate.getMonth()) && (currentDate.getFullYear() == actualDate.getFullYear())) {
+                                document.getElementById('right').innerHTML = "";
+                            } 
+                            generateCalendar(currentDate);
+                        } else {
+                            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
+                            if ((currentDate.getMonth() == actualDate.getMonth()) && (currentDate.getFullYear() == actualDate.getFullYear())) {
+                                document.getElementById('right').innerHTML = "";
+                            } 
+                            generateCalendar(currentDate);
+                        }
+                });
+                generateCalendar(currentDate);
+            });
+        </script>
+
+    </body>
+</html>
