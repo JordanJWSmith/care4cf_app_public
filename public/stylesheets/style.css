@@ -64,6 +64,8 @@ html, body {
 
 table {
   width: 100%;
+  max-width: 600px;
+  margin: auto;
   /* max-height: 50vh; */
 }
 th {
@@ -76,9 +78,9 @@ td {
   /* line-height: 100px !important; */
   font-size: 3vw;
 }
-tr {
+/* tr {
   height: 9vw;
-}
+} */
 .dot {
   border-color: blue;
   border-width: 2px;
