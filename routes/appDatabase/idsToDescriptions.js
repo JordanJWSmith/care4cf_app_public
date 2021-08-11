@@ -15,7 +15,7 @@ function buildQuery(sql, index, colName, res) {
 
 module.exports = async function(routineResults) {
 
-    console.log('IDToDescription routineResults: ', routineResults);
+    // console.log('IDToDescription routineResults: ', routineResults);
 
     var techDescriptions = "SELECT title, subtitle FROM techdescriptions WHERE ";
     var adjunctDescriptions = "SELECT adjunctTitle FROM adjunctdescriptions WHERE ";

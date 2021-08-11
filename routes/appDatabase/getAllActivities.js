@@ -30,7 +30,7 @@ module.exports = async function(userID) {
 
         }
 
-        console.log(routineDict);
+        // console.log(routineDict);
         return routineDict;
     }
 

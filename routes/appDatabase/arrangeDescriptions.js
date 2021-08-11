@@ -2,7 +2,7 @@ var readData = require('./readData');
 
 module.exports = async function(routineResults) {
 
-    console.log('routineResults: ', routineResults);
+    // console.log('routineResults: ', routineResults);
 
     techList = []
     for (var i = 0; i < routineResults[0].length; i++) {

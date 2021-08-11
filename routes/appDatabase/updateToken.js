@@ -11,7 +11,7 @@ module.exports = async function(cookieToken, userID) {
         var updateToken = "UPDATE users SET msalToken = ? WHERE userID = ?";
         var data = [cookieToken, userID];
         var results = await readData(updateToken, data);
-        console.log('updateToken results:', results);
+        // console.log('updateToken results:', results);
 
         return true
         // {

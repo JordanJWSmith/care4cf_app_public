@@ -7,7 +7,7 @@ module.exports = async function(userID) {
         // var data = ['Device-Free', 'Device-Dependent'];
         var results = await readData(getNormalSched, normalSchedValue);
 
-        console.log(results);
+      //   console.log(results);
         
         return { 
            results

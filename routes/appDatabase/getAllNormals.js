@@ -9,7 +9,7 @@ module.exports = async function(userID) {
 
     var allNormalsResults = await readData(allNormals, allNormalsValue)
     .then(function(allNormalsResults) {
-        console.log('user saved schedules: ', allNormalsResults);
+        // console.log('user saved schedules: ', allNormalsResults);
         return allNormalsResults;
     })
 
@@ -17,7 +17,7 @@ module.exports = async function(userID) {
 
     for (i=0; i < allNormalsResults.length; i++) {
         var scheduleID = allNormalsResults[i].scheduleID;
-        console.log('scheduleID: ', scheduleID);
+        // console.log('scheduleID: ', scheduleID);
         var getIDs =  `
             SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = ?;
         
@@ -29,10 +29,10 @@ module.exports = async function(userID) {
 
         var descriptionResults = await readData(getIDs, getIDValues)
         .then(async function(idResults) {
-            console.log('idResults: ', idResults);
+            // console.log('idResults: ', idResults);
             descriptions = await idsToDescriptions(idResults)
             .then(async function(descResults) {
-                console.log('descriptions before arranging: ', descResults);
+                // console.log('descriptions before arranging: ', descResults);
                 var arranged = await arrangeDescriptions(descResults)
                 .then(async function(arrangeResults) {
                     // console.log('arranged Descriptions: ', arrangeResults)
@@ -45,7 +45,7 @@ module.exports = async function(userID) {
         schedDict[scheduleID] = descriptionResults;
     }
 
-    console.log('schedDict: ', schedDict);
+    // console.log('schedDict: ', schedDict);
  
     return schedDict;
 
