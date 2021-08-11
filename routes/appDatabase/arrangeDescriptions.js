@@ -2,6 +2,8 @@ var readData = require('./readData');
 
 module.exports = async function(routineResults) {
 
+    console.log('routineResults: ', routineResults);
+
     techList = []
     for (var i = 0; i < routineResults[0].length; i++) {
         // console.log('techs: ', routineResults[0][i]);
@@ -15,6 +17,7 @@ module.exports = async function(routineResults) {
     }
 
     adjunctList = []
+    // THROWS ERROR
     if (routineResults.length > 2) {
         for (var i = 0; i < routineResults[2].length; i++) {
             adjunctList.push([routineResults[2][i].adjunctTitle, routineResults[3][i].adjunctTime]);

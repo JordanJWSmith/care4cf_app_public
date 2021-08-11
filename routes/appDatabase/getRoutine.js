@@ -11,7 +11,9 @@ module.exports = async function(userID, date) {
         if (dateResults) {
             // console.log('dateResults: ', dateResults[0].routineType);
             var routineType = dateResults[0].routineType;
-            if (routineType < 2) {
+
+            // CHANGE TO 3?
+            if (routineType < 3) {
                 console.log('get routine');
                     var getIDs =  `
                         SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = (
@@ -33,13 +35,13 @@ module.exports = async function(userID, date) {
             
                     var descriptionResults = await readData(getIDs, getIDValues)
                     .then(async function(idResults) {
-                        // console.log('idResults: ', idResults);
+                        console.log('idResults: ', idResults);
                         descriptions = await idsToDescriptions(idResults)
                         .then(async function(descResults) {
-                            // console.log('descResults: ', descResults);
+                            console.log('descResults: ', descResults);
                             var arranged = await arrangeDescriptions(descResults)
                             .then(async function(arrangeResults) {
-                                // console.log('arrangeResults: ', arrangeResults);
+                                console.log('arrangeResults: ', arrangeResults);
                                 return arrangeResults
                             })
                             return arranged;

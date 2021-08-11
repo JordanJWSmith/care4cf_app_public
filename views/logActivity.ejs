@@ -133,7 +133,9 @@
                 for (var i = 0; i < routineTypes['results'].length; i++) {
                 document.getElementById('buttons').innerHTML += '<button name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button>';
                 document.getElementById('buttons').innerHTML += '<br>';
+                console.log(routineTypes['results'][i]['routineID']);
                 }
+
             }
 
 

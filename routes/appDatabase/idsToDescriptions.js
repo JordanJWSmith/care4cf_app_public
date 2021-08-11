@@ -9,13 +9,13 @@ function buildQuery(sql, index, colName, res) {
         }
     
     }
-
+    console.log('SQL: ', sql)
     return sql;
 }
 
 module.exports = async function(routineResults) {
 
-    // console.log('routineResults: ', routineResults);
+    console.log('IDToDescription routineResults: ', routineResults);
 
     var techDescriptions = "SELECT title, subtitle FROM techdescriptions WHERE ";
     var adjunctDescriptions = "SELECT adjunctTitle FROM adjunctdescriptions WHERE ";

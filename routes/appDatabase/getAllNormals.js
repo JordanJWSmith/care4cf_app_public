@@ -32,8 +32,10 @@ module.exports = async function(userID) {
             console.log('idResults: ', idResults);
             descriptions = await idsToDescriptions(idResults)
             .then(async function(descResults) {
+                console.log('descriptions before arranging: ', descResults);
                 var arranged = await arrangeDescriptions(descResults)
                 .then(async function(arrangeResults) {
+                    // console.log('arranged Descriptions: ', arrangeResults)
                     return arrangeResults
                 })
                 return arranged;

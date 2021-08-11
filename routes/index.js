@@ -76,7 +76,8 @@ router.get('/', function(req, res, next) {
                       frequencies: JSON.stringify(frequencyResults),
                       chosenDate: false,
                       activityType: false,
-                      saveAsNormal: true
+                      saveAsNormal: true,
+                      sched: false
                     })
                   }
                     
@@ -130,12 +131,14 @@ router.post('/logNewActivity', async function(req, res, next) {
   // console.log('activity type: ', details.activityType);
   console.log('(index) date: ', details.chosenDate, typeof details.chosenDate);
   // console.log('user: ', details.user);
-  if (details.activityType == 0) {
+
+  // CHECK THIS STILL WORKS
+  if (details.activityType == 1) {
     console.log('logging normal activity');
     await logNormal(details.user, details.chosenDate, details.activityType)
-    .then(res.send(details));
+    .then(res.redirect('/'));
 
-  } else if (details.activityType == 1) {
+  } else if (details.activityType == 2) {
     console.log('logging something different');
     req.session.chosenDate = JSON.stringify(details.chosenDate);
     req.session.activityType =  details.activityType;
@@ -143,7 +146,7 @@ router.post('/logNewActivity', async function(req, res, next) {
     req.session.savedScheds = true;
     res.redirect('/somethingDifferent');
     
-  } else if (details.activityType == 2) {
+  } else if (details.activityType == 3) {
     console.log('logging no activities');
     await getNoActivityReasons()
     .then(function(results) {

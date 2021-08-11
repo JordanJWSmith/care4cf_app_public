@@ -115,7 +115,8 @@ router.post('/logActivity', async function(req, res, next) {
     var chosenDate = req.body.chosenDate;
     var userID = req.body.userID;
     var scheduleID = req.body.scheduleID;
-    await logDifferent(userID, chosenDate, scheduleID, 1)
+    // changed to 2?
+    await logDifferent(userID, chosenDate, scheduleID, 2)
     .then(res.redirect('/'));
     // var details = JSON.parse(req.body.details);
     // await logDifferent

@@ -22,14 +22,14 @@ module.exports = async function(userID) {
 
     var normalResults = await readData(getNormal, getNormalValues)
     .then(async function(getNormalResults) {
-        // console.log('idResults: ', idResults);
+        console.log('idResults: ', getNormalResults);
         descriptions = await idsToDescriptions(getNormalResults)
         .then(async function(descResults) {
-            // console.log('descResults: ', descResults);
+            console.log('descResults: ', descResults);
             // return descResults;
             var arranged = await arrangeDescriptions(descResults)
             .then(async function(arrangeResults) {
-                // console.log('arrangeResults: ', arrangeResults);
+                console.log('arrangeResults: ', arrangeResults);
                 return arrangeResults
             })
             return arranged;
