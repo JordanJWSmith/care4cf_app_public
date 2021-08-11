@@ -14,7 +14,7 @@ module.exports = async function(userID, date) {
 
             // CHANGE TO 3?
             if (routineType < 3) {
-                console.log('get routine');
+                // console.log('get routine');
                     var getIDs =  `
                         SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = (
                             SELECT scheduleID FROM activities WHERE userID = ? AND date = ?
@@ -35,13 +35,13 @@ module.exports = async function(userID, date) {
             
                     var descriptionResults = await readData(getIDs, getIDValues)
                     .then(async function(idResults) {
-                        console.log('idResults: ', idResults);
+                        // console.log('idResults: ', idResults);
                         descriptions = await idsToDescriptions(idResults)
                         .then(async function(descResults) {
-                            console.log('descResults: ', descResults);
+                            // console.log('descResults: ', descResults);
                             var arranged = await arrangeDescriptions(descResults)
                             .then(async function(arrangeResults) {
-                                console.log('arrangeResults: ', arrangeResults);
+                                // console.log('arrangeResults: ', arrangeResults);
                                 return arrangeResults
                             })
                             return arranged;
@@ -64,7 +64,7 @@ module.exports = async function(userID, date) {
                     return descriptionResults;
 
             } else {
-                console.log('no activities');
+                // console.log('no activities');
                 resDict = {}
                 var activityID = dateResults[0].activityID;
                 var getReason = `

@@ -9,7 +9,7 @@ function buildQuery(sql, index, colName, res) {
         }
     
     }
-    console.log('SQL: ', sql)
+    // console.log('SQL: ', sql)
     return sql;
 }
 
