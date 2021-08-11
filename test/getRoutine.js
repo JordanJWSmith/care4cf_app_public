@@ -42,11 +42,25 @@ describe('#getRoutine()', function() {
         })
     })
 
+    context('with date in far past', function() {
+        it('should return false', async function () {
+            var newDate = new Date()
+            expect(
+                await getRoutine(160, '2000-8-11').then(
+                    function(results) {
+                        return results
+                    }
+                )
+            ).to.be.false;
+        })
+    })
+    
+
     context('with correct arguments', function() {
         it('should return object', async function () {
             var newDate = new Date()
             expect(
-                await getRoutine(160, '2021-8-3').then(
+                await getRoutine(160, '2021-8-11').then(
                     function(results) {
                         return results
                     }
