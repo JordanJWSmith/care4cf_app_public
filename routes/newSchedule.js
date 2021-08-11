@@ -38,9 +38,7 @@ router.get('/', function (req, res, next) {
                         saveAsNormal: true,
                         sched: false
                         })
-                    }
-                        
-                    )
+                    })
                     
                     })
                     
