@@ -6,14 +6,16 @@
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
-        <!-- <script type="module" src="/pwabuilder-sw-register.js"></script> -->
+        <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
     </head>
     <body>
         <h1><%= title %></h1>
         <h2 id='date'></h2>
-
-        <button onclick= <%= prevDay %> >Previous Day</button>
+        <div id="prevDay">
+            <button onclick= <%= prevDay %> >Previous Day</button>
+        </div>
+        
         <!-- <button onclick= "decrementDate()">Previous Day</button> -->
         <div id="nextDay">
         </div>
@@ -25,6 +27,8 @@
         
 
         <script>
+
+            // console.log('online?:', navigator.onLine);
 
             var routineTypes = <%- routineTypes %>;
             var weekActivities = <%-weekActivities %>;
@@ -175,6 +179,12 @@
                 // disableButton(today);   
                 dayCounter++;
                 // console.log('dayCounter: ', dayCounter)
+                console.log('length: ', dateList.length);
+                console.log('dayCounter: ', dayCounter);
+
+                if ((dayCounter == (dateList.length-1)) && (!(navigator.onLine))) {
+                    document.getElementById('prevDay').innerHTML = '';
+                }
 
                 if (dayCounter <= (dateList.length-1)) {
                     document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
@@ -182,13 +192,19 @@
                     disableButton(newDay);
                     populateMainSection()
                 } else {
-                    var newDay = new Date(dateList[dayCounter-1]);
-                    // console.log('newDay: ', newDay)
-                    var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
-                    // console.log('diffDays: ', diffDays)
-                    var weeklyOffset = Math.floor((diffDays)/7);
-                    // console.log('weeklyOffset: ', weeklyOffset)
-                    window.location = '/w/'+ weeklyOffset;
+                    console.log('online? ', navigator.onLine);
+                    // if (navigator.onLine) {
+                        var newDay = new Date(dateList[dayCounter-1]);
+                        // console.log('newDay: ', newDay)
+                        var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
+                        // console.log('diffDays: ', diffDays)
+                        var weeklyOffset = Math.floor((diffDays)/7);
+                        // console.log('weeklyOffset: ', weeklyOffset)
+                        window.location = '/w/'+ weeklyOffset;
+                    // } else {
+                    //     document.getElementById('prevDay').innerHTML = '';
+                    // }
+                    
                 }
 
                 // document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
@@ -209,6 +225,7 @@
             }
 
             function incrementDate() { 
+                document.getElementById('prevDay').innerHTML = '<button onclick= <%= prevDay %> >Previous Day</button>';
 
                 // dayCounter--;
                 
