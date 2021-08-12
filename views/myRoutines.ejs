@@ -44,9 +44,9 @@
 
         <br><br>
         <% if (!somethingDifferent) { %>
-            <a href="/newSchedule">
-                <button>Save a new schedule</button>
-            </a> 
+            <!-- <a href="/newSchedule"> -->
+                <button onclick="isOnline()">Save a new schedule</button>
+            <!-- </a>  -->
             <% } else { %>
         <a href="/somethingDifferent/logNew">
             <button>Something else</button>
@@ -68,7 +68,7 @@
 
         <br><br>
         <a href="/normalRoutine">
-            <button>Back to Normal Routine</button>
+            <button >Back to Normal Routine</button>
         </a>
 
         <br><br>
@@ -84,19 +84,28 @@
                 window.location.href = "/loginUser"
             }
 
-            function getCook(cookiename) {
-                // Get name followed by anything except a semicolon
-                var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
-                // Return everything after the equal sign, or an empty string if the cookie name not found
-                return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
+            function isOnline() {
+            if (!(navigator.onLine)) {
+                alert("Cannot update while offline");
+                return false;
+            } else {
+                window.location="/newSchedule";
             }
+        }
+
+            // function getCook(cookiename) {
+            //     // Get name followed by anything except a semicolon
+            //     var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
+            //     // Return everything after the equal sign, or an empty string if the cookie name not found
+            //     return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
+            // }
 
             // if (getCook('offline')) {
             //     alert("Cannot update while offline");
             //     document.cookie = "offline=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             // }
 
-            console.log(document.cookie);
+            // console.log(document.cookie);
             var routinesString = <%- routines %>;
             var routines = JSON.parse(JSON.stringify(routinesString));
 
