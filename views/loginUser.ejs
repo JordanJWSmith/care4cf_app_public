@@ -10,11 +10,23 @@
     </head>
     <body>
         <h1><%= title %></h1>
-        <pwa-auth 
-        id="auth" style="display: block" microsoftkey="9b12a7f3-2f91-4e05-8bc2-2a1bc3c5a710">
-        </pwa-auth>
+        <div id="signIn">
+            <pwa-auth 
+                id="auth" style="display: block" microsoftkey="9b12a7f3-2f91-4e05-8bc2-2a1bc3c5a710">
+            </pwa-auth>
+        </div>
+        
+        
 
         <script>
+            if (!(navigator.onLine)) {
+                console.log('offline');
+                document.getElementById('signIn').innerHTML = "Please go online to sign in";
+            } else {
+                document.getElementById('signIn').innerHTML = '<pwa-auth id="auth" style="display: block" microsoftkey="9b12a7f3-2f91-4e05-8bc2-2a1bc3c5a710"></pwa-auth>';
+            }
+
+
             const pwaAuth = document.querySelector("pwa-auth");
             pwaAuth.addEventListener("signin-completed", ev => {
                 const signIn = ev.detail;

@@ -14,29 +14,30 @@ self.addEventListener("message", (event) => {
   }
 });
 
-
+// comment
 // This caches all the pages?
 self.addEventListener( "install", function( event ){
     event.waitUntil(
         caches.open( CACHE )
               .then(function( cache ){
-            return cache.addAll([
-                // "/css/main.css",
-                // "/js/main.js",
-                // "/img/favicon.png",
-                // "/offline/"
-                "/calendar",
-                '/',
-                '/loginUser',
-                '/myRoutines',
-                '/newSchedule',
-                '/normalRoutine',
-                '/somethingDifferent',
-                // '/w/1',
-                // 'w/0?r=1',
-                // 'w/0',
+                console.log('caching pages');
+                  return cache.addAll([
+                      // "/css/main.css",
+                      // "/js/main.js",
+                      // "/img/favicon.png",
+                      // "/offline/"
+                      "/calendar",
+                      '/',
+                      '/loginUser',
+                      '/myRoutines',
+                      '/newSchedule',
+                      '/normalRoutine',
+                      '/somethingDifferent',
+                      // '/w/1',
+                      // 'w/0?r=1',
+                      // 'w/0',
 
-            ]);
+                  ]);
         })
     );
 });
@@ -67,7 +68,9 @@ workbox.routing.registerRoute(
 
 // TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
 const offlineFallbackPage = "offline.html";
-const routineDescription = "javascripts/routineDescription.js"
+const routineDescription = "javascripts/routineDescription.js";
+const getCook = "javascripts/getCook.js";
+// const logOut = "javascripts/logout.js";
 
 // self.addEventListener("message", (event) => {
 //   if (event.data && event.data.type === "SKIP_WAITING") {
@@ -81,6 +84,7 @@ self.addEventListener('install', async (event) => {
     .then(function(cache) {
       cache.add(offlineFallbackPage);
       cache.add(routineDescription);
+      cache.add(getCook);
     })
       // .then((cache) => cache.add(offlineFallbackPage))
       // .then((cache) => cache.add(routineDescription))

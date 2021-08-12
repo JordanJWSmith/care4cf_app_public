@@ -11,6 +11,7 @@
         <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
         <script type="text/javascript" src="/javascripts/routineDescription.js"></script> 
+        <script type="text/javascript" src="/javascripts/getCook.js"></script> 
     </head>
    
     
@@ -62,6 +63,10 @@
         </a>
 
         <script>
+            if (!(navigator.onLine) && (!(getCook('accessToken')))) {
+                window.location.href = "/loginUser"
+            }
+
             var activities = <%- activities %>;
             // console.log(activities);
 

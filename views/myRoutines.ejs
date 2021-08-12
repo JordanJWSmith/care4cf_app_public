@@ -6,6 +6,7 @@
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
+        <script type="text/javascript" src="/javascripts/getCook.js"></script> 
     </head>
 
     <style>
@@ -65,9 +66,37 @@
             </form>
         <% } %>
 
+        <br><br>
+        <a href="/normalRoutine">
+            <button>Back to Normal Routine</button>
+        </a>
+
+        <br><br>
+        <a href="/">
+            <button>Log Activity</button>
+        </a>
+
 
 
         <script>
+
+            if (!(navigator.onLine) && (!(getCook('accessToken')))) {
+                window.location.href = "/loginUser"
+            }
+
+            function getCook(cookiename) {
+                // Get name followed by anything except a semicolon
+                var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
+                // Return everything after the equal sign, or an empty string if the cookie name not found
+                return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
+            }
+
+            // if (getCook('offline')) {
+            //     alert("Cannot update while offline");
+            //     document.cookie = "offline=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            // }
+
+            console.log(document.cookie);
             var routinesString = <%- routines %>;
             var routines = JSON.parse(JSON.stringify(routinesString));
 
@@ -141,16 +170,26 @@
             }
 
             function makeNormal(schedID) {
-                document.getElementById('newNormalUser').innerHTML = "<input type='hidden' name='user' value='" + user + "'>";
-                document.getElementById('newNormalSchedule').innerHTML = "<input type='hidden' name='scheduleID' value='" + schedID + "'>";
-                document.forms['newNormal'].submit();
+                if (navigator.onLine) {
+                    document.getElementById('newNormalUser').innerHTML = "<input type='hidden' name='user' value='" + user + "'>";
+                    document.getElementById('newNormalSchedule').innerHTML = "<input type='hidden' name='scheduleID' value='" + schedID + "'>";
+                    document.forms['newNormal'].submit();
+                } else {
+                    alert("Cannot update while offline");
+                }
+                
             }
 
             function logSchedule(schedID) {
-                document.getElementById('logChosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + chosenDate[0] + "'>";
-                document.getElementById('logScheduleID').innerHTML = "<input type='hidden' name='scheduleID' value = '" + schedID +"'>";
-                document.getElementById('logUserID').innerHTML = "<input type='hidden' name='userID' value = '" + user +"'>";
-                document.forms['logActivity'].submit();
+                if (navigator.onLine) {
+                    document.getElementById('logChosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + chosenDate[0] + "'>";
+                    document.getElementById('logScheduleID').innerHTML = "<input type='hidden' name='scheduleID' value = '" + schedID +"'>";
+                    document.getElementById('logUserID').innerHTML = "<input type='hidden' name='userID' value = '" + user +"'>";
+                    document.forms['logActivity'].submit();
+                } else {
+                    alert("Cannot update while offline");
+                }
+                
             }
 
             

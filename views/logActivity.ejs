@@ -8,6 +8,7 @@
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
+        <script type="text/javascript" src="/javascripts/getCook.js"></script> 
     </head>
     <body>
         <h1><%= title %></h1>
@@ -30,15 +31,32 @@
 
             // console.log('online?:', navigator.onLine);
 
+            if (!(navigator.onLine) && (!(getCook('accessToken')))) {
+                window.location.href = "/loginUser"
+            }
+            // if (!getCook('accessToken')) {
+            //     console.log('login cookie')
+
+            // }
+
+
+
+            function getCook(cookiename) {
+                // Get name followed by anything except a semicolon
+                var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
+                // Return everything after the equal sign, or an empty string if the cookie name not found
+                return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
+            }
+
             var routineTypes = <%- routineTypes %>;
             var weekActivities = <%-weekActivities %>;
             var dateList = <%- dateList %>
             var startDate = <%- startDate %>;
             var routineDict = <%- routineDict %>;
 
-            console.log(dateList);
+            // console.log(dateList);
             // console.log(weekActivities);
-            console.log(routineDict);
+            // console.log(routineDict);
 
             var dayCounter = 0;
 
@@ -67,11 +85,11 @@
                     populateRoutine();
 
                 } else {
-                    console.log('currentDate:', currentDate );
-                    console.log('dateString:', dateString );
+                    // console.log('currentDate:', currentDate );
+                    // console.log('dateString:', dateString );
                     var dateStringDate = new Date(dateString);
                     var diffDays = Math.round(Math.abs((dateStringDate - currentDay) / oneDay));
-                    console.log('difference: ', diffDays);
+                    // console.log('difference: ', diffDays);
                     if (diffDays > 3) {
                         document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
                     } else {
@@ -110,8 +128,8 @@
                     title = keys[i];
                     // console.log(title);
                     if ((title !== 'title') && (activities[title])) {
-                        console.log('title: ', title);
-                        console.log('content: ', activities[title]);
+                        // console.log('title: ', title);
+                        // console.log('content: ', activities[title]);
                         document.getElementById('routine').innerHTML += '<a id="'+ title +'"></a>';
                         document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
                         if (activities[title][0] == '[') {

@@ -6,6 +6,7 @@
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
+        <script type="text/javascript" src="/javascripts/getCook.js"></script> 
     </head>
     <body>
 
@@ -47,6 +48,10 @@
 
 
         <script>
+            if (!(navigator.onLine) && (!(getCook('accessToken')))) {
+                window.location.href = "/loginUser"
+            }
+
             var techniques = <%- techniques %>;
             for (var i = 0; i < techniques.length; i++) {
                 document.getElementById('techniques').innerHTML += "<dd>- " + techniques[i] + "</dd>";

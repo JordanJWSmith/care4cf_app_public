@@ -14,5 +14,12 @@ function logout() {
             d.shift();
         }
     }
-    location.reload();
+    if (!(navigator.onLine) && (!(getCook('accessToken')))) {
+        // console.log('offline logout')
+        // console.log(document.cookie);
+        window.location.href = "/loginUser"
+    } else {
+        location.reload();
+    }
+    
 };

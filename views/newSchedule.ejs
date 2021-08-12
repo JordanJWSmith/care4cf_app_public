@@ -7,6 +7,7 @@
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
+        <script type="text/javascript" src="/javascripts/getCook.js"></script> 
     </head>
     <body>
         <h1><%= title %></h1>
@@ -91,6 +92,9 @@
 
         <script>
 
+            if (!(navigator.onLine) && (!(getCook('accessToken')))) {
+                window.location.href = "/loginUser"
+            }
             // var today = new Date();
             // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             // console.log(date);
