@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="manifest" href="/manifest.json">
+        <script type="module" src="/pwabuilder-sw-register.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+
+        <!-- <form action="https://api.cleverpush.com/notification/send" method="POST" id="pushNotification" enctype="multipart/form-data">
+            <input type="hidden" name="channelId" value="pCGzsj9JXF7JG6rps">
+            <input type="text" name="title">
+            <button type="submit">Submit</button>
+        </form> -->
+
+        <button id="sendNotif" onclick="showNotification()">Notification</button>
+
+        <script>
+            navigator.serviceWorker.register('pwabuilder-sw.js');
+
+            function notif() {
+                navigator.serviceWorker.ready
+                    .then(function (registration) {
+                        // Check if the user has an existing subscription
+                        console.log(registration)
+                        return registration.pushManager.getSubscription()
+                            .then(async function (subscription) {
+                                if (subscription) {
+                                    console.log('subscription exists');
+                                    subscription.showNotification('Hello World!');
+                                    return subscription;
+                                }
+                            })
+                        })
+            }
+
+            function showNotification() {
+                Notification.requestPermission(function(result) {
+                    console.log('request permission: ', result);
+                    if (result === 'granted') {
+                        navigator.serviceWorker.ready
+                        .then(async function(registration) {
+                            console.log('registration:', registration);
+                            
+                            await registration.showNotification('Vibration Sample', {
+                                body: 'Buzz! Buzz!',
+                                // icon: '../images/touch/chrome-touch-icon-192x192.png',
+                                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                                tag: 'vibration-sample'
+                            })
+                            .then(console.log('end of function'));
+                        });
+                    }
+                });
+            }
+                // const data = JSON.stringify({
+                // channelId: 'pCGzsj9JXF7JG6rps',
+                // title: 'Test Notification'
+                // })
+
+                // const url = "https://api.cleverpush.com/notification/send";
+
+                // axios({
+                //     method: 'POST',
+                //     url, 
+                //     data: JSON.stringify(data), 
+                //     headers:{'Content-Type': 'application/json; charset=utf-8'}
+                // }) 
+                // .then((res) => {
+                //     console.log(`statusCode: ${res.status}`)
+                //     console.log(res)
+                // })
+                // .catch((error) => {
+                //     console.error(error)
+                // })
+            // }
+            
+            // document.getElementById('sendNotif').onclick = function() {
+            //     const delay = 2;
+            //     const ttl = 0;
+
+            //     fetch('./sendNotification', {
+            //         method: 'post',
+            //         headers: {
+            //             'Content-type': 'application/json'
+            //         },
+            //         body: JSON.stringify({
+            //             subscription: subscription,
+            //             delay: delay,
+            //             ttl: ttl,
+            //         }),
+            //     });
+            // }
+        </script>
+        
+    </body>

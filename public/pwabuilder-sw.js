@@ -3,6 +3,7 @@
 // const { cache } = require("ejs");
 
 const CACHE = "pwabuilder-precache";
+// const webPush = require('web-push');
 // const CACHE = "pwabuilder-offline-page";
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
@@ -70,6 +71,7 @@ workbox.routing.registerRoute(
 const offlineFallbackPage = "offline.html";
 const routineDescription = "javascripts/routineDescription.js";
 const getCook = "javascripts/getCook.js";
+const dateToDisplay = "javascripts/dateToDisplay.js";
 // const logOut = "javascripts/logout.js";
 
 // self.addEventListener("message", (event) => {
@@ -85,6 +87,7 @@ self.addEventListener('install', async (event) => {
       cache.add(offlineFallbackPage);
       cache.add(routineDescription);
       cache.add(getCook);
+      cache.add(dateToDisplay);
     })
       // .then((cache) => cache.add(offlineFallbackPage))
       // .then((cache) => cache.add(routineDescription))
@@ -183,7 +186,7 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('push', function (event) {
   if (Notification.permission === "granted") {
       const notificationText = event.data.text();
-      const showNotification = self.registration.showNotification('Sample PWA', {
+      const showNotification = self.registration.showNotification('CARE4CF', {
           body: notificationText,
           icon: './images/icon512.png'
       });

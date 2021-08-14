@@ -20,18 +20,49 @@ navigator.serviceWorker.ready
     .then(function (registration) {
         // Check if the user has an existing subscription
         return registration.pushManager.getSubscription()
-            .then(function (subscription) {
+            .then(async function (subscription) {
                 if (subscription) {
+                    // subscription.showNotification('Hello World!');
                     return subscription;
                 }
                 
-                const vapidPublicKey = "BIiO8mcHROh2wW2zVQkJUP-M6mFQ4OxKAMqCBpo7bJnRwROaBjCdlHag8dSrtnOAdlRR1jSta8re0KQDkTseIJ0";             
+                const response = await fetch('./vapidPublicKey');
+                const vapidPublicKey = await response.text();      
+                console.log(vapidPublicKey);       
                 return registration.pushManager.subscribe({
                     userVisibleOnly: true,
                     applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
                 });
             });
-    });
+    })
+    // added test
+    // .then(function(subscription) {
+    //     // Send the subscription details to the server using the Fetch API.
+    //     fetch('./register', {
+    //         method: 'post',
+    //         headers: {
+    //         'Content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //         subscription: subscription
+    //         }),
+    //     })
+    //     fetch('./sendNotification', {
+    //         method: 'post',
+    //         headers: {
+    //             'Content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             subscription: subscription,
+    //             delay: 2,
+    //             ttl: 0,
+    //         })
+    //     })
+    // });
+
+    
+
+    
 
 // Utility function for browser interoperability
 function urlBase64ToUint8Array(base64String) {
