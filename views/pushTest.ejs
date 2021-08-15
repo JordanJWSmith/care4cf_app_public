@@ -10,32 +10,86 @@
     </head>
     <body>
 
-        <!-- <form action="https://api.cleverpush.com/notification/send" method="POST" id="pushNotification" enctype="multipart/form-data">
+        <!-- <form action="/register" method="POST" id="pushNotification" enctype="multipart/form-data">
             <input type="hidden" name="channelId" value="pCGzsj9JXF7JG6rps">
-            <input type="text" name="title">
+            <input type="text" name="subscription" id="sub">
             <button type="submit">Submit</button>
         </form> -->
 
         <button id="sendNotif" onclick="showNotification()">Notification</button>
 
         <script>
-            navigator.serviceWorker.register('pwabuilder-sw.js');
 
-            function notif() {
-                navigator.serviceWorker.ready
-                    .then(function (registration) {
-                        // Check if the user has an existing subscription
-                        console.log(registration)
-                        return registration.pushManager.getSubscription()
-                            .then(async function (subscription) {
-                                if (subscription) {
-                                    console.log('subscription exists');
-                                    subscription.showNotification('Hello World!');
-                                    return subscription;
-                                }
-                            })
-                        })
-            }
+        // function notifTest() {
+        //     navigator.serviceWorker.ready
+        //     .then(function (registration) {
+        //         // Check if the user has an existing subscription
+        //         return registration.pushManager.getSubscription()
+        //             .then(async function (subscription) {
+        //                 if (subscription) {
+        //                     // console.log('pushManager: ', registration.pushManager)
+        //                     // subscription.showNotification('Hello World!');
+        //                     // console.log('subscription: ', subscription);
+        //                     postData('./register', subscription);  
+        //                     // console.log('endpoint: ', subscription.endpoint)  
+        //                     return subscription;
+        //                 }
+        //             })
+        //         })
+        // }
+
+        // async function postData(url, data) {
+        // // Default options are marked with *
+        //     const response = await fetch(url, {
+        //         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        //         mode: 'cors', // no-cors, *cors, same-origin
+        //         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        //         credentials: 'same-origin', // include, *same-origin, omit
+        //         headers: {
+        //         'Content-Type': 'application/json'
+        //         // 'Content-Type': 'application/x-www-form-urlencoded',
+        //         },
+        //         redirect: 'follow', // manual, *follow, error
+        //         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        //         body: JSON.stringify(data) // body data type must match "Content-Type" header
+        //     });
+        //     return response.json(); // parses JSON response into native JavaScript objects
+        // }
+
+
+
+            // document.getElementById('sub')
+
+            // navigator.serviceWorker.register('pwabuilder-sw.js');
+
+            // function notif() {
+            //     navigator.serviceWorker.ready
+            //         .then(function (registration) {
+            //             // Check if the user has an existing subscription
+            //             console.log(registration)
+            //             return registration.pushManager.getSubscription()
+            //                 .then(async function (subscription) {
+            //                     if (subscription) {
+            //                         console.log('subscription exists');
+            //                         subscription.showNotification('Hello World!');
+            //                         return subscription;
+            //                     }
+            //                 })
+            //             })
+            // }
+
+            // function msToHMS( ms ) {
+            //     // 1- Convert to seconds:
+            //     var seconds = ms / 1000;
+            //     // 2- Extract hours:
+            //     var hours = parseInt( seconds / 3600 ); // 3,600 seconds in 1 hour
+            //     seconds = seconds % 3600; // seconds remaining after extracting hours
+            //     // 3- Extract minutes:
+            //     var minutes = parseInt( seconds / 60 ); // 60 seconds in 1 minute
+            //     // 4- Keep only seconds not extracted to minutes:
+            //     seconds = seconds % 60;
+            //     return hours+":"+minutes+":"+seconds;
+            // }
 
             function showNotification() {
                 Notification.requestPermission(function(result) {
@@ -44,8 +98,10 @@
                         navigator.serviceWorker.ready
                         .then(async function(registration) {
                             console.log('registration:', registration);
+                            var timeStamp = new Date()
+                            // console.log(msToHMS(timeStamp.getTime()));
                             
-                            await registration.showNotification('Vibration Sample', {
+                            await registration.showNotification('Vibration Sample' + timeStamp, {
                                 body: 'Buzz! Buzz!',
                                 // icon: '../images/touch/chrome-touch-icon-192x192.png',
                                 vibrate: [200, 100, 200, 100, 200, 100, 200],

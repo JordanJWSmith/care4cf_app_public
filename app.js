@@ -17,7 +17,7 @@ var newScheduleRouter = require('./routes/newSchedule');
 var logFromRoutinesRouter = require('./routes/logFromRoutines');
 var calendarRouter = require('./routes/calendar');
 var vapidPublicKeyRouter = require('./routes/vapidPublicKey');
-// var registerRouter = require('./routes/register');
+var registerRouter = require('./routes/register');
 // var sendNotificationRouter = require('./routes/sendNotification');
 
 
@@ -45,7 +45,7 @@ app.use('/newSchedule', newScheduleRouter);
 app.use('/logFromRoutines', logFromRoutinesRouter);
 app.use('/calendar', calendarRouter);
 app.use('/vapidPublicKey', vapidPublicKeyRouter);
-// app.use('/register', registerRouter);
+app.use('/register', registerRouter);
 // app.use('/sendNotification', sendNotificationRouter);
 
 

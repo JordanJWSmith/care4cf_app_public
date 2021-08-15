@@ -184,6 +184,7 @@ self.addEventListener('fetch', (event) => {
 
 // Respond to a server push with a user notification.
 self.addEventListener('push', function (event) {
+  console.log('PUSH EVENT TRIGGERED');
   if (Notification.permission === "granted") {
       const notificationText = event.data.text();
       const showNotification = self.registration.showNotification('CARE4CF', {
