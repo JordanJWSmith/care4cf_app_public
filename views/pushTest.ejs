@@ -101,8 +101,8 @@
                             var timeStamp = new Date()
                             // console.log(msToHMS(timeStamp.getTime()));
                             
-                            await registration.showNotification('Vibration Sample' + timeStamp, {
-                                body: 'Buzz! Buzz!',
+                            await registration.showNotification('Vibration Sample', {
+                                body: timeStamp,
                                 // icon: '../images/touch/chrome-touch-icon-192x192.png',
                                 vibrate: [200, 100, 200, 100, 200, 100, 200],
                                 tag: 'vibration-sample'

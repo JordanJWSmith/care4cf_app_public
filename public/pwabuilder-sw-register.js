@@ -9,6 +9,7 @@
 */
 
 import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+const cron = require('node-cron');
 
 const el = document.createElement('pwa-update');
 document.body.appendChild(el);
@@ -40,6 +41,29 @@ navigator.serviceWorker.ready
             })
             
     })
+    
+
+    function showNotification() {
+          Notification.requestPermission(function(result) {
+              console.log('request permission: ', result);
+              if (result === 'granted') {
+                  navigator.serviceWorker.ready
+                  .then(async function(registration) {
+                      console.log('registration:', registration);
+                      var timeStamp = new Date()
+                      // console.log(msToHMS(timeStamp.getTime()));
+                      
+                      await registration.showNotification('Atomated notification test' + timeStamp, {
+                          body: 'Buzz! Buzz!',
+                          // icon: '../images/touch/chrome-touch-icon-192x192.png',
+                          vibrate: [200, 100, 200, 100, 200, 100, 200],
+                          tag: 'vibration-sample'
+                      })
+                      .then(console.log('end of function'));
+                  });
+              }
+          });
+        }
     
     // added test
     // .then(function(subscription) {

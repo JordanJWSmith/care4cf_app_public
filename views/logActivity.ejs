@@ -11,6 +11,27 @@
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <!-- <script src="https://static.cleverpush.com/channel/loader/pCGzsj9JXF7JG6rps.js" async></script> -->
+        <script>
+            (function(p,u,s,h,x){
+                p.pushpad=p.pushpad||function(){
+                    (p.pushpad.q=p.pushpad.q||[]).push(arguments)
+                };
+                h=u.getElementsByTagName('head')[0];
+                x=u.createElement('script');
+                x.async=1;
+                x.src=s;
+                h.appendChild(x);
+            })
+            (window,document,'https://pushpad.xyz/pushpad.js');
+          
+            pushpad('init', 7781);
+            // if (window.sessionStorage.getItem('notification-status') != 'subscribed') {
+            //     pushpad('subscribe', function () { window.sessionStorage.setItem('notification-status', 'subscribed'); })
+            // }
+               
+            pushpad('widget');
+          </script>
+        
 
     </head>
     <body>
@@ -80,7 +101,7 @@
             const oneDay = 24 * 60 * 60 * 1000;
 
 
-            var today = new Date(dateList[dayCounter])
+            var today = new Date(dateList[dayCounter].replace(/-/g, "/"));
             // console.log(today);
             // var today = new Date(startDate);
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
@@ -94,6 +115,7 @@
             function populateMainSection() {
                 // if (weekActivities[dayCounter]) {
                 var dateString = dateList[dayCounter];
+                // console.log('dateString: ', dateString);
                 if (routineDict[dateString]) {
                     // var activities = JSON.stringify(weekActivities[dayCounter]);
                     document.getElementById('mainSection').innerHTML = '<div id="routine"></div>';
@@ -102,7 +124,7 @@
                 } else {
                     // console.log('currentDate:', currentDate );
                     // console.log('dateString:', dateString );
-                    var dateStringDate = new Date(dateString);
+                    var dateStringDate = new Date(dateString.replace(/-/g, "/"));
                     var diffDays = Math.round(Math.abs((dateStringDate - currentDay) / oneDay));
                     // console.log('difference: ', diffDays);
                     if (diffDays > 3) {
@@ -226,13 +248,13 @@
 
                 if (dayCounter <= (dateList.length-1)) {
                     document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
-                    var newDay = new Date(dateList[dayCounter]);
+                    var newDay = new Date(dateList[dayCounter].replace(/-/g, "/"));
                     disableButton(newDay);
                     populateMainSection()
                 } else {
                     console.log('online? ', navigator.onLine);
                     // if (navigator.onLine) {
-                        var newDay = new Date(dateList[dayCounter-1]);
+                        var newDay = new Date(dateList[dayCounter-1].replace(/-/g, "/"));
                         // console.log('newDay: ', newDay)
                         var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
                         // console.log('diffDays: ', diffDays)
@@ -279,7 +301,7 @@
                 // console.log('dayCounter: ', dayCounter)
 
                 if (dayCounter == -1) {
-                    var newDay = new Date(dateList[dayCounter+1]);
+                    var newDay = new Date(dateList[dayCounter+1].replace(/-/g, "/"));
                     var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
                     // var weeklyOffset = (Math.floor((diffDays)/7) - 1);
 
@@ -301,7 +323,7 @@
                     // window.location = '/w/'+ weeklyOffset + '?r=1';
                 } else {
                     document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
-                    var newDay = new Date(dateList[dayCounter]);
+                    var newDay = new Date(dateList[dayCounter].replace(/-/g, "/"));
                     disableButton(newDay);
                     populateMainSection()
                 }

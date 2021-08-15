@@ -4,7 +4,10 @@ var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const webPush = require('web-push');
+var webPush = require('web-push');
+var cron = require('node-cron');
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -86,6 +89,44 @@ webPush.setVapidDetails(
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
+
+// cron.schedule('* * * * *', async function() {
+//   console.log('running a task every minute');
+//   await showNotification()
+//   .then(console.log('After notification'));
+// });
+
+// function showNotification() {
+//   console.log('attempting notification');
+//   // console.log('notif: ', Notification.requestPermission());
+//   navigator.serviceWorker.ready
+//   console.log(navigator.serviceWorker)
+//   .then(function() {
+//     Notification.requestPermission(function(result) {
+//       console.log('request permission: ', result);
+//       if (result === 'granted') {
+//           navigator.serviceWorker.ready
+//           .then(async function(registration) {
+//               console.log('registration:', registration);
+//               var timeStamp = new Date()
+//               // console.log(msToHMS(timeStamp.getTime()));
+              
+//               await registration.showNotification('Vibration Sample' + timeStamp, {
+//                   body: 'Buzz! Buzz!',
+//                   // icon: '../images/touch/chrome-touch-icon-192x192.png',
+//                   vibrate: [200, 100, 200, 100, 200, 100, 200],
+//                   tag: 'vibration-sample'
+//               })
+//               .then(console.log('end of function'));
+//           });
+//       }
+//     })
+//   }
+//     // console.log(navigator.serviceWorker)
+    
+//   )
+  
+// }
 
 // app.use(function(app, route) {
 //   app.get(route + 'vapidPublicKey', function(req, res) {

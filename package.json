@@ -9,6 +9,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "cookie-parser": "~1.4.4",
+    "datejs": "^1.0.0-rc3",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
@@ -17,7 +18,9 @@
     "mocha": "^9.0.2",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
+    "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
+    "pushpad": "^0.9.0",
     "set-cookie-parser": "^2.4.8",
     "web-push": "^3.4.5"
   },
