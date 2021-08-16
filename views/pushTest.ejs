@@ -17,9 +17,14 @@
         </form> -->
 
         <button id="sendNotif" onclick="showNotification()">Notification</button>
+        <!-- <button id="pushtest" onclick="pushEvent()">Push</button> -->
+        <!-- <button id="cleverpush" onclick="cleverPush()">Cleverpush</button> -->
         <!-- <button id="cleverpush" onclick="cleverPush()">Cleverpush</button> -->
 
+
         <script>
+
+           
 
         // function notifTest() {
         //     navigator.serviceWorker.ready
@@ -104,7 +109,7 @@
                             
                             await registration.showNotification('Vibration Sample', {
                                 body: timeStamp,
-                                // icon: '../images/touch/chrome-touch-icon-192x192.png',
+                                icon: './images/icon512.png',
                                 vibrate: [200, 100, 200, 100, 200, 100, 200],
                                 tag: 'vibration-sample'
                             })

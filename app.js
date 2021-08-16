@@ -21,7 +21,8 @@ var logFromRoutinesRouter = require('./routes/logFromRoutines');
 var calendarRouter = require('./routes/calendar');
 var vapidPublicKeyRouter = require('./routes/vapidPublicKey');
 var registerRouter = require('./routes/register');
-// var sendNotificationRouter = require('./routes/sendNotification');
+var sendNotificationRouter = require('./routes/sendNotification');
+var saveSubscriptionAPIRouter = require('./routes/saveSubscriptionAPI');
 
 
 var app = express();
@@ -49,7 +50,8 @@ app.use('/logFromRoutines', logFromRoutinesRouter);
 app.use('/calendar', calendarRouter);
 app.use('/vapidPublicKey', vapidPublicKeyRouter);
 app.use('/register', registerRouter);
-// app.use('/sendNotification', sendNotificationRouter);
+app.use('/sendNotification', sendNotificationRouter);
+app.use('/saveSubscriptionAPI', saveSubscriptionAPIRouter);
 
 
 
@@ -76,16 +78,38 @@ app.use(function(err, req, res, next) {
 // }
 // console.log(process.env)
 
-if ((!process.env.VAPID_PUBLIC_KEY) || (!process.env.VAPID_PRIVATE_KEY)) {
-  // console.log('does not exist');
-  const VAPID_PUBLIC_KEY = webPush.generateVAPIDKeys().publicKey;
-  const VAPID_PRIVATE_KEY = webPush.generateVAPIDKeys().privateKey;
-  process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
-  process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
-}
+// console.log('before: ', process.env);
 
+// if ((!process.env.VAPID_PUBLIC_KEY) || (!process.env.VAPID_PRIVATE_KEY)) {
+//   console.log('does not exist');
+//   const VAPID_PUBLIC_KEY = webPush.generateVAPIDKeys().publicKey;
+//   const VAPID_PRIVATE_KEY = webPush.generateVAPIDKeys().privateKey;
+//   process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
+//   process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
+// }
+// console.log('after: ', process.env);
+
+const VAPID_PUBLIC_KEY = "BFuaW7LdscFd2-mN_lTvILOlijf9YzTnVcqbq4pgUVPyzOGPpOFoIS5ZyeenRvcz0jZ4ysWynvFfbgjnaDIJQK0"
+const VAPID_PRIVATE_KEY = "0bhLTOSzscVW0Gu1XOEhwsyk8M9-ha2HrPsX4mH0imA";
+
+process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
+process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
+
+console.log('app.js public: ', process.env.VAPID_PUBLIC_KEY);
+console.log('app.js private: ', process.env.VAPID_PRIVATE_KEY);
+
+
+
+// process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
+// process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
+
+// console.log('public: ', VAPID_PUBLIC_KEY);
+// console.log('private: ', VAPID_PRIVATE_KEY);
+
+
+webPush.setGCMAPIKey('AIzaSyBjJ9i9OfBGzplXujpb-ft_452zF17BIjc');
 webPush.setVapidDetails(
-  'https://serviceworke.rs/',
+  'mailto:jordan.smith.202ucl.ac.uk',
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );

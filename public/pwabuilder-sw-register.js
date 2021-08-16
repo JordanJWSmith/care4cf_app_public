@@ -10,6 +10,16 @@
 
 import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
 // const cron = require('node-cron');
+// import * as saveSubscription from '../routes/appDatabase/saveSubscription';
+// var saveSubscription = require('../routes/appDatabase/saveSubscription');
+// import './javascripts/getCook.js';
+
+function getCook(cookiename) {
+    // Get name followed by anything except a semicolon
+    var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
+    // Return everything after the equal sign, or an empty string if the cookie name not found
+    return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
+}
 
 const el = document.createElement('pwa-update');
 document.body.appendChild(el);
@@ -24,20 +34,99 @@ navigator.serviceWorker.ready
         return registration.pushManager.getSubscription()
             .then(async function (subscription) {
                 if (subscription) {
+                    console.log(subscription);
+                    
+                    // subscription.unsubscribe().then(function(successful) {
+                    //     console.log('success:', successful)
+                    //     // You've successfully unsubscribed
+                    //   }).catch(function(e) {
+                    //       console.log('failed: ', e)
+                    //     // Unsubscription failed
+                    //   })
+
+                    // console.log('subscription: ', JSON.stringify(subscription));
+                    // console.log(JSON.parse(document.cookie));
+                    // console.log(getCook('accessToken'));
+
+                    if ((getCook('accessToken')) && (!getCook('subscription'))) {
+                        var accessToken = getCook('accessToken');
+                        (async () => {
+                            const rawResponse = await fetch('/saveSubscriptionAPI', {
+                              method: 'POST',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                              },
+                            //   body: JSON.stringify({a: 1, b: 'Textual content'})
+                                body: JSON.stringify({
+                                    subscription: JSON.stringify(subscription),
+                                    token: accessToken
+                                })
+                            });
+                            const content = await rawResponse.text();
+                          
+                            console.log('content: ', content);
+                          })()
+                          .then(function() {
+                              document.cookie = "subscription=true"
+                              console.log('save sub cookie');
+                          })
+                    }
+
+                    (async () => {
+                        const rawResponse = await fetch('/sendNotification', {
+                          method: 'POST',
+                          headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                          },
+                        //   body: JSON.stringify({a: 1, b: 'Textual content'})
+                            body: JSON.stringify(subscription)
+                        });
+                        const content = await rawResponse.text();
+                      
+                        console.log('SendNotifcontent: ', content);
+                      })()
+                                       
+
+                    
+
+                    // save subscription object to database
+                    // saveSubscription(subscription);
+
                     // console.log('pushManager: ', registration.pushManager)
                     // subscription.showNotification('Hello World!');
                     // console.log('subscription: ', subscription);
                     // postData('./register', subscription);    
                     return subscription;
                 }
+
+                // if ((!process.env.VAPID_PUBLIC_KEY) || (!process.env.VAPID_PRIVATE_KEY)) {
+                //   console.log('does not exist');
+                //   const VAPID_PUBLIC_KEY = webPush.generateVAPIDKeys().publicKey;
+                //   const VAPID_PRIVATE_KEY = webPush.generateVAPIDKeys().privateKey;
+                //   process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
+                //   process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
+
+                // }
                 
+                // var vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
+                // webPush.setVapidDetails(
+                //     'mailto:jordan.smith.20@ucl.ac.uk',
+                //     process.env.VAPID_PUBLIC_KEY,
+                //     process.env.VAPID_PRIVATE_KEY
+                //   );
+
                 const response = await fetch('./vapidPublicKey');
                 const vapidPublicKey = await response.text();      
-                // console.log(vapidPublicKey);  
+                console.log('registgering  key: ', vapidPublicKey);  
+                // var vapidPublicKey = 'BIe57AWCNKGIPXrdKOGrf68a3vv7krH9aWE4jCSbrcgktfLk02CDfXDJERxhaaa8t0kgni3HoFZz21BJlkRpa5c';
+                // var vapidPublicKey = process.env.VAPID_PUBLIC_KEY
                 
                 return registration.pushManager.subscribe({
                     userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+                    // applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+                    applicationServerKey: vapidPublicKey
                 });
             })
             
