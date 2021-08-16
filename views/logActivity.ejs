@@ -7,29 +7,55 @@
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
         <script type="module" src="/pwabuilder-sw-register.js"></script>
+        <!-- <script type="module" src="/courierTest.js"></script> -->
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <!-- <script src="https://static.cleverpush.com/channel/loader/pCGzsj9JXF7JG6rps.js" async></script> -->
         <script>
-            (function(p,u,s,h,x){
-                p.pushpad=p.pushpad||function(){
-                    (p.pushpad.q=p.pushpad.q||[]).push(arguments)
-                };
-                h=u.getElementsByTagName('head')[0];
-                x=u.createElement('script');
-                x.async=1;
-                x.src=s;
-                h.appendChild(x);
-            })
-            (window,document,'https://pushpad.xyz/pushpad.js');
+            // var CleverPush = window.CleverPush || [];
+            // // CleverPush.push(['unsubscribe'])
+            // // CleverPush = window.CleverPush || [];
+            // CleverPush.push(['subscribe', function(err, subscriptionId) {
+            //     if (err) {
+            //         console.log('CleverPush Subscription Error:');
+            //         console.warn(err);
+            //     } else {
+            //         console.log('CleverPush Subscription was successful with ID', subscriptionId);
+            //     }
+            // }])
+            // // .then(
+            //     CleverPush.push(['getSubscriptionId', function(subscriptionId) {
+            //         console.log('CleverPush Subscription ID', subscriptionId);
+            //     }])
+            // // )
+            // // .then(
+            //     CleverPush.push(['isSubscribed', function(result) {
+            //     console.log('CleverPush isSubscribed result', result); // true or false
+            // }]
+            // )
+            // )
+            // (function(p,u,s,h,x){
+            //     p.pushpad=p.pushpad||function(){
+            //         (p.pushpad.q=p.pushpad.q||[]).push(arguments)
+            //     };
+            //     h=u.getElementsByTagName('head')[0];
+            //     x=u.createElement('script');
+            //     x.async=1;
+            //     x.src=s;
+            //     h.appendChild(x);
+            // })
+            // (window,document,'https://pushpad.xyz/pushpad.js');
           
-            pushpad('init', 7781);
+            // pushpad('init', "7781");
+            // pushpad('subscribe', function () {}, { projectId: "7781" });
+            // pushpad('status', function (isSubscribed, tags, uid) { console.log(isSubscribed, tags, uid); });
+            // console.log('pushpad notification:', window.sessionStorage.getItem('notification-status'))
             // if (window.sessionStorage.getItem('notification-status') != 'subscribed') {
             //     pushpad('subscribe', function () { window.sessionStorage.setItem('notification-status', 'subscribed'); })
             // }
                
-            pushpad('widget');
+            // pushpad('widget');
           </script>
         
 
@@ -402,6 +428,31 @@
 
         <br><br>
         <button onclick="logout()">Log Out</button>
+
+        <!-- firebase: -->
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script> -->
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<!-- <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script> -->
+
+<!-- <script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyCWJjbwRZbzpnuXwgjPaAKTA6vCUCu_CjY",
+    authDomain: "care4cf.firebaseapp.com",
+    projectId: "care4cf",
+    storageBucket: "care4cf.appspot.com",
+    messagingSenderId: "894516146550",
+    appId: "1:894516146550:web:b1a2598dd910f263df8a57",
+    measurementId: "G-1MDX03Z5FW"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script> -->
     </body>
 
 </html>

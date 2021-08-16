@@ -10,13 +10,14 @@
     </head>
     <body>
 
-        <!-- <form action="/register" method="POST" id="pushNotification" enctype="multipart/form-data">
+        <!-- <form action="/sendNotification" method="POST" id="pushNotification">
             <input type="hidden" name="channelId" value="pCGzsj9JXF7JG6rps">
-            <input type="text" name="subscription" id="sub">
+            <input type="text" name="title" id="sub">
             <button type="submit">Submit</button>
         </form> -->
 
         <button id="sendNotif" onclick="showNotification()">Notification</button>
+        <!-- <button id="cleverpush" onclick="cleverPush()">Cleverpush</button> -->
 
         <script>
 
@@ -112,27 +113,33 @@
                     }
                 });
             }
-                // const data = JSON.stringify({
-                // channelId: 'pCGzsj9JXF7JG6rps',
-                // title: 'Test Notification'
-                // })
 
-                // const url = "https://api.cleverpush.com/notification/send";
+            // function cleverPush() {
+            //     const data = {
+            //         channelId: 'pCGzsj9JXF7JG6rps',
+            //         title: 'Test Notification'
+            //     }
+            //     const url = "https://api.cleverpush.com/notification/send";
+            //     axios({
+            //         method: 'POST',
+            //         url, 
+            //         data: JSON.stringify(data), 
+            //         headers:{'Content-Type': 'application/json; charset=utf-8'}
+            //     }) 
+            //     .then((res) => {
+            //         console.log(`statusCode: ${res.status}`)
+            //         console.log(res)
+            //     })
+            //     .catch((error) => {
+            //         console.error(error)
+            //     })
+            // };
+                
 
-                // axios({
-                //     method: 'POST',
-                //     url, 
-                //     data: JSON.stringify(data), 
-                //     headers:{'Content-Type': 'application/json; charset=utf-8'}
-                // }) 
-                // .then((res) => {
-                //     console.log(`statusCode: ${res.status}`)
-                //     console.log(res)
-                // })
-                // .catch((error) => {
-                //     console.error(error)
-                // })
-            // }
+                
+
+                
+            
             
             // document.getElementById('sendNotif').onclick = function() {
             //     const delay = 2;

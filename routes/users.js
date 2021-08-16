@@ -50,7 +50,8 @@ router.get('/', function(req, res, next) {
   //   console.log(err || result);
   // });
 
-  res.render('pushTest', {title: 'Push Test'})
+  res.render('pushTest', {title:'Notification Test'});
+    
 });
 
 module.exports = router;

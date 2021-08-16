@@ -9,10 +9,11 @@
 */
 
 import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-const cron = require('node-cron');
+// const cron = require('node-cron');
 
 const el = document.createElement('pwa-update');
 document.body.appendChild(el);
+
 
 // // Appended push notification code
 
