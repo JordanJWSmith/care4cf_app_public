@@ -24,17 +24,34 @@ function getCook(cookiename) {
 const el = document.createElement('pwa-update');
 document.body.appendChild(el);
 
+// function ab2str(buf) {
+//     return String.fromCharCode.apply(null, new Uint8Array(buf));
+//   }
+
+// var testBuff = [4, 91, 154, 91, 178, 221, 177, 193, 93, 219, 233, 141, 254, 84, 239, 32, 179, 165, 138, 55, 253, 99, 52, 231, 85, 202, 155, 171, 138, 96, 81, 83, 242, 204, 225, 143, 164, 225, 104, 33, 46, 89, 201, 231, 167, 70, 247, 51, 210, 54, 120, 202, 197, 178, 158, 241, 95, 110, 8, 23, 104, 50, 9, 64, 173]
+
+// var enc = new TextDecoder("utf-8");
+// var arr = new Int8Array(testBuff);
+
 
 // // Appended push notification code
 
 // Ask the user for permission to send push notifications.
+   
+
 navigator.serviceWorker.ready
     .then(function (registration) {
         // Check if the user has an existing subscription
         return registration.pushManager.getSubscription()
             .then(async function (subscription) {
                 if (subscription) {
-                    console.log(subscription);
+                    console.log('subscription: ', subscription);
+                    console.log('options: ', subscription.options.applicationServerKey);
+                   
+                    // console.log('getKey', subscription.toJSON());
+                    // console.log('decode: ', enc.decode(arr));
+                    // console.log(ab2str(testBuff));
+                    
                     
                     // subscription.unsubscribe().then(function(successful) {
                     //     console.log('success:', successful)
@@ -73,6 +90,9 @@ navigator.serviceWorker.ready
                           })
                     }
 
+                    
+                   
+
                     (async () => {
                         const rawResponse = await fetch('/sendNotification', {
                           method: 'POST',
@@ -87,9 +107,6 @@ navigator.serviceWorker.ready
                       
                         console.log('SendNotifcontent: ', content);
                       })()
-                                       
-
-                    
 
                     // save subscription object to database
                     // saveSubscription(subscription);
@@ -101,32 +118,17 @@ navigator.serviceWorker.ready
                     return subscription;
                 }
 
-                // if ((!process.env.VAPID_PUBLIC_KEY) || (!process.env.VAPID_PRIVATE_KEY)) {
-                //   console.log('does not exist');
-                //   const VAPID_PUBLIC_KEY = webPush.generateVAPIDKeys().publicKey;
-                //   const VAPID_PRIVATE_KEY = webPush.generateVAPIDKeys().privateKey;
-                //   process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
-                //   process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
-
-                // }
-                
-                // var vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
-                // webPush.setVapidDetails(
-                //     'mailto:jordan.smith.20@ucl.ac.uk',
-                //     process.env.VAPID_PUBLIC_KEY,
-                //     process.env.VAPID_PRIVATE_KEY
-                //   );
-
                 const response = await fetch('./vapidPublicKey');
                 const vapidPublicKey = await response.text();      
                 console.log('registgering  key: ', vapidPublicKey);  
                 // var vapidPublicKey = 'BIe57AWCNKGIPXrdKOGrf68a3vv7krH9aWE4jCSbrcgktfLk02CDfXDJERxhaaa8t0kgni3HoFZz21BJlkRpa5c';
                 // var vapidPublicKey = process.env.VAPID_PUBLIC_KEY
+
                 
                 return registration.pushManager.subscribe({
                     userVisibleOnly: true,
-                    // applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
-                    applicationServerKey: vapidPublicKey
+                    applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+                    // applicationServerKey: vapidPublicKey
                 });
             })
             

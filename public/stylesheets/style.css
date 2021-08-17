@@ -1,11 +1,15 @@
 html, body {
   height:100%;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; */
+  font-family: 'Roboto';font-size: 16px;
+  color: #373737;
+  letter-spacing: 3px;
   margin: 0px;
 }
 
 .container {
   height: 100%;
+  width: 100%;
   /* Gradient adapted from: https://www.schemecolor.com/sky-blue-gradient.php */
   /* background-image: linear-gradient(to right bottom, #97ebf4, #a1edf7, #aaeff9, #b4f1fb, #bdf3fd, #c7f4fe, #d1f6ff, #dbf7ff, #e7f8ff, #f2f9ff, #fafcff, #ffffff); */
   background-image: linear-gradient(to right top, #e3e6ec, #d7e6f4, #c4e7fa, #aee9fa, #97ebf4);
@@ -13,7 +17,12 @@ html, body {
   top: 0px;
   right: 0px;
   bottom: 0px;
-  left: 0px
+  left: 0px;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: 'Roboto';font-size: 16px;
+  color: #373737;
+  letter-spacing: 3px;
+  text-align: center;
 }
 
 .center {
@@ -108,6 +117,102 @@ pwa-auth::part(signInButton) {
 
 
 
-a {
+/* a {
   color: #00B7FF;
+} */
+
+#outer
+{
+    width:100%;
+    text-align: center;
+}
+.inner
+{
+    display: inline-block;
+    margin-top: 5vh;
+}
+
+.dayButton {
+  text-align: center;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  font-size: large;
+}
+
+.routineButton {
+  background: #DEE3EE;
+  box-shadow: -10px -10px 30px #FFFFFF, 10px 10px 30px rgba(166, 174, 189, 0.6);
+  border-radius: 10px;
+  border: none;
+  height: 13vh;
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+  cursor: pointer;
+  font-size: 14pt;
+  font-family: 'Roboto';font-size: 16px;
+  color: #373737;
+  letter-spacing: 3px;
+}
+
+.routineButton:active {
+  background-color: #ffffff;
+  box-shadow: 10px 10px 30px #FFFFFF, -10px -10px 30px rgba(166, 174, 189, 0.6);
+  transform: translateY(4px);
+}
+
+#buttons {
+  position: relative;
+  /* bottom: 0vh; */
+  margin: auto;
+  padding-top: 5vh;
+}
+
+
+#mainSection {
+  text-align: center;
+  margin: auto;
+  width: 100vw;
+  /* position: absolute; */
+  bottom: 15vh;
+}
+
+.buttonContainer {
+  margin: auto;
+  padding: 3vh;
+}
+
+.navButton {
+  background: #DEE3EE;
+  box-shadow: -10px -10px 30px #FFFFFF, 10px 10px 30px rgba(166, 174, 189, 0.6);
+  padding: 3vh;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  height: 10vh;
+  width: 10vh;
+
+}
+.navButton:active {
+  background-color: #2FB9CA;
+  box-shadow: 10px 10px 30px #FFFFFF, -10px -10px 30px rgba(166, 174, 189, 0.6);
+  transform: translateY(4px);
+}
+
+#navButtonContainer {
+  position: absolute;
+  bottom: 2vh;
+  width: 100%;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
 }

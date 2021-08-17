@@ -11,6 +11,7 @@
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
         <!-- <script src="https://static.cleverpush.com/channel/loader/pCGzsj9JXF7JG6rps.js" async></script> -->
         <script>
             // var CleverPush = window.CleverPush || [];
@@ -61,23 +62,78 @@
 
     </head>
     <body>
-        <h1><%= title %></h1>
-        <h2 id='date'></h2>
-        <div id="prevDay">
-            <button onclick= <%= prevDay %> >Previous Day</button>
-        </div>
-        
-        <!-- <button onclick= "decrementDate()">Previous Day</button> -->
-        <div id="nextDay">
-        </div>
-        <br><br>
+        <div class="container">
 
-        <div id="mainSection">
+       
+            <!-- <h1><%= title %></h1> -->
+            <div id="outer">
+                <div id="prevDay" class="inner">
+                    <button class="dayButton" onclick= <%= prevDay %>> &#8592;</button>
+                </div>
+                <span>&nbsp;</span>
+                <div class="inner">
+                    <h2 id='date'></h2>
+                </div>
+                <span>&nbsp;</span>
+                <div id="nextDay" class="inner">
+                    <!-- &#8594; -->
+                </div>
+            </div>
+            
+            <!-- <div id="prevDay">
+                <button onclick= <%= prevDay %>> Previous Day</button>
+            </div> -->
+            
+            <!-- <button onclick= "decrementDate()">Previous Day</button> -->
+            <!-- <div id="nextDay">
+            </div> -->
+            <br><br>
 
+            <div id="mainSection">
+
+            </div>
+            <br><br>
+            <!-- <a href="/normalRoutine">
+                <button>My Normal Routine</button>
+            </a> -->
+    
+            <!-- <br><br>
+            <a href="/calendar">
+                <button>My History</button>
+            </a> -->
+    
+            <br><br>
+            <button onclick="logout()">Log Out</button>
+
+            <div id="navButtonContainer">
+                <!-- <a href="/normalRoutine"> -->
+                    <button class="navButton" style="margin-left: 20vw; margin-right: 10vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" height="100%"></button>
+                <!-- </a> -->
+                
+                <!-- <a href="/calendar"> -->
+                    <button class="navButton" style="margin-right: 20vw; margin-left: 10vw" onclick='window.location="/calendar"'><img id="calendarButton" height="100%"></button>
+                <!-- </a> -->
+                
+            </div>
         </div>
+
         
 
         <script>
+
+            // console.log(document.URL);
+
+            var url = new URL(document.URL);
+            if (url.pathname.slice(0, 2) == "/w") {
+                var userPath = "../images/Sample_User_Icon.png";
+                var calendarPath = "../images/Calendar_Icon.png";
+            } else {
+                var userPath = "./images/Sample_User_Icon.png";
+                var calendarPath = "./images/Calendar_Icon.png";
+            }
+
+            document.getElementById('normalRoutineButton').src = userPath;
+            document.getElementById('calendarButton').src = calendarPath;
 
             // console.log('online?:', navigator.onLine);
 
@@ -145,6 +201,8 @@
                 if (routineDict[dateString]) {
                     // var activities = JSON.stringify(weekActivities[dayCounter]);
                     document.getElementById('mainSection').innerHTML = '<div id="routine"></div>';
+                    document.getElementById('mainSection').style.position = "relative";
+                    document.getElementById('mainSection').style['margin-top'] = "15vh";
                     populateRoutine();
 
                 } else {
@@ -155,7 +213,11 @@
                     // console.log('difference: ', diffDays);
                     if (diffDays > 3) {
                         document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
+                        document.getElementById('mainSection').style.position = "relative";
+                        document.getElementById('mainSection').style['margin-top'] = "15vh";
                     } else {
+                        document.getElementById('mainSection').style.position = "absolute";
+                        document.getElementById('mainSection').style['margin-top'] = "";
                         document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity" onsubmit="return isOnline()" ></form>';
                         document.getElementById('activityForm').innerHTML += '<div id="buttons"></div>';
                         document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
@@ -186,15 +248,37 @@
                 // delete activities.title;
                 // delete activities.title;
                 // var keys = Object.keys(activities);
+                document.getElementById('routine').innerHTML += '<div id="routineDescription"></div>';
+                        // document.getElementById('routine').innerHTML += '<div id="icons" style="height: 100%; "></div>'
+
+                        document.getElementById('routineDescription').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
+                        document.getElementById('routineDescription').style['padding'] = '2vh';
+                        document.getElementById('routineDescription').style['width'] = '80%';
+                        document.getElementById('routineDescription').style['max-width'] = '400px';
+                        document.getElementById('routineDescription').style['margin'] = 'auto';
+                        document.getElementById('routineDescription').style['max-height'] = '40vh';
+                        document.getElementById('routineDescription').style['overflow'] = 'scroll';
+
                 var keys = Object.keys(activities);
+                
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
                     // console.log(title);
                     if ((title !== 'title') && (activities[title])) {
                         // console.log('title: ', title);
                         // console.log('content: ', activities[title]);
-                        document.getElementById('routine').innerHTML += '<a id="'+ title +'"></a>';
+                        
+                        document.getElementById('routineDescription').innerHTML += '<div id="'+ title +'"></div>';
+                        
+                        document.getElementById(title).style['padding'] = '1vh';
+
                         document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
+                        // document.getElementById(title).innerHTML += '<div class="alignleft" id="iconTest">Test</div>';
+                        
+
+
+                        // document.getElementById(title).style['opacity'] = '0.4';
+
                         if (activities[title][0] == '[') {
                             activitiesList = JSON.parse(activities[title]);
                             for (var j = 0; j < activitiesList.length; j++) {
@@ -216,8 +300,8 @@
 
             function populateButtons() {
                 for (var i = 0; i < routineTypes['results'].length; i++) {
-                document.getElementById('buttons').innerHTML += '<button name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button>';
-                document.getElementById('buttons').innerHTML += '<br>';
+                document.getElementById('buttons').innerHTML += '<div class="buttonContainer"><button class="routineButton" name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="button">'+routineTypes['results'][i]['routine']+'</button></div>';
+                // document.getElementById('buttons').innerHTML += '<br>';
                 console.log(routineTypes['results'][i]['routineID']);
                 }
 
@@ -236,7 +320,7 @@
             function getDisplayDate(date) {
                 newToday = new Date();
                 if (date == newToday.getFullYear()+'-'+(newToday.getMonth()+1)+'-'+newToday.getDate()) {
-                    var displayDate = 'Today';
+                    var displayDate = 'Today' ;
                 } else {
                     var displayDate = dateToString(date);
                 }
@@ -252,7 +336,7 @@
                 if (today >= newToday) {
                     document.getElementById('nextDay').innerHTML = '';
                 } else {
-                    document.getElementById('nextDay').innerHTML = '<button onclick=<%= nextDay %> >Next Day</button>';
+                    document.getElementById('nextDay').innerHTML = '<button class="dayButton" onclick=<%= nextDay %> >&#8594;</button>';
                     // document.getElementById('nextDay').innerHTML = '<button onclick="incrementDate()">Next Day</button>';
                 }
             }
@@ -311,7 +395,7 @@
             }
 
             function incrementDate() { 
-                document.getElementById('prevDay').innerHTML = '<button onclick= <%= prevDay %> >Previous Day</button>';
+                document.getElementById('prevDay').innerHTML = '<button class="dayButton" onclick= <%= prevDay %> >&#8592;</button>';
 
                 // dayCounter--;
                 
@@ -368,8 +452,6 @@
                 // console.log(weekActivities[dayCounter]);
                 // populateMainSection()
             }
-            
-
 
         </script>
 
@@ -416,18 +498,7 @@
 
         </script> -->
 
-        <br><br>
-        <a href="/normalRoutine">
-            <button>My Normal Routine</button>
-        </a>
-
-        <br><br>
-        <a href="/calendar">
-            <button>My History</button>
-        </a>
-
-        <br><br>
-        <button onclick="logout()">Log Out</button>
+       
 
         <!-- firebase: -->
         <!-- The core Firebase JS SDK is always required and must be listed first -->

@@ -28,5 +28,5 @@ function dateToString(date) {
 
     // console.log('test');
     // console.log(weekDays[dayIndex] + ' ' + day + append + ' ' + (months[monthIndex]) + ' ' + convDate.getFullYear());
-    return weekDays[dayIndex] + ' ' + day + append + ' ' + (months[monthIndex]) + ' ' + convDate.getFullYear();
+    return weekDays[dayIndex] + '<br>' + day + append + ' ' + (months[monthIndex]) + ' ' + convDate.getFullYear();
 }

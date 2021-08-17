@@ -89,8 +89,8 @@ app.use(function(err, req, res, next) {
 // }
 // console.log('after: ', process.env);
 
-const VAPID_PUBLIC_KEY = "BFuaW7LdscFd2-mN_lTvILOlijf9YzTnVcqbq4pgUVPyzOGPpOFoIS5ZyeenRvcz0jZ4ysWynvFfbgjnaDIJQK0"
-const VAPID_PRIVATE_KEY = "0bhLTOSzscVW0Gu1XOEhwsyk8M9-ha2HrPsX4mH0imA";
+const VAPID_PUBLIC_KEY = "BCrvW3Wqnj6Af3rcTamZLtzMvJX0gMCQLvmemsPQ9fruTTIFsQGoODQ1Zjn-6TRrV9bUtkpQAPQFSDQwSFGBnKg"
+const VAPID_PRIVATE_KEY = "ZnA0fY9H320xTpzTCWck1XJAbE9s9gTQ5ljOtoQq9eY";
 
 process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
 process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
@@ -109,7 +109,7 @@ console.log('app.js private: ', process.env.VAPID_PRIVATE_KEY);
 
 webPush.setGCMAPIKey('AIzaSyBjJ9i9OfBGzplXujpb-ft_452zF17BIjc');
 webPush.setVapidDetails(
-  'mailto:jordan.smith.202ucl.ac.uk',
+  'mailto:jordan.smith.20@ucl.ac.uk',
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
