@@ -65,48 +65,61 @@ navigator.serviceWorker.ready
                     // console.log(JSON.parse(document.cookie));
                     // console.log(getCook('accessToken'));
 
-                    if ((getCook('accessToken')) && (!getCook('subscription'))) {
+                    // think of a better way to do this other than cookies
+                    // 1. hash subscription object
+                    // 2. use as primary key in database
+                    // 3. use fetch to access a function to check whether subscriptionHash exists in database
+                    // 4. if it exists, do nothing
+                    // 5. if it doesn't exist, save in database
+
+                    var subExistResponse = await fetch('/checkSubscriptionAPI', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({subscription})
+                    })
+                    var subExistContent = await subExistResponse.json();
+                    console.log('subExists? ', subExistContent.subExists);
+
+                    if ((getCook('accessToken')) && (!subExistContent.subExists)) {
                         var accessToken = getCook('accessToken');
-                        (async () => {
-                            const rawResponse = await fetch('/saveSubscriptionAPI', {
-                              method: 'POST',
-                              headers: {
+                        var saveSubResponse = await fetch('/saveSubscriptionAPI', {
+                            method: 'POST',
+                            headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
-                              },
-                            //   body: JSON.stringify({a: 1, b: 'Textual content'})
-                                body: JSON.stringify({
-                                    subscription: JSON.stringify(subscription),
-                                    token: accessToken
-                                })
-                            });
-                            const content = await rawResponse.text();
-                          
-                            console.log('content: ', content);
-                          })()
-                          .then(function() {
-                              document.cookie = "subscription=true"
-                              console.log('save sub cookie');
-                          })
+                            },
+                           
+                            body: JSON.stringify({
+                                subscription: JSON.stringify(subscription),
+                                token: accessToken
+                            })
+                        })
+                        var saveSubContent = await saveSubResponse.json();
+                        console.log(saveSubContent);
+                    } else {
+                        console.log('subscription already saved');
                     }
 
                     
                    
 
-                    (async () => {
-                        const rawResponse = await fetch('/sendNotification', {
-                          method: 'POST',
-                          headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                          },
-                        //   body: JSON.stringify({a: 1, b: 'Textual content'})
-                            body: JSON.stringify(subscription)
-                        });
-                        const content = await rawResponse.text();
+                    // (async () => {
+                    //     const rawResponse = await fetch('/sendNotification', {
+                    //       method: 'POST',
+                    //       headers: {
+                    //         'Accept': 'application/json',
+                    //         'Content-Type': 'application/json'
+                    //       },
+                    //     //   body: JSON.stringify({a: 1, b: 'Textual content'})
+                    //         body: JSON.stringify(subscription)
+                    //     });
+                    //     const content = await rawResponse.text();
                       
-                        console.log('SendNotifcontent: ', content);
-                      })()
+                    //     console.log('SendNotifcontent: ', content);
+                    //   })()
 
                     // save subscription object to database
                     // saveSubscription(subscription);

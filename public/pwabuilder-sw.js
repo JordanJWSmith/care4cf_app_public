@@ -37,6 +37,7 @@ self.addEventListener( "install", function( event ){
                       // '/w/1',
                       // 'w/0?r=1',
                       // 'w/0',
+                      // add better trigger?
 
                   ]);
         })
@@ -78,7 +79,8 @@ const dateToDisplay = "javascripts/dateToDisplay.js";
 //   if (event.data && event.data.type === "SKIP_WAITING") {
 //     self.skipWaiting();
 //   }
-// });
+// }); 
+// test
 
 self.addEventListener('install', async (event) => {
   event.waitUntil(

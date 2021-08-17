@@ -1,14 +1,16 @@
 var express = require('express');
-const saveSubscription = require('./appDatabase/saveSubscription');
+const checkSubExists = require('./appDatabase/checkSubExists');
+
 var router = express.Router();
 
 router.post('/', function(req, res, next) {
   // console.log('req body: ', req.body);
-  saveSubscription(req.body)
+  var subscription = req.body;
+  checkSubExists(subscription)
   .then(function(results) {
     res.send(results);
   })
     
-  });
+});
   
 module.exports = router;

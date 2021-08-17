@@ -1,9 +1,14 @@
 const login = require('./login');
 var readData = require('./readData');
+var crypto = require('crypto');
 
 module.exports = async function(subscription) {
-    var subObject = JSON.stringify(subscription.subscription);
+    console.log('received subscription to save: ', subscription);
+    var subObject = subscription.subscription;
     var token = subscription.token;
+
+    var hash = crypto.createHash('md5').update(subObject).digest("hex"); 
+    console.log('save hash: ', hash);
 
     // console.log('aaccess token: ', token);
     
@@ -12,14 +17,18 @@ module.exports = async function(subscription) {
     // console.log('loginDetails: ', loginDetails.logIn);
     if (loginDetails.logIn) {
         var userID = loginDetails.userID;
-        var saveSub = "UPDATE users SET pushNotificationKey = ? WHERE userID = ?";
-        var saveSubValues = [subObject, userID];
+
+        var saveSub = "INSERT INTO subscriptions VALUES (?, ?, ?)";
+        var saveSubValues = [hash, userID, subObject];
+
         console.log('saving subscription');
         var results = await readData(saveSub, saveSubValues)
         .then(function(results) {
             return results;
         })
+
         return results
+
     } else {
         return false
     }
