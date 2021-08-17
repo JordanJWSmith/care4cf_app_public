@@ -64,6 +64,19 @@
     <body>
         <div class="container">
 
+            <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
+                <img src="./images/hamburgerDots.png" height="100%">
+            </a>
+
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="modalText" onclick="logout()">Log Out</p>
+                </div>
+            </div>
+
        
             <!-- <h1><%= title %></h1> -->
             <div id="outer">
@@ -103,7 +116,7 @@
             </a> -->
     
             <br><br>
-            <button onclick="logout()">Log Out</button>
+            <!-- <button onclick="logout()">Log Out</button> -->
 
             <div id="navButtonContainer">
                 <!-- <a href="/normalRoutine"> -->
@@ -300,7 +313,7 @@
 
             function populateButtons() {
                 for (var i = 0; i < routineTypes['results'].length; i++) {
-                document.getElementById('buttons').innerHTML += '<div class="buttonContainer"><button class="routineButton" name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="button">'+routineTypes['results'][i]['routine']+'</button></div>';
+                document.getElementById('buttons').innerHTML += '<div class="buttonContainer"><button class="routineButton" name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button></div>';
                 // document.getElementById('buttons').innerHTML += '<br>';
                 console.log(routineTypes['results'][i]['routineID']);
                 }
@@ -451,6 +464,30 @@
                 // console.log('dayCounter: ', dayCounter);
                 // console.log(weekActivities[dayCounter]);
                 // populateMainSection()
+            }
+
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            function openModal(date) {
+                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
+                // routineDescription(activities[date], 'modalText');
+                modal.style.display = "block";
             }
 
         </script>

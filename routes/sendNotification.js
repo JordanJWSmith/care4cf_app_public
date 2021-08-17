@@ -29,12 +29,7 @@ router.post('/', async function(req, res) {
     const subscription = req.body;
     console.log('sendNotification:', subscription);
     // console.log('endpoint: ', subscription.endpoint);
-    const payload = JSON.stringify({
-        "notification": {
-            "title": "Example title",
-            "body": "This is the body",
-        }
-    });
+    const payload = 'Hello! This is care4cf';
 
     const vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
     const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
