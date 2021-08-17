@@ -33,13 +33,13 @@ userExistsPriv(email).then(function(results) {
     } else {
         // User exists in private database
         console.log('user exists in private database');
-        userID = results.userID;
-        userExists(userID).then(function(userResults) {
+        var userID = results.userID;
+        userExists(userID).then(async function(userResults) {
             if (userResults.logIn) {
                 console.log('user exists in app database');
                 // User exists in app database
                 // updateToken
-                updateToken(token, userID)
+                await updateToken(token, userID)
                 // Then redirect to index
                 .then(res.redirect('/'));
                 
@@ -47,7 +47,11 @@ userExistsPriv(email).then(function(results) {
                 // User does not exist in app database
                 console.log('user does not exist in app database. Creating new row...');
                 // createUser
-                newUser({userID: userID, msalToken: token}).then(res.redirect('/'));
+                await newUser({userID: userID, msalToken: token})
+                .then(async function() {
+                    await updateToken(token, userID)
+                })
+                .then(res.redirect('/'));
 
                 // Then redirect to index
             }
