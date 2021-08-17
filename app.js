@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var webPush = require('web-push');
 var cron = require('node-cron');
+var fetch = require('fetch');
+var axios = require('axios').default;
+
 
 
 
@@ -116,11 +119,79 @@ webPush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY
 );
 
-// cron.schedule('* * * * *', async function() {
+// cron.schedule('* * * * *', function() {
 //   console.log('running a task every minute');
-//   await showNotification()
-//   .then(console.log('After notification'));
-// });
+//   // app.post('/sendNotification', function(req, res, next) {
+//   //   return res;
+//   // })
+//   cronPush()
+//   .then(function(results) {
+//     console.log('after push');
+//     console.log('sent: ', results);
+//   })
+// })
+  
+
+  // const rawResponse = await fetch('/sendNotification', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json'
+  //   },
+  // //   body: JSON.stringify({a: 1, b: 'Textual content'})
+  //     body: JSON.stringify(subscription)
+  // });
+  // const content = await rawResponse.text();
+
+  // console.log('SendNotifcontent: ', content);
+  // await showNotification()
+  // .then(console.log('After notification'));
+// })
+
+// async function cronPush() {
+//   console.log('cronPush');
+//   var axResponse = await axios.get('./routes/sendNotification')
+//   .then(function(response) {
+//     console.log(response);
+//     return response;
+//   })
+//   .catch(function(error) {
+//     console.log(error)
+//     return error;
+//   })
+//   }
+//   cronPush();
+
+  // var axResponse = await axios.post('/sendNotification')
+  // .then(function(response) {
+  //   console.log(response)
+  //   return response
+  // axios.post('/sendNotification', {
+  //   firstName: 'Fred',
+  //   lastName: 'Flintstone'
+  // })
+  // .then(function (response) {
+  //   console.log(response);
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+// }
+
+
+
+  // return axResponse;
+  // var response = await fetch.fetchUrl('/sendNotification', {
+  //   method:'POST',
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({title: 'test'})
+  // });
+  // var content = await response.text();
+  // return content;
+// }
 
 // function showNotification() {
 //   console.log('attempting notification');

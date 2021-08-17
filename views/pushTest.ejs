@@ -17,12 +17,29 @@
         </form> -->
 
         <button id="sendNotif" onclick="showNotification()">Notification</button>
+        <button id="properPush" onclick="properPush()">ProperPush</button>
         <!-- <button id="pushtest" onclick="pushEvent()">Push</button> -->
         <!-- <button id="cleverpush" onclick="cleverPush()">Cleverpush</button> -->
         <!-- <button id="cleverpush" onclick="cleverPush()">Cleverpush</button> -->
 
 
         <script>
+
+            // fetch not defined??
+            function properPush() {
+                        const rawResponse = await fetch('/sendNotification', {
+                          method: 'POST',
+                          headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                          },
+                        //   body: JSON.stringify({a: 1, b: 'Textual content'})
+                            body: {}
+                        });
+                        const content = await rawResponse.text();
+                      
+                        console.log('SendNotifcontent: ', content);
+            }
 
            
 
