@@ -65,7 +65,7 @@
         <div class="container">
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
-                <img src="./images/hamburgerDots.png" height="100%">
+                <img id="hamburgerButton" height="100%">
             </a>
 
             <div id="myModal" class="modal">
@@ -138,15 +138,15 @@
 
             var url = new URL(document.URL);
             if (url.pathname.slice(0, 2) == "/w") {
-                var userPath = "../images/Sample_User_Icon.png";
-                var calendarPath = "../images/Calendar_Icon.png";
+                var path = "../images/"
             } else {
-                var userPath = "./images/Sample_User_Icon.png";
-                var calendarPath = "./images/Calendar_Icon.png";
+                var path = "./images/"
             }
 
-            document.getElementById('normalRoutineButton').src = userPath;
-            document.getElementById('calendarButton').src = calendarPath;
+            document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";
+            document.getElementById('calendarButton').src = path + "Calendar_Icon.png";
+            document.getElementById('hamburgerButton').src = path + "hamburgerDots.png";
+            // doccument.get
 
             // console.log('online?:', navigator.onLine);
 
@@ -248,7 +248,6 @@
 
             function populateRoutine() {
                 var dateString = dateList[dayCounter];
-               
                 var activities = routineDict[dateString];
                 // console.log('dateString: ', dateString);
                 // console.log('activities: ', activities)
@@ -264,28 +263,42 @@
                 document.getElementById('routine').innerHTML += '<div id="routineDescription"></div>';
                         // document.getElementById('routine').innerHTML += '<div id="icons" style="height: 100%; "></div>'
 
-                        document.getElementById('routineDescription').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
-                        document.getElementById('routineDescription').style['padding'] = '2vh';
-                        document.getElementById('routineDescription').style['width'] = '80%';
-                        document.getElementById('routineDescription').style['max-width'] = '400px';
-                        document.getElementById('routineDescription').style['margin'] = 'auto';
-                        document.getElementById('routineDescription').style['max-height'] = '40vh';
-                        document.getElementById('routineDescription').style['overflow'] = 'scroll';
+                document.getElementById('routineDescription').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
+                document.getElementById('routineDescription').style['padding'] = '2vh';
+                document.getElementById('routineDescription').style['width'] = '80%';
+                document.getElementById('routineDescription').style['max-width'] = '400px';
+                document.getElementById('routineDescription').style['margin'] = 'auto';
+                document.getElementById('routineDescription').style['max-height'] = '40vh';
+                document.getElementById('routineDescription').style['overflow'] = 'scroll';
+
+                var table = document.createElement('table');
+                table.setAttribute("id", "routineTable");
+                document.getElementById('routineDescription').appendChild(table);
+
+                
+                // document.getElementById('routineDescription').innerHTML += '<table style="width:100%></table>';
 
                 var keys = Object.keys(activities);
                 
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
-                    // console.log(title);
+                    console.log(title);
                     if ((title !== 'title') && (activities[title])) {
-                        // console.log('title: ', title);
-                        // console.log('content: ', activities[title]);
+
                         
-                        document.getElementById('routineDescription').innerHTML += '<div id="'+ title +'"></div>';
+                        document.getElementById('routineTable').innerHTML += '<tr><td><img src="'+path+title+'Icon.png" style="max-height: 6vh;"></td><td><div id="'+ title +'"></div></td></tr>';
+
+                        // console.log('title: ', title); 
+                        // console.log('content: ', activities[title]);
+                        document.getElementById('routineDescription').innerHTML += '<div id="' + title + 'routineContainer"></div>'
+                        
+                        // document.getElementById(title + 'routineContainer').innerHTML += '<div id="'+ title +'icon">Icon</div>';
+                        document.getElementById(title + 'routineContainer').innerHTML += '<div id="'+ title +'"></div>';
                         
                         document.getElementById(title).style['padding'] = '1vh';
+                        // document.getElementById(title).style['padding-left'] = '20%';
 
-                        document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
+                        // document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
                         // document.getElementById(title).innerHTML += '<div class="alignleft" id="iconTest">Test</div>';
                         
 
@@ -296,13 +309,13 @@
                             activitiesList = JSON.parse(activities[title]);
                             for (var j = 0; j < activitiesList.length; j++) {
                                 if (typeof activitiesList[j] == "object") {
-                                    document.getElementById(title).innerHTML += '<dd>' + activitiesList[j][0] + ' (' + activitiesList[j][1] + ') ' + '</dd>';
+                                    document.getElementById(title).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + activitiesList[j][0] + ' (' + activitiesList[j][1] + ') ' + '</dd>';
                                 } else {
-                                    document.getElementById(title).innerHTML += '<dd>' + activitiesList[j] + '</dd>';
+                                    document.getElementById(title).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + activitiesList[j] + '</dd>';
                                 }
                             }
                         } else {
-                            document.getElementById(title).innerHTML += '<dd>' + activities[title] + '</dd>';
+                            document.getElementById(title).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + activities[title] + '</dd>';
                         }
                     }
                     

@@ -102,13 +102,13 @@
                         cal.push(['<tr>']);
                         for (var j = 0; j < 7; j++) {
                             if (i === 0) {
-                                cal[i].push('<td>' + details.weekDays[j] + '</td>');
+                                cal[i].push('<td id="caltd">' + details.weekDays[j] + '</td>');
                                 
                             } else if (day > details.totalDays) {
-                            cal[i].push('<td>&nbsp;</td>');
+                            cal[i].push('<td id="caltd">&nbsp;</td>');
                             } else {
                                 if (i === 1 && j < start) {
-                                    cal[i].push('<td>&nbsp;</td>');
+                                    cal[i].push('<td id="caltd">&nbsp;</td>');
                                 } else {
                                     // console.log('day? ', day);
                                     // console.log(d.getFullYear() + '-' + (d.getMonth() +1) + "-" + day);
@@ -116,10 +116,10 @@
                                     // console.log(activities[interDate]);
                                     if (activities[interDate]) {
                                    
-                                            cal[i].push('<td class="day dot" onclick="openModal('+"'" + interDate + "'" + ')">' + day++ + '</td>');
+                                            cal[i].push('<td id="caltd" class="day dot" onclick="openModal('+"'" + interDate + "'" + ')">' + day++ + '</td>');
                                        
                                     } else {
-                                        cal[i].push('<td class="day">' + day++ + '</td>');
+                                        cal[i].push('<td id="caltd" class="day">' + day++ + '</td>');
                                     }
                                     
                                     

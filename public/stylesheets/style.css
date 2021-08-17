@@ -77,10 +77,10 @@ table {
   margin: auto;
   /* max-height: 50vh; */
 }
-th {
+#calth {
   text-align: center;
 }
-td {
+#caltd {
   /* width: 14.2%; */
   height: 16%;
   text-align: center;
@@ -95,7 +95,7 @@ td {
   border-width: 2px;
   border-style: solid;
 }
-td,
+#caltd,
 #year {
   font-family: monospace;
 }

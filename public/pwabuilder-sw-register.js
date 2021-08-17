@@ -121,21 +121,16 @@ navigator.serviceWorker.ready
                       
                     //     console.log('SendNotifcontent: ', content);
                     //   })()
-                    (async () => {
-                        const rawResponse = await fetch('/sendNotification', {
-                          method: 'GET',
-                        //   headers: {
-                        //     'Accept': 'application/json',
-                        //     'Content-Type': 'application/json'
-                        //   },
-                        // //   body: JSON.stringify({a: 1, b: 'Textual content'})
-                        //     body: JSON.stringify(subscription)
-                        //     // body: {}
-                        });
-                        const content = await rawResponse.text();
+
+
+                    // (async () => {
+                    //     const rawResponse = await fetch('/sendNotification', {
+                    //       method: 'GET',
+                    //     });
+                    //     const content = await rawResponse.text();
                       
-                        console.log('SendNotifcontent: ', content);
-                      })()
+                    //     console.log('SendNotifcontent: ', content);
+                    //   })()
 
                     // save subscription object to database
                     // saveSubscription(subscription);

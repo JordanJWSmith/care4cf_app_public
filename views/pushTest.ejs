@@ -25,19 +25,21 @@
 
         <script>
 
+            // (async () => {
+            // const rawResponse = await fetch('/sendNotification', {
+            //     method: 'GET',
+            // });
+            // const content = await rawResponse.text();
+            
+            // console.log('SendNotifcontent: ', content);
+            // })()
+
             // fetch not defined??
-            function properPush() {
+            async function properPush() {
                         const rawResponse = await fetch('/sendNotification', {
-                          method: 'POST',
-                          headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                          },
-                        //   body: JSON.stringify({a: 1, b: 'Textual content'})
-                            body: {}
+                          method: 'GET',
                         });
                         const content = await rawResponse.text();
-                      
                         console.log('SendNotifcontent: ', content);
             }
 
@@ -124,7 +126,7 @@
                             var timeStamp = new Date()
                             // console.log(msToHMS(timeStamp.getTime()));
                             
-                            await registration.showNotification('Vibration Sample', {
+                            await registration.showNotification('Simple Push', {
                                 body: timeStamp,
                                 icon: './images/icon512.png',
                                 vibrate: [200, 100, 200, 100, 200, 100, 200],
