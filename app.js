@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var webPush = require('web-push');
 var cron = require('node-cron');
-var fetch = require('fetch');
-var axios = require('axios').default;
+// var fetch = require('fetch');
+// var axios = require('axios').default;
 
 
 
@@ -27,6 +27,10 @@ var registerRouter = require('./routes/register');
 var sendNotificationRouter = require('./routes/sendNotification');
 var saveSubscriptionAPIRouter = require('./routes/saveSubscriptionAPI');
 var checkSubscriptionAPIRouter = require('./routes/checkSubscriptionAPI');
+
+var getSubscriptions = require('./routes/appDatabase/getSubscriptions');
+var sendPush = require('./routes/appDatabase/sendPush');
+var sendReminder = require('./routes/appDatabase/sendReminder');
 
 
 var app = express();
@@ -119,17 +123,15 @@ webPush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY
 );
 
-// cron.schedule('* * * * *', function() {
-//   console.log('running a task every minute');
-//   // app.post('/sendNotification', function(req, res, next) {
-//   //   return res;
-//   // })
-//   cronPush()
-//   .then(function(results) {
-//     console.log('after push');
-//     console.log('sent: ', results);
-//   })
-// })
+cron.schedule('0 20 * * *', function() {
+  // console.log('running a task every minute');
+  sendReminder()
+  .then(function(results) {
+    console.log('sent ', results);
+    // console.log('function complete');
+  })
+})
+
   
 
   // const rawResponse = await fetch('/sendNotification', {

@@ -54,6 +54,7 @@ html, body {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  max-width: 400px;
 }
 
 /* The Close Button */
@@ -140,7 +141,9 @@ pwa-auth::part(signInButton) {
   cursor:pointer;
   overflow: hidden;
   outline:none;
-  font-size: large;
+  font-size: xx-large;
+  position: absolute;
+  top: 12vh;
 }
 
 .routineButton {
@@ -208,6 +211,10 @@ pwa-auth::part(signInButton) {
   position: absolute;
   bottom: 2vh;
   width: 100%;
+  /* margin: auto;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(50%); */
 }
 
 .alignleft {

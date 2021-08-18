@@ -15,7 +15,6 @@ self.addEventListener("message", (event) => {
   }
 });
 
-// comment
 // This caches all the pages?
 self.addEventListener( "install", function( event ){
     event.waitUntil(

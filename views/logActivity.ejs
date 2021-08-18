@@ -81,7 +81,7 @@
             <!-- <h1><%= title %></h1> -->
             <div id="outer">
                 <div id="prevDay" class="inner">
-                    <button class="dayButton" onclick= <%= prevDay %>> &#8592;</button>
+                    <button class="dayButton" style="left: 7vw" onclick= <%= prevDay %>> &#8592;</button>
                 </div>
                 <span>&nbsp;</span>
                 <div class="inner">
@@ -120,11 +120,11 @@
 
             <div id="navButtonContainer">
                 <!-- <a href="/normalRoutine"> -->
-                    <button class="navButton" style="margin-left: 20vw; margin-right: 10vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" height="100%"></button>
+                    <button class="navButton" style="margin-right: 15vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" height="100%"></button>
                 <!-- </a> -->
                 
                 <!-- <a href="/calendar"> -->
-                    <button class="navButton" style="margin-right: 20vw; margin-left: 10vw" onclick='window.location="/calendar"'><img id="calendarButton" height="100%"></button>
+                    <button class="navButton" style="margin-left: 15vw" onclick='window.location="/calendar"'><img id="calendarButton" height="100%"></button>
                 <!-- </a> -->
                 
             </div>
@@ -362,7 +362,7 @@
                 if (today >= newToday) {
                     document.getElementById('nextDay').innerHTML = '';
                 } else {
-                    document.getElementById('nextDay').innerHTML = '<button class="dayButton" onclick=<%= nextDay %> >&#8594;</button>';
+                    document.getElementById('nextDay').innerHTML = '<button class="dayButton" style="right: 7vw" onclick=<%= nextDay %> >&#8594;</button>';
                     // document.getElementById('nextDay').innerHTML = '<button onclick="incrementDate()">Next Day</button>';
                 }
             }
@@ -421,7 +421,7 @@
             }
 
             function incrementDate() { 
-                document.getElementById('prevDay').innerHTML = '<button class="dayButton" onclick= <%= prevDay %> >&#8592;</button>';
+                document.getElementById('prevDay').innerHTML = '<button class="dayButton" style="left: 7vw" onclick= <%= prevDay %> >&#8592;</button>';
 
                 // dayCounter--;
                 
