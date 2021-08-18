@@ -104,8 +104,8 @@ const VAPID_PRIVATE_KEY = "ZnA0fY9H320xTpzTCWck1XJAbE9s9gTQ5ljOtoQq9eY";
 process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
 process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
 
-console.log('app.js public: ', process.env.VAPID_PUBLIC_KEY);
-console.log('app.js private: ', process.env.VAPID_PRIVATE_KEY);
+// console.log('app.js public: ', process.env.VAPID_PUBLIC_KEY);
+// console.log('app.js private: ', process.env.VAPID_PRIVATE_KEY);
 
 
 

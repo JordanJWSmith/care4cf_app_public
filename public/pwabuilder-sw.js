@@ -22,10 +22,6 @@ self.addEventListener( "install", function( event ){
               .then(function( cache ){
                 console.log('caching pages');
                   return cache.addAll([
-                      // "/css/main.css",
-                      // "/js/main.js",
-                      // "/img/favicon.png",
-                      // "/offline/"
                       "/calendar",
                       '/',
                       '/loginUser',
@@ -33,11 +29,16 @@ self.addEventListener( "install", function( event ){
                       '/newSchedule',
                       '/normalRoutine',
                       '/somethingDifferent',
-                      // '/w/1',
-                      // 'w/0?r=1',
-                      // 'w/0',
-                      // add better trigger?
-
+                      '/images/adjunctsIcon.png',
+                      '/images/Calendar_Icon.png',
+                      '/images/descriptionIcon.png',
+                      '/images/durationIcon.png',
+                      '/images/frequencyIcon.png',
+                      '/images/hamburgerDots.png',
+                      '/images/icon512.png',
+                      '/images/logo.png',
+                      '/images/Sample_User_Icon.png',
+                      '/images/techniquesIcon.png',
                   ]);
         })
     );
@@ -60,26 +61,11 @@ workbox.routing.registerRoute(
 // })
 
 
-
-// This is the service worker with the combined offline experience (Offline page + Offline copy of pages)
-
-// const CACHE = "pwabuilder-offline-page";
-
-// importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
-
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
 const offlineFallbackPage = "offline.html";
 const routineDescription = "javascripts/routineDescription.js";
 const getCook = "javascripts/getCook.js";
 const dateToDisplay = "javascripts/dateToDisplay.js";
-// const logOut = "javascripts/logout.js";
 
-// self.addEventListener("message", (event) => {
-//   if (event.data && event.data.type === "SKIP_WAITING") {
-//     self.skipWaiting();
-//   }
-// }); 
-// test
 
 self.addEventListener('install', async (event) => {
   event.waitUntil(

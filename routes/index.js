@@ -17,6 +17,7 @@ const getFrequencies = require('./appDatabase/getFrequencies');
 const getRoutine = require('./appDatabase/getRoutine');
 const checkForDate = require('./appDatabase/checkForDate');
 const getWeekActivities = require('./appDatabase/getWeekActivities');
+const promptToEditNormal = require('./appDatabase/promptToEditNormal');
 var router = express.Router();
 
 
@@ -118,8 +119,18 @@ router.post('/scheduleData', async function(req, res, next) {
       var scheduleID = results[1][0]['LAST_INSERT_ID()'];
       
       await logDifferent(scheduleDetails.user, scheduleDetails.chosenDate, scheduleID, scheduleDetails.activityType)
+      .then(async function() {
+        await promptToEditNormal(scheduleDetails.user) 
+        .then(function(promptResults) {
+          if (promptResults) {
+            res.redirect('/?np=true')
+          } else {
+            res.redirect('/');
+          }
+        })
+      })
       // res.redirect('/')
-      .then(res.redirect('/'))
+      // .then(res.redirect('/'))
     } else {
       res.redirect('/');
     }

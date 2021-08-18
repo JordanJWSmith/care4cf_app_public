@@ -77,6 +77,25 @@
                 </div>
             </div>
 
+            <!-- <button onclick="promptModal()">Open prompt</button> -->
+
+            <div id="updateNormalModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close" id="updateClose">&times;</span>
+                    <p id="modalText">
+                        You haven't logged your normal routine in a while. 
+                        <br><br> 
+                        Update your normal routine?
+                        <br><br>
+                        <button class="navButton" margin="auto" onclick='window.location="/normalRoutine"'>
+                            <img id="normalRoutineButtonPrompt" height="100%">
+                        </button>
+                    </p>
+                </div>
+            </div>
+
        
             <!-- <h1><%= title %></h1> -->
             <div id="outer">
@@ -144,9 +163,16 @@
             }
 
             document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";
+            document.getElementById('normalRoutineButtonPrompt').src = path + "Sample_User_Icon.png";
             document.getElementById('calendarButton').src = path + "Calendar_Icon.png";
             document.getElementById('hamburgerButton').src = path + "hamburgerDots.png";
-            // doccument.get
+
+            if (url.searchParams.get('np')) {
+                console.log('open modal');
+                document.getElementById("updateNormalModal").style.display = "block";
+               
+            }
+         
 
             // console.log('online?:', navigator.onLine);
 
@@ -268,7 +294,7 @@
                 document.getElementById('routineDescription').style['width'] = '80%';
                 document.getElementById('routineDescription').style['max-width'] = '400px';
                 document.getElementById('routineDescription').style['margin'] = 'auto';
-                document.getElementById('routineDescription').style['max-height'] = '40vh';
+                document.getElementById('routineDescription').style['max-height'] = '42vh';
                 document.getElementById('routineDescription').style['overflow'] = 'scroll';
 
                 var table = document.createElement('table');
@@ -481,26 +507,42 @@
 
             // Get the modal
             var modal = document.getElementById("myModal");
+            var updateNormalModal = document.getElementById("updateNormalModal");
 
             // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
+            var span = document.getElementsByClassName("close");
+            console.log('span', span);
 
             // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
+            span[0].onclick = function() {
                 modal.style.display = "none";
+                // updateNormalModal.style.display = "none";
+            }
+
+            span[1].onclick = function() {
+                updateNormalModal.style.display = "none";
+                // updateNormalModal.style.display = "none";
             }
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
+                } else if (event.target == updateNormalModal) {
+                    updateNormalModal.style.display = "none";
                 }
             }
 
-            function openModal(date) {
+            function openModal() {
                 // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
                 // routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
+            }
+
+            function promptModal() {
+                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
+                // routineDescription(activities[date], 'modalText');
+                updateNormalModal.style.display = "block";
             }
 
         </script>

@@ -71,17 +71,18 @@ navigator.serviceWorker.ready
                     // 3. use fetch to access a function to check whether subscriptionHash exists in database
                     // 4. if it exists, do nothing
                     // 5. if it doesn't exist, save in database
-
-                    var subExistResponse = await fetch('/checkSubscriptionAPI', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({subscription})
-                    })
+                    if (navigator.onLine) {
+                        var subExistResponse = await fetch('/checkSubscriptionAPI', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({subscription})
+                        })
                     var subExistContent = await subExistResponse.json();
-                    console.log('subExists? ', subExistContent.subExists);
+                    
+                    // console.log('subExists? ', subExistContent.subExists);
 
                     if ((getCook('accessToken')) && (!subExistContent.subExists)) {
                         var accessToken = getCook('accessToken');
@@ -101,6 +102,8 @@ navigator.serviceWorker.ready
                         console.log(saveSubContent);
                     } else {
                         console.log('subscription already saved');
+                    }
+
                     }
 
                     

@@ -10,6 +10,7 @@ const getFrequencies = require('./appDatabase/getFrequencies');
 const getAllNormals = require('./appDatabase/getAllNormals');
 const getNormalSchedID = require('./appDatabase/getNormalSchedID');
 const logDifferent = require('./appDatabase/logDifferent');
+const promptToEditNormal = require('./appDatabase/promptToEditNormal');
 
 
 router.get('/', function (req, res, next) {
@@ -26,20 +27,26 @@ router.get('/', function (req, res, next) {
             .then(function(allNormalsResults) {
                 getNormalSchedID(results.userID)
                 .then(function(normalSchedIDResult) {
-                    // var normalSched = normalSchedIDResult[0].scheduleID;
+                    promptToEditNormal(results.userID)
+                    .then(function(promptResults) {
+                        console.log('promptResults: ', promptResults);
+                         // var normalSched = normalSchedIDResult[0].scheduleID;
                     // console.log(normalSched);
                     // console.log('normal ID: ', normalSchedIDResult.results[0].scheduleID);
-                    var normalSched = normalSchedIDResult.results[0].scheduleID;
-                    // console.log(chosenDate);
-                    res.render('myRoutines', {
-                        title: 'Which activities did you do?',
-                        routines: JSON.stringify(allNormalsResults),
-                        normalSched: normalSched,
-                        user: results.userID,
-                        chosenDate: chosenDate,
-                        activityType: activityType,
-                        somethingDifferent: true
+                        var normalSched = normalSchedIDResult.results[0].scheduleID;
+                        // console.log(chosenDate);
+                        res.render('myRoutines', {
+                            title: 'Which activities did you do?',
+                            routines: JSON.stringify(allNormalsResults),
+                            normalSched: normalSched,
+                            user: results.userID,
+                            chosenDate: chosenDate,
+                            activityType: activityType,
+                            somethingDifferent: true,
+                            // prompt: promptResults
+                        })
                     })
+                   
                 })                
             })           
         }
@@ -85,20 +92,25 @@ router.get('/logNew', function (req, res, next) {
                     .then(function(adjunctTimeResults) {
                         getFrequencies()
                         .then(function(frequencyResults) {
-                            res.render('newSchedule', 
-                            // res.render('logFromRoutines', 
-                        {title: 'What activities did you do?', 
-                        user: results.userID, 
-                        techniques: JSON.stringify(techResults),
-                        durations: JSON.stringify(durationResults),
-                        adjuncts: JSON.stringify(adjunctResults),
-                        adjunctTimes: JSON.stringify(adjunctTimeResults),
-                        frequencies: JSON.stringify(frequencyResults),
-                        chosenDate: chosenDate,
-                        activityType: activityType,
-                        saveAsNormal: saveAsNormal,
-                        sched: sched
-                        })
+                            // promptToEditNormal(results.userID)
+                            // .then(function(promptResults) {
+                                res.render('newSchedule', 
+                                // res.render('logFromRoutines', 
+                                {
+                                    title: 'What activities did you do?', 
+                                    user: results.userID, 
+                                    techniques: JSON.stringify(techResults),
+                                    durations: JSON.stringify(durationResults),
+                                    adjuncts: JSON.stringify(adjunctResults),
+                                    adjunctTimes: JSON.stringify(adjunctTimeResults),
+                                    frequencies: JSON.stringify(frequencyResults),
+                                    chosenDate: chosenDate,
+                                    activityType: activityType,
+                                    saveAsNormal: saveAsNormal,
+                                    sched: sched
+                                })
+                          
+                            // })
                         })
                     })
                 })
@@ -115,9 +127,21 @@ router.post('/logActivity', async function(req, res, next) {
     var chosenDate = req.body.chosenDate;
     var userID = req.body.userID;
     var scheduleID = req.body.scheduleID;
-    // changed to 2?
+    
+    // if promptToEditNormal, redirect to myRoutines instead
     await logDifferent(userID, chosenDate, scheduleID, 2)
-    .then(res.redirect('/'));
+    .then(async function() {
+        await promptToEditNormal(userID)
+        .then(function(promptResults) {
+            console.log(promptResults)
+            if (promptResults) {
+                res.redirect('/?np=true')
+            } else {
+                res.redirect('/');
+            }
+        })
+    })
+    // .then(res.redirect('/'));
     // var details = JSON.parse(req.body.details);
     // await logDifferent
     // res.send(details);

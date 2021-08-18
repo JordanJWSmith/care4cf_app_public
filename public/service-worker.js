@@ -1,1 +1,1 @@
-importScripts('https://pushpad.xyz/service-worker.js');
+// importScripts('https://pushpad.xyz/service-worker.js');
