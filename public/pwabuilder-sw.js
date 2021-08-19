@@ -39,6 +39,8 @@ self.addEventListener( "install", function( event ){
                       '/images/logo.png',
                       '/images/Sample_User_Icon.png',
                       '/images/techniquesIcon.png',
+                      '/images/circleicon.png',
+                      '/images/myRoutinesIcon.png',
                   ]);
         })
     );

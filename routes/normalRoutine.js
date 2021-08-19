@@ -19,8 +19,8 @@ router.get('/', function (req, res, next) {
                     title: 'My Routine', 
                     user: results.userID,
                     techniques: routineResults.techniques,
-                    duration: routineResults.duration,
-                    frequency: routineResults.frequency,
+                    duration: JSON.stringify(routineResults.duration),
+                    frequency: JSON.stringify(routineResults.frequency),
                     adjuncts: routineResults.adjuncts
                     // adjuncts: false
                 })

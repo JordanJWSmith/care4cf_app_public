@@ -139,11 +139,12 @@
 
             <div id="navButtonContainer">
                 <!-- <a href="/normalRoutine"> -->
-                    <button class="navButton" style="margin-right: 15vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" height="100%"></button>
+                    <button class="navButton" style="margin-right: 5vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" height="100%"></button>
                 <!-- </a> -->
+                    <button id="mainNavButton" class="navButtonDisabled" style="margin: auto; height: 13vh; width: 13vh; border: #2FB9CA;border-width: thick;border-style: solid;"><img id="mainButton" height="100%"></button>
                 
                 <!-- <a href="/calendar"> -->
-                    <button class="navButton" style="margin-left: 15vw" onclick='window.location="/calendar"'><img id="calendarButton" height="100%"></button>
+                    <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'><img id="calendarButton" height="100%"></button>
                 <!-- </a> -->
                 
             </div>
@@ -166,6 +167,9 @@
             document.getElementById('normalRoutineButtonPrompt').src = path + "Sample_User_Icon.png";
             document.getElementById('calendarButton').src = path + "Calendar_Icon.png";
             document.getElementById('hamburgerButton').src = path + "hamburgerDots.png";
+            // document.getElementById('mainButton').src = path + "logo.png";
+            document.getElementById('mainButton').src = path + "circleIcon.png";
+
 
             if (url.searchParams.get('np')) {
                 console.log('open modal');
@@ -241,7 +245,9 @@
                     // var activities = JSON.stringify(weekActivities[dayCounter]);
                     document.getElementById('mainSection').innerHTML = '<div id="routine"></div>';
                     document.getElementById('mainSection').style.position = "relative";
+                    // document.getElementById('mainSection').style.position = "absolute";
                     document.getElementById('mainSection').style['margin-top'] = "15vh";
+                    // document.getElementById('mainSection').style['margin-top'] = "0vh";
                     populateRoutine();
 
                 } else {
@@ -372,7 +378,7 @@
             function getDisplayDate(date) {
                 newToday = new Date();
                 if (date == newToday.getFullYear()+'-'+(newToday.getMonth()+1)+'-'+newToday.getDate()) {
-                    var displayDate = 'Today' ;
+                    var displayDate = 'Today <br> &nbsp;' ;
                 } else {
                     var displayDate = dateToString(date);
                 }

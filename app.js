@@ -124,6 +124,7 @@ webPush.setVapidDetails(
 );
 
 cron.schedule('0 20 * * *', function() {
+  // cron.schedule('* * * * *', function() {
   // console.log('running a task every minute');
   sendReminder()
   .then(function(results) {
