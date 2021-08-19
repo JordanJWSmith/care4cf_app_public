@@ -7,6 +7,7 @@
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     </head>
 
     <style>
@@ -35,47 +36,49 @@
     </style>
 
     <body>
-        <h1><%= title %></h1>
-      
+        <div class="container">
+            <h1><%= title %></h1>
+        
 
-        <div id="routineSection">
+            <div id="routineSection">
 
-        </div>
+            </div>
 
-        <br><br>
-        <% if (!somethingDifferent) { %>
-            <!-- <a href="/newSchedule"> -->
-                <button onclick="isOnline()">Save a new schedule</button>
-            <!-- </a>  -->
+            <br><br>
+
+            <% if (!somethingDifferent) { %>
+                <!-- <a href="/newSchedule"> -->
+                    <button onclick="isOnline()">Save a new schedule</button>
+                <!-- </a>  -->
+                <% } else { %>
+            <a href="/somethingDifferent/logNew">
+                <button>Something else</button>
+            </a>
+            <% } %>
+
+            <% if (!somethingDifferent) { %>
+                <form action="/myRoutines/newNormal" method="POST" name="newNormal">
+                    <a id="newNormalUser"></a>
+                    <a id="newNormalSchedule"></a>
+                </form>
             <% } else { %>
-        <a href="/somethingDifferent/logNew">
-            <button>Something else</button>
-        </a>
-        <% } %>
+                <form action="/somethingDifferent/logActivity" method="POST" name="logActivity">
+                    <a id="logChosenDate"></a>
+                    <a id="logUserID"></a>
+                    <a id="logScheduleID"></a>
+                </form>
+            <% } %>
 
-        <% if (!somethingDifferent) { %>
-            <form action="/myRoutines/newNormal" method="POST" name="newNormal">
-                <a id="newNormalUser"></a>
-                <a id="newNormalSchedule"></a>
-            </form>
-        <% } else { %>
-            <form action="/somethingDifferent/logActivity" method="POST" name="logActivity">
-                <a id="logChosenDate"></a>
-                <a id="logUserID"></a>
-                <a id="logScheduleID"></a>
-            </form>
-        <% } %>
+            <br><br>
+            <a href="/normalRoutine">
+                <button >Back to Normal Routine</button>
+            </a>
 
-        <br><br>
-        <a href="/normalRoutine">
-            <button >Back to Normal Routine</button>
-        </a>
-
-        <br><br>
-        <a href="/">
-            <button>Log Activity</button>
-        </a>
-
+            <br><br>
+            <a href="/">
+                <button>Log Activity</button>
+            </a>
+        </div>
 
 
         <script>
@@ -91,7 +94,7 @@
             } else {
                 window.location="/newSchedule";
             }
-        }
+            }
 
             // function getCook(cookiename) {
             //     // Get name followed by anything except a semicolon
