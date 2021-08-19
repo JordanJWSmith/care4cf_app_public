@@ -12,7 +12,7 @@
 
     <style>
         .collapsible {
-          background-color: #777;
+          background-color: rgba(154,154,154,1);
           color: white;
           cursor: pointer;
           padding: 18px;
@@ -21,10 +21,13 @@
           text-align: left;
           outline: none;
           font-size: 15px;
+          /* border-radius: 10px; */
+          /* background-color:linear-gradient(90deg, rgba(128,128,128,1) 0%, rgba(154,154,154,1) 47%, rgba(216,216,216,1) 100%) */
         }
         
         .active, .collapsible:hover {
           background-color: #555;
+          /* border-radius: 10px; */
         }
         
         .content {
@@ -32,28 +35,50 @@
           display: none;
           overflow: hidden;
           background-color: #f1f1f1;
+          border-radius: 10px;
         }
     </style>
 
     <body>
-        <div class="container">
-            <h1><%= title %></h1>
-        
-
-            <div id="routineSection">
-
+        <div class="container" style="display: table;">
+            <div>
+                <img src="./images/backArrowIcon.png" onclick="window.location='/normalRoutine'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
             </div>
 
-            <br><br>
+            <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
+                <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
+            </a>
+
+            <h1 style="margin-top: 9vh"><%= title %></h1>
+        
+            <div>
+                <div id="routineSection" style="max-width: 400px; margin: auto; margin-top: 10vh">
+
+                </div>
+            </div>
+
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="modalText" onclick="logout()">Log Out</p>
+                </div>
+            </div>
+            <!-- <br><br> -->
 
             <% if (!somethingDifferent) { %>
                 <!-- <a href="/newSchedule"> -->
-                    <button onclick="isOnline()">Save a new schedule</button>
-                <!-- </a>  -->
+                    <!-- <button onclick="isOnline()">Save a new schedule</button> -->
+                    <button class="navButton" style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;" onclick='window.location="/newSchedule"'>
+                        <img id="myRoutinesButton" src="./images/plusIcon.png" height="100%">
+                    </button>
+                
                 <% } else { %>
-            <a href="/somethingDifferent/logNew">
+            <!-- <a href="/somethingDifferent/logNew">
                 <button>Something else</button>
-            </a>
+            </a> -->
+            <button class="optionButton" onclick='window.location="/newSchedule"' style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;">Something Different</button>
             <% } %>
 
             <% if (!somethingDifferent) { %>
@@ -69,15 +94,16 @@
                 </form>
             <% } %>
 
-            <br><br>
-            <a href="/normalRoutine">
+            <!-- <br><br> -->
+            <!-- <a href="/normalRoutine">
                 <button >Back to Normal Routine</button>
-            </a>
+            </a> -->
 
-            <br><br>
-            <a href="/">
+            <!-- <br><br> -->
+            <!-- <a href="/">
                 <button>Log Activity</button>
-            </a>
+            </a> -->
+            <!-- > -->
         </div>
 
 
@@ -135,10 +161,10 @@
                     var schedID = keys[i];
                     var normalFlag = "";
                     if (schedID == normalSched) {
-                        normalFlag = " (Normal Schedule)";
+                        normalFlag = "<img src='./images/tickIcon.png' style='height:4vh; position: absolute'>";
                     }
 
-                    document.getElementById('routineSection').innerHTML += '<button type="button"  class="collapsible" style="text-align:left;">Routine ' + (i+1) + '<span style="float:right;">' + normalFlag + '</span></button>';
+                    document.getElementById('routineSection').innerHTML += '<button type="button"  class="collapsible" style="text-align:left; ">Routine ' + (i+1) + '<span style="float:right; margin-right: 10%">' + normalFlag + '</span></button>';
                     document.getElementById('routineSection').innerHTML += '<div class="content" id="routine'+i+'"></div>';
                     populateRoutineInfo(schedID, i);
 
@@ -149,13 +175,21 @@
 
 
             function populateRoutineInfo(scheduleID, ind) {
+                // console.log('routines:', routines)
                 var keys = Object.keys(routines[scheduleID])
+                // console.log('keys: ', JSON.stringify(keys))
+                var table = document.createElement('table');
+                table.setAttribute("id", "routineTable"+ind);
+                document.getElementById('routine'+ind).appendChild(table);
+
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
                     description = routines[scheduleID][title];
                     if (description) {
-                        document.getElementById('routine'+ind).innerHTML += '<a id="'+ title + ind +'"></a>';
-                        document.getElementById(title+ind).innerHTML += '<dt>' + title + ':</dt>';
+                        document.getElementById('routineTable'+ind).innerHTML += '<tr><td><img src="./images/'+title+'Icon.png" style="max-height: 6vh;"></td><td><div id="'+ title +ind+'"></div></td></tr>';
+                        // document.getElementById(title+ind).innerHTML += 
+                        // document.getElementById('routine'+ind).innerHTML += '<a id="'+ title + ind +'"></a>';
+                        // document.getElementById(title+ind).innerHTML += '<dt>' + title + ':</dt>';
                             if (description[0] == '[') {
                                 descList = JSON.parse(description);
                                 for (var j=0; j<descList.length; j++) {
@@ -172,11 +206,11 @@
                 }
                 <% if (!somethingDifferent) { %>
                     if (parseInt(scheduleID) !== normalSched) {
-                        document.getElementById('routine'+ind).innerHTML += '<br><button onclick="makeNormal('+scheduleID+')">Make Normal</button>';
+                        document.getElementById('routine'+ind).innerHTML += '<br><button class="optionButton" onclick="makeNormal('+scheduleID+')" style="margin-bottom: 2vh;">Make Normal</button>';
 
                     }
                 <% } else { %>
-                    document.getElementById('routine'+ind).innerHTML += '<br><button onclick="logSchedule('+scheduleID+')">Log Routine</button>';
+                    document.getElementById('routine'+ind).innerHTML += '<br><button class="optionButton" onclick="logSchedule('+scheduleID+')" style="margin-bottom: 2vh;">Log Routine</button>';
                 <% } %>
                 
             }
@@ -220,6 +254,27 @@
                     }
                 });
             }
+
+
+            var modal = document.getElementById("myModal");
+            var span = document.getElementsByClassName("close");
+
+            span[0].onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            function openModal() {
+                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
+                // routineDescription(activities[date], 'modalText');
+                modal.style.display = "block";
+            }
+
 
 
         </script>

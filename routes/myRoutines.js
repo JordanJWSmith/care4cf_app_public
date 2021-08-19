@@ -23,7 +23,7 @@ router.get('/', function (req, res, next) {
                     var normalSched = normalSchedIDResult.results[0].scheduleID;
                     // res.render('myRoutines', {
                         res.render('myRoutines', {
-                        title: 'My Routines',
+                        title: 'Routines',
                         routines: JSON.stringify(allNormalsResults),
                         normalSched: normalSched,
                         user: results.userID,
