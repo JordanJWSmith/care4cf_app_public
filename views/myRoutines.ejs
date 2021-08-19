@@ -42,8 +42,12 @@
     <body>
         <div class="container" style="display: table;">
             <div>
-                <img src="./images/backArrowIcon.png" onclick="window.location='/normalRoutine'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
-            </div>
+                <% if (!somethingDifferent) { %>
+                    <img src="./images/backArrowIcon.png" onclick="window.location='/normalRoutine'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+                <% } else { %>
+                    <img src="./images/backArrowIcon.png" onclick="window.location='/'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+                <% } %>
+                </div>
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
                 <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
