@@ -56,7 +56,7 @@
             <h1 style="margin-top: 9vh"><%= title %></h1>
         
             <div>
-                <div id="routineSection" style="max-width: 400px; margin: auto; margin-top: 10vh">
+                <div id="routineSection" style="max-width: 400px; margin: auto; margin-top: 10vh; width: 90%">
 
                 </div>
             </div>
@@ -198,13 +198,13 @@
                                 descList = JSON.parse(description);
                                 for (var j=0; j<descList.length; j++) {
                                     if (typeof descList[j] == 'object') {
-                                        document.getElementById(title+ind).innerHTML += '<dd>' + descList[j][0] + ' (' + descList[j][1] + ') </dd>';
+                                        document.getElementById(title+ind).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + descList[j][0] + ' (' + descList[j][1] + ') </dd>';
                                     } else {
-                                        document.getElementById(title+ind).innerHTML += '<dd>' + descList[j] + '</dd>';
+                                        document.getElementById(title+ind).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + descList[j] + '</dd>';
                                     }
                                 }
                             } else {
-                                document.getElementById(title+ind).innerHTML += '<dd>' + description + '</dd>';
+                                document.getElementById(title+ind).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + description + '</dd>';
                             }
                         }
                 }

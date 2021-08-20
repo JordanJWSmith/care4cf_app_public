@@ -12,6 +12,7 @@
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
         <script type="text/javascript" src="/javascripts/routineDescription.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
+        <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     </head>
    
@@ -27,24 +28,37 @@
 
             <div class="calendar" id="main">
                 <!-- <div class="jumbotron"> -->
-                    <p class="text-center" style="text-align: center; font-size: 5vw;">
-                    <a id="left" href="#">
-                        <i> &#8592; </i>
-                    </a>
-                    <span>&nbsp;</span>
-                    <span id="month"> </span>
-                    <span>&nbsp;</span>
-                    <span id="year"> </span>
-                    <span>&nbsp;</span>
-                    <a id="right" href="#">
-                        <!-- <i> &#8594; </i> -->
-                        <!-- <i class="fas fa-chevron-right"></i> -->
-                    </a>
-                </p>
+                    <div id="topBar">
+                        
+                        <button class="dayButton" style="position: absolute; left: 5%; top: 0; font-size: 5vw" id="left" href="#">
+                            <i> &#8592; </i>
+                        </button>
+                   
+                        <p class="text-center" style="text-align: center; font-size: 5vw;">
+                            <!-- <button class="dayButton"  id="left" href="#">
+                                <i> &#8592; </i>
+                            </button> -->
+                            <span>&nbsp;</span>
+                            <span id="month"> </span>
+                            <span>&nbsp;</span>
+                            <span id="year"> </span>
+                            <span>&nbsp;</span>
+                            <!-- <button class="dayButton" id="right" href="#"> -->
+                                <!-- <i> &#8594; </i> -->
+                                <!-- <i class="fas fa-chevron-right"></i> -->
+                           <!-- </button> -->
+                        </p>
+                        <button class="dayButton" style="position: absolute; right: 5%; top: 0; font-size: 5vw" id="right" href="#">
+                            <!-- <i> &#8594; </i> -->
+                            <!-- <i class="fas fa-chevron-right"></i> -->
+                        </button>
+                    </div>
                 <!-- </div> -->
-                <div class="row">
+                <div class="row" >
                     <div class="col-sm-10 col-sm-offset-1">
-                        <table class="table" ></table>
+                        <table class="table" >
+   
+                        </table>
                     </div>
                 </div>
             </div>
@@ -62,9 +76,33 @@
             </div>
 
             <br><br>
-            <a href="/">
+            <!-- <a href="/">
                 <button>Log Activity</button>
-            </a>
+            </a> -->
+
+            <div id="navButtonContainer">
+                <!-- <a href="/normalRoutine"> -->
+                    <button class="navButton" style="margin-right: 5vw;" onclick='window.location="/normalRoutine"'>
+                        <img id="normalRoutineButton" src="./images/Sample_User_Icon.png" height="100%">
+                    </button>
+                <!-- </a> -->
+                    <!-- <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/normalRoutine"'><img id="mainButton" height="100%"></button> -->
+                    <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/"'>
+                        <img id="mainButton" src="./images/circleIcon.png" height="100%">
+                    </button>
+                <!-- <a href="/calendar"> -->
+                    <button class="navButtonDisabled" style="margin-left: 5vw; border: #2FB9CA; border-width: thick; border-style: solid;">
+                        <img id="calendarButton" src="./images/Calendar_Icon.png" height="100%">
+                    </button>
+                <!-- </a> -->
+                
+            </div>
+
+            <div id="streaks">
+                <p>Current streak: <%= currentStreak %> days</p>
+                <p>Record: <%= longestStreak %> days</p>
+            </div>
+
         </div>
 
         <script>
@@ -166,6 +204,7 @@
                             currentDate = new Date(currentDate.getFullYear() + 1, 0); 
                             if ((currentDate.getMonth() == actualDate.getMonth()) && (currentDate.getFullYear() == actualDate.getFullYear())) {
                                 document.getElementById('right').innerHTML = "";
+                                document.getElementById('right').disabled = "true";
                             } 
                             generateCalendar(currentDate);
                         } else {
@@ -179,6 +218,15 @@
                 });
                 generateCalendar(currentDate);
             // });
+
+            document.getElementById('main').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
+            document.getElementById('main').style['padding'] = '2vh';
+            document.getElementById('main').style['width'] = '80%';
+            // document.getElementById('calendar').style['max-width'] = '400px';
+            document.getElementById('main').style['margin'] = 'auto';
+            // document.getElementById('calendar').style['max-height'] = '42vh';
+            // document.getElementById('calendar').style['overflow'] = 'scroll';
+            document.getElementById('main').style['border-radius'] = '10px';
 
             // Get the modal
             var modal = document.getElementById("myModal");
@@ -199,8 +247,11 @@
             }
 
             function openModal(date) {
-                document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
-                routineDescription(activities[date], 'modalText');
+                var displayDate = dateToString(date);
+                // console.log(displayDate);
+                document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+displayDate+'</p>';
+                // routineDescription(activities[date], 'modalText');
+                routineDescription2(activities[date], 'modalText');
                 modal.style.display = "block";
             }
 

@@ -1,4 +1,5 @@
 var express = require('express');
+const getActivityDates = require('./appDatabase/getActivityDates');
 const getAllActivities = require('./appDatabase/getAllActivities');
 var router = express.Router();
 const login = require('./appDatabase/login');
@@ -15,11 +16,18 @@ router.get('/', function (req, res, next) {
             userID = results.userID;
             getAllActivities(userID)
             .then(function(activitiesResults) {
-                // console.log('activitiesResults: ', activitiesResults);
-                res.render('calendar', {
-                    title: 'My History',
-                    activities: JSON.stringify(activitiesResults)
+                getActivityDates(userID)
+                .then(function(streakResults) {
+                    console.log('streakResults: ', streakResults)
+                    res.render('calendar', {
+                        title: 'My History',
+                        activities: JSON.stringify(activitiesResults),
+                        currentStreak: streakResults.currentStreak,
+                        longestStreak: streakResults.longestStreak
+                    })
                 })
+                // console.log('activitiesResults: ', activitiesResults);
+                
             })
             
         } 
