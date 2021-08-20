@@ -41,6 +41,9 @@ self.addEventListener( "install", function( event ){
                       './images/techniquesIcon.png',
                       './images/circleicon.png',
                       './images/myRoutinesIcon.png',
+                      './images/tickIcon.png',
+                      './images/plusIcon.png',
+                      './images/backArrowIcon.png',
                   ]);
         })
     );

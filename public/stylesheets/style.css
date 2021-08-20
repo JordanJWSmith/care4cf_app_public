@@ -67,6 +67,16 @@ html, body {
   background-color:lightgray;
 }
 
+.modalText {
+  cursor: pointer;
+  width: 80%;
+  padding: 3%;
+}
+
+.modalText:hover {
+  background-color:lightgray;
+}
+
 /* The Close Button */
 .close {
   color: #aaaaaa;
@@ -103,10 +113,11 @@ table {
   height: 9vw;
 } */
 .dot {
-  border-color: blue;
+  border-color: #2FB9CA;
   border-width: 2px;
   border-style: solid;
   cursor: pointer;
+  border-radius: 20%;
 }
 #caltd,
 #year {
@@ -270,4 +281,19 @@ pwa-auth::part(signInButton) {
   background-color: #FFFFFF;
   box-shadow: 10px 10px 30px #FFFFFF, -10px -10px 30px rgba(166, 174, 189, 0.6);
   transform: translateY(4px);
+}
+
+.streakRecord {
+  background: #DEE3EE;
+  /* box-shadow: -10px -10px 30px #FFFFFF, 10px 10px 30px rgba(166, 174, 189, 0.6); */
+  padding: 3vh;
+  display: inline-block;
+  /* cursor: pointer; */
+  border-radius: 50%;
+  border: solid;
+  border-width: 2px;
+  border-color: #2FB9CA;
+  height: 6vh;
+  width: 6vh;
+  margin-top: 3vh;
 }

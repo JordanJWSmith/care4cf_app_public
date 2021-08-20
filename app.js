@@ -27,9 +27,11 @@ var registerRouter = require('./routes/register');
 var sendNotificationRouter = require('./routes/sendNotification');
 var saveSubscriptionAPIRouter = require('./routes/saveSubscriptionAPI');
 var checkSubscriptionAPIRouter = require('./routes/checkSubscriptionAPI');
+// var checkSubscriptionAPIRouter = require('./routes/checkSubscriptionAPI');
+var editGamificationAPIRouter = require('./routes/editGamificationAPI');
 
-var getSubscriptions = require('./routes/appDatabase/getSubscriptions');
-var sendPush = require('./routes/appDatabase/sendPush');
+// var getSubscriptions = require('./routes/appDatabase/getSubscriptions');
+// var sendPush = require('./routes/appDatabase/sendPush');
 var sendReminder = require('./routes/appDatabase/sendReminder');
 
 
@@ -61,6 +63,7 @@ app.use('/register', registerRouter);
 app.use('/sendNotification', sendNotificationRouter);
 app.use('/saveSubscriptionAPI', saveSubscriptionAPIRouter);
 app.use('/checkSubscriptionAPI', checkSubscriptionAPIRouter);
+app.use('/editGamificationAPI', editGamificationAPIRouter);
 
 
 

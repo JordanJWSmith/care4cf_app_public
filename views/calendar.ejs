@@ -13,6 +13,7 @@
         <script type="text/javascript" src="/javascripts/routineDescription.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
+        <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     </head>
    
@@ -21,20 +22,37 @@
 
         <div class="container">
 
+            <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openMenuModal()">
+                <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
+            </a>
+
+            <div id="menuModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="menuModalText" class="modalText" onclick="logout()">Log Out</p>
+                    <a id="gamificationTrigger">
+                        <p id="menuModalTextGamification" class="modalText" ></p>
+                    </a>
+                    
+                </div>
+            </div>
+
         
             <!-- Calendar adapted from https://codepen.io/nitroduck/pen/pmQoOY -->
 
-            <h1><%= title%></h1>
+            <h1 style="margin-top: 9vh"><%= title%></h1>
 
             <div class="calendar" id="main">
                 <!-- <div class="jumbotron"> -->
                     <div id="topBar">
                         
-                        <button class="dayButton" style="position: absolute; left: 5%; top: 11%; font-size: 16pt;" id="left" href="#">
+                        <button class="dayButton" style="position: absolute; left: 5%; top: 8%; font-size: 16pt;" id="left" href="#">
                             <i> &#8592; </i>
                         </button>
                    
-                        <p class="text-center" style="text-align: center; font-size: 16pt;">
+                        <div class="text-center" style="text-align: center; font-size: 16pt; margin: 3vw">
                             <!-- <button class="dayButton"  id="left" href="#">
                                 <i> &#8592; </i>
                             </button> -->
@@ -47,8 +65,8 @@
                                 <!-- <i> &#8594; </i> -->
                                 <!-- <i class="fas fa-chevron-right"></i> -->
                            <!-- </button> -->
-                        </p>
-                        <button class="dayButton" style="position: absolute; right: 5%; top: 11%; font-size: 16pt;" id="right" href="#">
+                            </div>
+                        <button class="dayButton" style="position: absolute; right: 5%; top: 8%; font-size: 16pt;" id="right" href="#">
                             <!-- <i> &#8594; </i> -->
                             <!-- <i class="fas fa-chevron-right"></i> -->
                         </button>
@@ -76,8 +94,21 @@
             </div>
 
             <div id="streaks">
-                <p>Current streak: <%= currentStreak %> days</p>
-                <p>Record: <%= longestStreak %> days</p>
+                <div class="streakRecord" style="margin-right:2vw">
+                    <div style="margin-top: -2vh">
+                        <img src="./images/streakIcon.png" style="height: 4vh">
+                    </div>
+                    <div style="letter-spacing: 0; font-size:3vh"><%= currentStreak %></div>
+                </div>
+                <div class="streakRecord" style="margin-left:2vw">
+                    <div style="margin-top: -2vh">
+                        <img src="./images/recordIcon.png" style="height: 4vh">
+                    </div>
+                    <div style="letter-spacing: 0; font-size:3vh"><%= longestStreak %></div>
+                    
+                </div>
+                <!-- <p>Current streak: <%= currentStreak %> days</p>
+                <p>Record: <%= longestStreak %> days</p> -->
             </div>
 
             <!-- <br><br> -->
@@ -102,6 +133,8 @@
                 <!-- </a> -->
                 
             </div>
+
+           
 
            
 
@@ -218,7 +251,8 @@
                         }
                     // $('test').html('');
                 });
-                generateCalendar(currentDate);
+
+            generateCalendar(currentDate);
             // });
 
             document.getElementById('main').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
@@ -229,22 +263,34 @@
             // document.getElementById('calendar').style['max-height'] = '42vh';
             // document.getElementById('calendar').style['overflow'] = 'scroll';
             document.getElementById('main').style['border-radius'] = '10px';
+            document.getElementById('main').style['max-width'] = '500px';
+
+
 
             // Get the modal
             var modal = document.getElementById("myModal");
+            var menuModal = document.getElementById("menuModal");
 
             // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
+            var span = document.getElementsByClassName("close");
+            console.log(span);
+            // var menuSpan = document.getElementsByClassName("close")[1];
 
             // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
+            span[1].onclick = function() {
                 modal.style.display = "none";
+            }
+
+            span[0].onclick = function() {
+                menuModal.style.display = "none";
             }
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
+                } else if (event.target == menuModal) {
+                    menuModal.style.display = "none";
                 }
             }
 
@@ -256,6 +302,80 @@
                 routineDescription2(activities[date], 'modalText');
                 modal.style.display = "block";
             }
+
+            function openMenuModal() {
+                menuModal.style.display = "block";
+            }
+
+            var gamification = <%- gamification %>;
+
+            // var elem = document.getElementById("menuModalTextGamification");
+            // elem.addEventListener("click", changeGamificationSettings(gamification));
+
+            // console.log('gamification: ', gamification);
+            function updateStreaks() {
+                if (gamification) {
+                // console.log('gamification active')
+                // var menuText = "Disable Logging Streaks";
+                document.getElementById("gamificationTrigger").innerHTML = '<p id="menuModalTextGamification" class="modalText" onclick="changeGamificationSettings(1)"></p>'
+                document.getElementById("menuModalTextGamification").innerHTML = "Disable Logging Streaks";
+                document.getElementById("streaks").style.display = "block";
+                
+                // gamification = 0;
+                // document.getElementById("menuModalTextGamification").onclick = "changeGamificationSettings(1)"
+                // document.getElementById("setValue").innerHTML = '<input type="hidden" id="setForm" name="set" value="0">';
+
+                } else {
+                    // console.log('gamification inactive');
+                    document.getElementById("gamificationTrigger").innerHTML = '<p id="menuModalTextGamification" class="modalText" onclick="changeGamificationSettings(0)"></p>'
+                    document.getElementById("menuModalTextGamification").innerHTML = "Enable Logging Streaks";
+                    document.getElementById("streaks").style.display = "none";
+                    // gamification = 1;
+                    // document.getElementById("menuModalTextGamification").onclick = "changeGamificationSettings(0)"
+                    // document.getElementById("setValue").innerHTML = '<input type="hidden" id="setForm" name="set" value="1">';
+
+                    
+                }
+            }
+
+            updateStreaks();
+            
+
+            function changeGamificationSettings(set) {
+                if (!(navigator.onLine)) {
+                    alert("Cannot update while offline");
+                    return false;
+                } else {
+                    var s = 1 - set;
+                console.log('set: ', s, typeof s)
+                var http = new XMLHttpRequest();
+                http.open("POST", "/editGamificationAPI", true);
+                http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+                // var params = "set=" + document.getElementById("setForm").value + "&user=" + document.getElementById("userForm").value; // probably use document.getElementById(...).value
+                var params = "set="+s+"&userID="+<%- userID %>;
+                http.send(params);
+                http.onload = function() {
+                    alert(http.responseText);
+
+                        // if (s) {
+                            // document.getElementById("streaks").style.display = "block";
+                        // } else {
+                            // document.getElementById("streaks").style.display = "none";
+                        // }
+                        
+                        menuModal.style.display = "none";
+                        gamification = s;
+                        // console.log(gamification);
+                        updateStreaks(s);
+
+                    }
+                }
+                
+                
+            }
+
+            
 
         </script>
 
