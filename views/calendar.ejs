@@ -30,11 +30,11 @@
                 <!-- <div class="jumbotron"> -->
                     <div id="topBar">
                         
-                        <button class="dayButton" style="position: absolute; left: 5%; top: 0; font-size: 5vw" id="left" href="#">
+                        <button class="dayButton" style="position: absolute; left: 5%; top: 11%; font-size: 16pt;" id="left" href="#">
                             <i> &#8592; </i>
                         </button>
                    
-                        <p class="text-center" style="text-align: center; font-size: 5vw;">
+                        <p class="text-center" style="text-align: center; font-size: 16pt;">
                             <!-- <button class="dayButton"  id="left" href="#">
                                 <i> &#8592; </i>
                             </button> -->
@@ -48,7 +48,7 @@
                                 <!-- <i class="fas fa-chevron-right"></i> -->
                            <!-- </button> -->
                         </p>
-                        <button class="dayButton" style="position: absolute; right: 5%; top: 0; font-size: 5vw" id="right" href="#">
+                        <button class="dayButton" style="position: absolute; right: 5%; top: 11%; font-size: 16pt;" id="right" href="#">
                             <!-- <i> &#8594; </i> -->
                             <!-- <i class="fas fa-chevron-right"></i> -->
                         </button>
@@ -75,7 +75,12 @@
                 </div>
             </div>
 
-            <br><br>
+            <div id="streaks">
+                <p>Current streak: <%= currentStreak %> days</p>
+                <p>Record: <%= longestStreak %> days</p>
+            </div>
+
+            <!-- <br><br> -->
             <!-- <a href="/">
                 <button>Log Activity</button>
             </a> -->
@@ -98,10 +103,7 @@
                 
             </div>
 
-            <div id="streaks">
-                <p>Current streak: <%= currentStreak %> days</p>
-                <p>Record: <%= longestStreak %> days</p>
-            </div>
+           
 
         </div>
 
@@ -145,7 +147,7 @@
                         cal.push(['<tr>']);
                         for (var j = 0; j < 7; j++) {
                             if (i === 0) {
-                                cal[i].push('<td id="caltd">' + details.weekDays[j] + '</td>');
+                                cal[i].push('<td id="caltd" style="font-weight: bold;">' + details.weekDays[j] + '</td>');
                                 
                             } else if (day > details.totalDays) {
                             cal[i].push('<td id="caltd">&nbsp;</td>');
