@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="manifest" href="/manifest.json">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
+        <script type="module" src="/pwabuilder-sw-register.js"></script>
+        <script type="text/javascript" src="/javascripts/logout.js"></script> 
+        <script type="text/javascript" src="/javascripts/getCook.js"></script> 
+        <!-- <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script>  -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+
+        <button class="optionButton" onclick="window.location='https://app.forestadmin.com/care4cf-admin/'">Content Management</button>
+
+        <form>
+            <input type="text" id="payloadText" name="payloadText" required>
+            <button class="optionButton" type="button" onclick="sendPush()">Send Notification</button>
+        </form>
+
+        
+
+        <script>
+            function sendPush() {
+                var payload = document.getElementById("payloadText").value;
+                if (!payload) {
+                    alert('Please enter a message to be pushed to users')
+                } else {
+                    console.log('payload: ', payload)
+                    var http = new XMLHttpRequest();
+                    http.open("POST", "/sendNotification", true);
+                    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+                    // var params = "set=" + document.getElementById("setForm").value + "&user=" + document.getElementById("userForm").value; // probably use document.getElementById(...).value
+                    
+                    var params = "payload=" + payload;
+                    http.send(params);
+                    http.onload = function() {
+                        alert(http.responseText);
+                    }
+                }
+                
+            }
+        </script>
+    </body>

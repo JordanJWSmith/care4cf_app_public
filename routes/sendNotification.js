@@ -11,16 +11,19 @@ const sendPush = require('./appDatabase/sendPush');
 // }
 
 // router.post('/', async function(req, res) {
-router.get('/', async function(req, res) { 
+router.post('/', async function(req, res) { 
+
+    console.log('body:', req.body)
+    var payload = req.body.payload;
 
     var counter = 0;
 
     await getSubscriptions()
     .then(function(subs) {
-        console.log('subs: ', subs)
+        // console.log('subs: ', subs)
         for (i=0; i<subs.results.length; i++) {
             var subscription = subs.results[i].subscription
-            var payload = 'Don\'t forget to log your activities today!';
+            // var payload = 'Don\'t forget to log your activities today!';
             // console.log(subscription);
             sendPush(JSON.parse(subscription), payload);
             counter++;
@@ -33,7 +36,7 @@ router.get('/', async function(req, res) {
         // }
     })
     .then(function() {
-        res.send('test');
+        res.send('Sent ' + counter + ' notifications');
     })
     
     // console.log(webPush.getVapidHeaders());

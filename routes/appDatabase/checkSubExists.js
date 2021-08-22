@@ -6,10 +6,10 @@ module.exports = async function(subscription) {
     // console.log('received subscription: ', subscription);
 
     var sub = JSON.stringify(subscription.subscription);
-    console.log('received subscription: ', sub);
+    // console.log('received subscription: ', sub);
 
     var hash = crypto.createHash('md5').update(sub).digest("hex"); 
-    console.log('hash: ', hash);
+    // console.log('hash: ', hash);
 
     var checkSub = "SELECT * FROM subscriptions WHERE hashSubscription = ?";
     var checkSubValue = [hash];

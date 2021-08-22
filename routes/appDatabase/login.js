@@ -29,7 +29,7 @@ module.exports = async function(cookieToken) {
 
         if (results.length == 1) {
             var userID = results[0].userID;
-            console.log('new userID: ', userID)
+            // console.log('new userID: ', userID)
             return {
                 logIn: true,
                 userID: results[0].userID
