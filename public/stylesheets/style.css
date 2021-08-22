@@ -223,8 +223,8 @@ pwa-auth::part(signInButton) {
   border: none;
   height: 10vh;
   width: 10vh;
-
 }
+
 .navButton:active {
   background-color: #2FB9CA;
   box-shadow: 10px 10px 30px #FFFFFF, -10px -10px 30px rgba(166, 174, 189, 0.6);
@@ -315,4 +315,16 @@ select {
   /* border-radius: 10%; */
 }
 
-
+.adminButton {
+  background: #DEE3EE;
+  box-shadow: -10px -10px 30px #FFFFFF, 10px 10px 30px rgba(166, 174, 189, 0.6);
+  padding: 3vh;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 2em;
+  border: none;
+  height: 30vh;
+  width: 80%;
+  max-width: 400px;
+  font-family: 'Roboto';font-size: 16px;
+}
