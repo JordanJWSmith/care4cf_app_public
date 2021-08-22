@@ -10,5 +10,4 @@ var conn = mysql.createPool({
     multipleStatements: true
 }); 
 
-
 module.exports = conn;

@@ -8,86 +8,121 @@
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
+        <script type="text/javascript" src="/javascripts/logout.js"></script> 
+        <!-- <script type="text/javascript" src="/javascripts/selectStyling.js"></script>  -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     </head>
     <body>
-        <h1><%= title %></h1>
-        <!-- <p>What's your normal airway clearance routine?</p> -->
+        <div class="container" style="display: table;">
 
+            <img src="./images/backArrowIcon.png" onclick="window.history.back()"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
 
-        
+            <h1 style="margin-top: 9vh"><%= title %></h1>
+            <!-- <p>What's your normal airway clearance routine?</p> -->
 
-        <div id="mainAction">
+            <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
+                <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
+            </a>
+
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="modalText" onclick="logout()">Log Out</p>
+                </div>
+            </div>
             
-            <form action="/scheduleData" method="POST" id="activityForm">
 
-                <div id='techniques'>
-                    <div id="formBox0">
-                        <select id="dropdown0" name="act0" onchange="subtitleExists(0)" required>
-                            <option value="" selected disabled hidden>Airway Clearance Technique</option>
-                        </select>
-                        <br>
-                    </div>
-                    <div id="secondFormBox0">
-                    </div>
+            <div id="mainAction" style="max-width: 400px">
                 
-                </div>
+                <form action="/scheduleData" method="POST" id="activityForm">
 
-                <button type="button" onclick="incrementCounter()">Add Technique</button>
+                    <div id='techniques'>
+                        <div id="formBox0">
+                            <select id="dropdown0" name="act0" onchange="subtitleExists(0)" required>
+                                <option value="" selected disabled hidden>Airway Clearance Technique</option>
+                            </select>
+                            <br>
+                        </div>
+                        <div id="secondFormBox0">
+                        </div>
+                    
+                    </div>
 
-                <div id=removeButtonDiv>
-                </div>
+                    <div style="width: 100%">
+                        <div id="addButtonDiv" style="display: inline-block; padding-top: 2vh">
+                            <button class="optionButton" type="button" onclick="incrementCounter()" style="margin: auto;">+</button>
+                        </div>
+                        
 
-                <br><br>
+                        <div id=removeButtonDiv style="display: none; padding-left: 2vw; padding-top: 2vh">
+                        </div>
+                    </div>
 
-                <div id="duration">
-                    <select id='durationDropdown' name="duration" required>
-                        <option value="" selected disabled hidden>Duration per Session</option>
-                    </select>
-                </div>
+                    
 
-                <br><br>
+                    <br><br>
 
-                <div id="frequency">
-                    <select id='frequencyDropdown' name="frequency" required>
-                        <option value="" selected disabled hidden>Frequency per Day</option>
-                        <!-- <option value=1>Once</option>
-                        <option value=2>Twice</option>
-                        <option value=3>Three times</option>  -->
-                    </select>
-                </div>
-
-                <br><br>
-
-                <div id="adjuncts">
-                    <div id="adjunctDiv0">
-                        <select id="adjunctDropdown0" name="adjuncts0" onchange="populateAdjunctTimeBox(0)">
-                            <option value="" selected disabled hidden>Adjunct Medication</option>
+                    <div id="duration">
+                        <select id='durationDropdown' name="duration" required>
+                            <option value="" selected disabled hidden>Duration per Session</option>
                         </select>
                     </div>
-                    <div id="adjunctTimeDiv0">
 
+                    <br><br>
+
+                    <div id="frequency">
+                        <select id='frequencyDropdown' name="frequency" required>
+                            <option value="" selected disabled hidden>Frequency per Day</option>
+                            <!-- <option value=1>Once</option>
+                            <option value=2>Twice</option>
+                            <option value=3>Three times</option>  -->
+                        </select>
+                    </div>
+
+                    <br><br>
+
+                    <div id="adjuncts">
+                        <div id="adjunctDiv0">
+                            <select id="adjunctDropdown0" name="adjuncts0" onchange="populateAdjunctTimeBox(0)">
+                                <option value="" selected disabled hidden>Adjunct Medication</option>
+                            </select>
+                        </div>
+                        <div id="adjunctTimeDiv0">
+
+                        </div>
+                        
+                    </div>
+                    <div style="width: 100%">
+                        <div id="addAdjunctButtonDiv" style="display: inline-block; padding-top: 2vh">
+                            <button class="optionButton" type="button" onclick="incrementAdjunctCounter()">+</button>
+                        </div>
+                        
+                        <div id=removeAdjunctButtonDiv style="display: none; padding-left: 2vw; padding-top: 2vh">
+                            <!-- <button type="button" onclick="removeAdjunct()">Remove Adjunct</button> -->
+                        </div>
                     </div>
                     
-                </div>
-                <button type="button" onclick="incrementAdjunctCounter()">Add Adjunct</button>
-                <div id=removeAdjunctButtonDiv>
-                    <!-- <button type="button" onclick="removeAdjunct()">Remove Adjunct</button> -->
-                </div>
 
-                <a id="date"></a>
-                <a id="saveAsNormal"></a>
-                <a id="user"></a>
-                <a id="activityType"></a>
-                <a id="chosenDate"></a>
-                <a id="maxCounter">
-                    <input type='hidden' name='maxCounter' value=0>
-                </a>
-                
-                <br><br>
+                    <a id="date"></a>
+                    <a id="saveAsNormal"></a>
+                    <a id="user"></a>
+                    <a id="activityType"></a>
+                    <a id="chosenDate"></a>
+                    <a id="maxCounter">
+                        <input type='hidden' name='maxCounter' value=0>
+                    </a>
+                    
+                    <br><br>
 
-                <input type="submit" value="Submit">
-            </form>
-        </div>  
+                    <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit">
+                        <img src="images/tickIcon.png" style="height: 100%">
+                    </button>
+                </form>
+            </div>  
+        </div>
 
 
         <script>
@@ -198,10 +233,20 @@
             }
 
             function addNewTechnique(n) {
+                // add IF statement to catch box already existing?
+
+                // if (document.getElementById('formBox'+n)) {
+                //     console.log('element already exists');
+                //     document.getElementById('formBox'+n).remove()
+                // }
+
                 var fb = document.createElement('div');
                 fb.id = 'formBox'+n;
+                fb.style = "padding-top: 2vh;"
+                // fb.style.display = "block";
                 var sfb = document.createElement('div');
                 sfb.id = 'secondFormBox'+n;
+                // sfb.style.display = "block";
                 document.getElementById('techniques').appendChild(fb);
                 document.getElementById('techniques').appendChild(sfb);
 
@@ -231,19 +276,25 @@
                 console.log('counter: ', counter);
                 addNewTechnique(counter);
                 if (counter > 0) {
-                    document.getElementById("removeButtonDiv").innerHTML = '<button type="button" id="removeButton"  onclick="removeTechnique()" >Remove Technique</button>';
+                    document.getElementById("removeButtonDiv").innerHTML = '<button class="optionButton" type="button" id="removeButton" onclick="removeTechnique()" style="margin: auto;">&#8211;</button>';
+                    document.getElementById("removeButtonDiv").style.display = "inline-block"
                 }
                 document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
             }
 
             function removeTechnique() {
                 if (counter > 0) {
-                    document.getElementById("formBox"+counter).innerHTML = "";
-                    document.getElementById("secondFormBox"+counter).innerHTML = "";
+                    // document.getElementById("formBox"+counter).innerHTML = "";
+                    // document.getElementById("secondFormBox"+counter).innerHTML = "";
+                    // document.getElementById("formBox"+counter).style = "padding-top: 0";
+                    // document.getElementById("secondFormBox"+counter).style.display = "none";
+                    document.getElementById("formBox"+counter).remove();
+                    document.getElementById("secondFormBox"+counter).remove();
                     counter--;
                     document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
                     if (counter == 0) {
                         document.getElementById("removeButtonDiv").innerHTML = "";
+                        document.getElementById("removeButtonDiv").style.display = "none";
                     }
                     // console.log('counter: ', counter);
                 }
@@ -315,6 +366,7 @@
             function addAdjunctBox(n) {
                 d = document.createElement('div');
                 d.id = 'adjunctDiv'+n;
+                d.style = "padding-top: 2vh;"
                 document.getElementById('adjuncts').appendChild(d);
 
                 s = document.createElement('select');
@@ -346,25 +398,48 @@
                 addAdjunctBox(adjunctCounter);
                 document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
                 if (adjunctCounter > 0) {
-                    document.getElementById("removeAdjunctButtonDiv").innerHTML = '<button type="button" onclick="removeAdjunct()">Remove Adjunct</button>';
+                    document.getElementById("removeAdjunctButtonDiv").innerHTML = '<button class="optionButton" type="button" onclick="removeAdjunct()">&#8211;</button>';
+                    document.getElementById("removeAdjunctButtonDiv").style.display = "inline-block";
                 }
             }
 
             function removeAdjunct() {
                 if (adjunctCounter > 0) {
-                    document.getElementById("adjunctDiv"+adjunctCounter).innerHTML = "";
-                    document.getElementById("adjunctTimeDiv"+adjunctCounter).innerHTML = "";
+                    // document.getElementById("adjunctDiv"+adjunctCounter).innerHTML = "";
+                    // document.getElementById("adjunctTimeDiv"+adjunctCounter).innerHTML = "";
+                    document.getElementById("adjunctDiv"+adjunctCounter).remove();
+                    document.getElementById("adjunctTimeDiv"+adjunctCounter).remove();
                     adjunctCounter--;
                     document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
                     console.log('adjunctCounter: ', adjunctCounter);
                     if (adjunctCounter == 0) {
                         document.getElementById("removeAdjunctButtonDiv").innerHTML = "";
+                        document.getElementById("removeAdjunctButtonDiv").style.display = "none";
                     }
                     
                 }
                 
             }
 
+            
+            var modal = document.getElementById("myModal");
+            var span = document.getElementsByClassName("close");
+
+            span[0].onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            function openModal() {
+                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
+                // routineDescription(activities[date], 'modalText');
+                modal.style.display = "block";
+            }
 
 
         </script>

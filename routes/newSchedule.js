@@ -25,8 +25,9 @@ router.get('/', function (req, res, next) {
                     .then(function(adjunctTimeResults) {
                     getFrequencies()
                     .then(function(frequencyResults) {
+
                         res.render('newSchedule', {
-                        title: 'Welcome, user ' + results.userID +'.', 
+                        title: 'What\'s your routine?', 
                         user: results.userID, 
                         techniques: JSON.stringify(techResults),
                         durations: JSON.stringify(durationResults),

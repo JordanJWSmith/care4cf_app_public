@@ -8,6 +8,7 @@ module.exports = function (query, data){
             // console.log('rows: ', rows);
             resolve( rows );
         } );
+       
     } );
    
 };
