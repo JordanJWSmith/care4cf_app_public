@@ -48,7 +48,7 @@ self.addEventListener( "install", function( event ){
                       './images/streakIcon.png',
                       './images/msLogo.png',
                       './images/uclGOSLogo.png',
-                      './images/uclLogo.png',
+                      './images/uclLogo.svg',
                   ]);
         })
     );
