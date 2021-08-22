@@ -54,24 +54,27 @@
 
         <script>
             function sendPush() {
-                var payload = document.getElementById("payloadText").value;
-                if (!payload) {
-                    alert('Please enter a message to be pushed to users')
+                if (!navigator.onLine) {
+                    alert('Please go online to send notifications')
                 } else {
-                    console.log('payload: ', payload)
-                    var http = new XMLHttpRequest();
-                    http.open("POST", "/sendNotification", true);
-                    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    var payload = document.getElementById("payloadText").value;
+                    if (!payload) {
+                        alert('Please enter a message to be pushed to users')
+                    } else {
+                        // console.log('payload: ', payload)
+                        var http = new XMLHttpRequest();
+                        http.open("POST", "/sendNotification", true);
+                        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 
-                    // var params = "set=" + document.getElementById("setForm").value + "&user=" + document.getElementById("userForm").value; // probably use document.getElementById(...).value
-                    
-                    var params = "payload=" + payload;
-                    http.send(params);
-                    http.onload = function() {
-                        alert(http.responseText);
+                        // var params = "set=" + document.getElementById("setForm").value + "&user=" + document.getElementById("userForm").value; // probably use document.getElementById(...).value
+                        
+                        var params = "payload=" + encodeURIComponent(payload);
+                        http.send(params);
+                        http.onload = function() {
+                            alert(http.responseText);
+                        }
                     }
-                }
-                
+                }                 
             }
 
             var modal = document.getElementById("myModal");

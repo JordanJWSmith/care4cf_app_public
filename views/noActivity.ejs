@@ -7,23 +7,37 @@
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     </head>
     <body>
 
-        <h1><%= title %></h1>
+        <div class="container">
 
-        <form method="POST" action="/noActivities">
-            <select id="reason" name="reasonID" required>
-                <option value="" selected disabled hidden>Reason for no activities</option>
-            </select>
+            <img src="./images/backArrowIcon.png" onclick="window.location='/'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+
+            <h1 style="margin-top: 9vh"><%= title %></h1>
+
+            <div style="max-width: 400px; margin: auto; margin-top: 30vh;">
+                <form method="POST" action="/noActivities">
+                    <select id="reason" name="reasonID" required>
+                        <option value="" selected disabled hidden>Reason for no activities</option>
+                    </select>
+                    
+                    <a id="details"></a>
+                    <!-- <a id="user"></a> -->
+                    <br>
+                    <div id="navButtonContainer">
+                        <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit">
+                            <img src="images/tickIcon.png" style="height: 100%">
+                        </button>
+                    </div>
+                    
+                </form>
+            </div>
             
-            <a id="details"></a>
-            <!-- <a id="user"></a> -->
-            <button type='submit'>Submit</button>
-        </form>
 
-        
         <br>
+    </div>
         
 
         <script>
@@ -41,8 +55,8 @@
                 document.getElementById('reason').appendChild(o);
             }
 
-            console.log('details: ',details);
-            console.log('reasons: ', reasons);
+            // console.log('details: ',details);
+            // console.log('reasons: ', reasons);
 
             document.getElementById('details').innerHTML = "<input type='hidden' name='details' value='" + JSON.stringify(details) + "'>";
 
