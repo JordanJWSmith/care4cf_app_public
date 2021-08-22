@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
     .then(function(results) {
         console.log('loginUser results: ', results, '. Rendering sign in...');
         if (!results.logIn) {
-            res.render('loginUser', {title: 'Please sign in'});
+            res.render('loginUser', {title: 'CARE4CF'});
         } else {
             res.redirect('/');
         }

@@ -15,7 +15,7 @@ self.addEventListener("message", (event) => {
   }
 });
 
-// This caches all the pages?
+// This caches all the pages
 self.addEventListener( "install", function( event ){
     event.waitUntil(
         caches.open( CACHE )
@@ -44,10 +44,17 @@ self.addEventListener( "install", function( event ){
                       './images/tickIcon.png',
                       './images/plusIcon.png',
                       './images/backArrowIcon.png',
+                      './images/recordIcon.png',
+                      './images/streakIcon.png',
+                      './images/msLogo.png',
+                      './images/uclGOSLogo.png',
+                      './images/uclLogo.png',
                   ]);
         })
     );
 });
+
+
 
 self.addEventListener('activate', function(event) {
     console.log('Claiming control');
@@ -60,6 +67,13 @@ workbox.routing.registerRoute(
     cacheName: CACHE
   })
 );
+
+// workbox.routing.registerRoute(
+//   new RegExp('/*'),
+//   new workbox.strategies.StaleWhileRevalidate({
+//     cacheName: CACHE
+//   })
+// );
 
 // self.addEventListener("fetch", (event) => {
 //     console.log('event: ', event);
@@ -90,24 +104,21 @@ self.addEventListener('install', async (event) => {
 //   workbox.navigationPreload.enable();
 // }
 
-// workbox.routing.registerRoute(
-//   new RegExp('/*'),
-//   new workbox.strategies.StaleWhileRevalidate({
-//     cacheName: CACHE
-//   })
-// );
+
 
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
         const preloadResp = await event.preloadResponse;
+        console.log('preloadResp: ', preloadResp)
 
         if (preloadResp) {
           return preloadResp;
         }
 
         const networkResp = await fetch(event.request);
+        console.log('networkResp: ', networkResp);
         return networkResp;
       } catch (error) {
 

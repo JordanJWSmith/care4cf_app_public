@@ -114,6 +114,8 @@
 
         <script>
 
+            console.log('normalSched: ', <%-normalSched %>)
+
             if (!(navigator.onLine) && (!(getCook('accessToken')))) {
                 window.location.href = "/loginUser"
             }
@@ -142,6 +144,7 @@
             // console.log(document.cookie);
             var routinesString = <%- routines %>;
             var routines = JSON.parse(JSON.stringify(routinesString));
+            console.log('routines: ', routines);
 
             <% if (somethingDifferent) { %>
                 // console.log('myRoutine page');
