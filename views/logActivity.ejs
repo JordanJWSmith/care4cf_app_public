@@ -154,7 +154,24 @@
 
         <script>
 
+            var routineTypes = <%- routineTypes %>;
+            var weekActivities = <%-weekActivities %>;
+            var dateList = <%- dateList %>
+            var startDate = <%- startDate %>;
+            var routineDict = <%- routineDict %>;
+            var user = <%- user %>;
+
             // console.log(document.URL);
+            if (navigator.onLine) {
+                console.log('saving to local');
+                window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
+            } else {
+                console.log(window.localStorage.getItem('routineDict'));
+                routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
+            }
+            
+            console.log('routineDict: ', routineDict);
+            // 
 
             var url = new URL(document.URL);
             if (url.pathname.slice(0, 2) == "/w") {
@@ -209,11 +226,7 @@
             //     return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
             // }
 
-            var routineTypes = <%- routineTypes %>;
-            var weekActivities = <%-weekActivities %>;
-            var dateList = <%- dateList %>
-            var startDate = <%- startDate %>;
-            var routineDict = <%- routineDict %>;
+           
 
             // console.log(dateList);
             // console.log(weekActivities);

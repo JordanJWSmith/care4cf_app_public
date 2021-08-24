@@ -21,6 +21,7 @@ const promptToEditNormal = require('./appDatabase/promptToEditNormal');
 var router = express.Router();
 
 
+
 router.get('/', function(req, res, next) {
   var cookieToken = req.cookies.accessToken;
   // console.log('integerCheck:', Number.isInteger(parseInt('5')));
