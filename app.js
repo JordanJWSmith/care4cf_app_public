@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var webPush = require('web-push');
 var cron = require('node-cron');
+var favicon = require('serve-favicon'); 
+
 // var fetch = require('fetch');
 // var axios = require('axios').default;
 
@@ -48,6 +50,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ resave: true ,secret: '123456' , saveUninitialized: true}));
+app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -84,6 +87,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.get('*', function(req, res) {
+  res.redirect('https://' + req.headers.host + req.url)
+})
 
 // console.log(webPush.generateVAPIDKeys()); 
 // process.env.VAPID_PUBLIC_KEY = '';

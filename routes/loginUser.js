@@ -29,7 +29,7 @@ userExistsPriv(email).then(function(results) {
     // console.log(' userExists results (should be false):',  results)
     if (!results.logIn) {
         // User does not exist in private database
-        res.send('You have not registered for CARE4CF. Redirecting to registration site...');
+        res.redirect('https://care4cf-register.azurewebsites.net/');
     } else {
         // User exists in private database
         console.log('user exists in private database');

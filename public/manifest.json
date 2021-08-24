@@ -1,8 +1,8 @@
 {
     "lang": "en-us",
-    "name": "My Sample PWA",
-    "short_name": "SamplePWA",
-    "description": "A sample PWA for testing purposes",
+    "name": "CARE4CF",
+    "short_name": "CARE4CF",
+    "description": "CARE4CF Activity Tracker",
     "start_url": "/",
     "background_color": "#2f3d58",
     "theme_color": "#2f3d58",        

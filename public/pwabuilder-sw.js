@@ -36,7 +36,7 @@ self.addEventListener( "install", function( event ){
                       './images/frequencyIcon.png',
                       './images/hamburgerDots.png',
                       './images/icon512.png',
-                      './images/logo.png',
+                      './images/favicon.ico',
                       './images/Sample_User_Icon.png',
                       './images/techniquesIcon.png',
                       './images/circleicon.png',
@@ -62,21 +62,113 @@ self.addEventListener('activate', function(event) {
   });
 
 workbox.routing.registerRoute(
-  new RegExp('/*'),
+  // new RegExp('/calendar'),
+  '/calendar',
   new workbox.strategies.NetworkFirst({
     cacheName: CACHE
   })
 );
 
-// workbox.routing.registerRoute(
-//   new RegExp('/*'),
-//   new workbox.strategies.StaleWhileRevalidate({
-//     cacheName: CACHE
-//   })
-// );
+workbox.routing.registerRoute(
+  // new RegExp('/'),
+  '/',
+  new workbox.strategies.NetworkFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  // new RegExp('/loginTest'),
+  '/loginTest',
+  new workbox.strategies.NetworkFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  // new RegExp('/loginUser'),
+  '/loginUser',
+  new workbox.strategies.NetworkFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  // new RegExp('/myRoutines'),
+  '/myRoutines',
+  new workbox.strategies.NetworkFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  // new RegExp('/newSchedule'),
+  '/newSchedule',
+  new workbox.strategies.NetworkFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  // new RegExp('/normalRoutine'),
+  '/normalRoutine',
+  new workbox.strategies.NetworkFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  // new RegExp('/somethingDifferent'),
+  '/somethingDifferent',
+  new workbox.strategies.NetworkFirst({
+    cacheName: CACHE
+  })
+);
+
+
+
+workbox.routing.registerRoute(
+  new RegExp('/images/*'),
+  // new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.CacheFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  new RegExp('/javascripts/*'),
+  // new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.CacheFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  new RegExp('/favicon.ico'),
+  // new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.CacheFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  new RegExp('/stylesheets/*'),
+  // new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.CacheFirst({
+    cacheName: CACHE
+  })
+);
+
+workbox.routing.registerRoute(
+  new RegExp('/manifest.json'),
+  // new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.CacheFirst({
+    cacheName: CACHE
+  })
+);
 
 // self.addEventListener("fetch", (event) => {
-//     console.log('event: ', event);
+//     console.log('e vent: ', event);
 // })
 
 
@@ -122,6 +214,7 @@ self.addEventListener('fetch', (event) => {
         return networkResp;
       } catch (error) {
 
+        console.log('error');
         const cache = await caches.open(CACHE);
         const cachedResp = await cache.match(offlineFallbackPage);
         return cachedResp;
