@@ -18,6 +18,8 @@ const getRoutine = require('./appDatabase/getRoutine');
 const checkForDate = require('./appDatabase/checkForDate');
 const getWeekActivities = require('./appDatabase/getWeekActivities');
 const promptToEditNormal = require('./appDatabase/promptToEditNormal');
+const getAllNormals = require('./appDatabase/getAllNormals');
+const getAllActivities = require('./appDatabase/getAllActivities');
 var router = express.Router();
 
 
@@ -37,23 +39,33 @@ router.get('/', function(req, res, next) {
           .then(function(routineResults) {
               getWeekActivities(results.userID, 0)
               .then(function(weekResults) {
+                getAllNormals(results.userID)
+                .then(function(allNormalsResults) {
+                  getAllActivities(results.userID)
+                  .then(function(allActivitiesResults){
+                    var prevDay = "decrementDate()";
+                    var nextDay = "incrementDate()";
+
+                    res.render('logActivity', {
+                      title: 'Welcome user '+ results.userID, 
+                      user: results.userID,
+                      routineTypes: JSON.stringify(routineResults),
+                      weekActivities: JSON.stringify(weekResults.routine),
+                      dateList: JSON.stringify(weekResults.dateList),
+                      startDate: JSON.stringify(weekResults.startDate),
+                      routineDict: JSON.stringify(weekResults.routineDict),
+                      prevDay: prevDay,
+                      nextDay: nextDay,
+                      allNormals: JSON.stringify(allNormalsResults),
+                      allActivities: JSON.stringify(allActivitiesResults)
+                    })
+                  })
+                  
                 // console.log('routineResults: ', getRoutineResults);
                 // console.log('startDate: ', weekResults.startDate);
                 // console.log('routineDict: ', weekResults.routineDict);
 
-                var prevDay = "decrementDate()";
-                var nextDay = "incrementDate()";
-
-                res.render('logActivity', {
-                title: 'Welcome user '+ results.userID, 
-                user: results.userID,
-                routineTypes: JSON.stringify(routineResults),
-                weekActivities: JSON.stringify(weekResults.routine),
-                dateList: JSON.stringify(weekResults.dateList),
-                startDate: JSON.stringify(weekResults.startDate),
-                routineDict: JSON.stringify(weekResults.routineDict),
-                prevDay: prevDay,
-                nextDay: nextDay
+                
                 })
               })
           })

@@ -116,7 +116,7 @@ workbox.routing.registerRoute(
     cacheName: CACHE
   })
 );
-
+ 
 workbox.routing.registerRoute(
   // new RegExp('/somethingDifferent'),
   '/somethingDifferent',

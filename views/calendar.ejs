@@ -145,7 +145,13 @@
                 window.location.href = "/loginUser"
             }
 
-            var activities = <%- activities %>;
+            if (navigator.onLine) {
+                var activities = <%- activities %>;
+            } else {
+                console.log('offline activities');
+                var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+            }
+            
             // console.log(activities);
 
             // $(document).ready(function() {

@@ -143,8 +143,16 @@
 
             // console.log(document.cookie);
             var routinesString = <%- routines %>;
-            var routines = JSON.parse(JSON.stringify(routinesString));
-            console.log('routines: ', routines);
+            
+
+            if (navigator.onLine) {
+                var routines = JSON.parse(JSON.stringify(routinesString));
+                console.log('onlineRoutines: ', routines);
+            } else {
+                var routines = JSON.parse(window.localStorage.getItem('allNormals'));
+                console.log('offlineRoutines: ', routines);
+            }
+            // console.log('routines: ', routines);
 
             <% if (somethingDifferent) { %>
                 // console.log('myRoutine page');
@@ -160,11 +168,12 @@
             // console.log(normalSched);
 
             var user = <%- user %>;
-            console.log('user: ', user);
+            // console.log('user: ', user);
 
 
             function populateRoutineSection() {
                 var keys = Object.keys(routines);
+                // console.log('keys: ', keys);
                 for (i=0; i<keys.length; i++) {
                     var schedID = keys[i];
                     var normalFlag = "";

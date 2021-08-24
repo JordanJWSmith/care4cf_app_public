@@ -160,17 +160,21 @@
             var startDate = <%- startDate %>;
             var routineDict = <%- routineDict %>;
             var user = <%- user %>;
+            var allNormals = <%- allNormals %>;
+            var allActivities = <%- allActivities %>;
 
             // console.log(document.URL);
             if (navigator.onLine) {
                 console.log('saving to local');
                 window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
+                window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
+                window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
             } else {
-                console.log(window.localStorage.getItem('routineDict'));
+                console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
                 routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
             }
             
-            console.log('routineDict: ', routineDict);
+            // console.log('allNormals: ', allNormals);
             // 
 
             var url = new URL(document.URL);
