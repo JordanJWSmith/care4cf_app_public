@@ -305,7 +305,8 @@
                 // console.log(displayDate);
                 document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+displayDate+'</p>';
                 // routineDescription(activities[date], 'modalText');
-                routineDescription2(activities[date], 'modalText');
+                console.log('activities: ', activities[date]);
+                routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }
 
@@ -362,7 +363,7 @@
                 var params = "set="+s+"&userID="+<%- userID %>;
                 http.send(params);
                 http.onload = function() {
-                    alert(http.responseText);
+                    // alert(http.responseText);
 
                         // if (s) {
                             // document.getElementById("streaks").style.display = "block";

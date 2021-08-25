@@ -43,7 +43,7 @@ router.get('/', function (req, res, next) {
                             chosenDate: chosenDate,
                             activityType: activityType,
                             somethingDifferent: true,
-                            // prompt: promptResults
+                            prompt: promptResults
                         })
                     })
                    

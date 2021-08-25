@@ -5,17 +5,17 @@ describe('#getRoutine()', function() {
     var args = Array.prototype.slice.call(arguments);
 
 
-    context('with no arguments', function() {
-        it('should return object', async function () {
-            expect(
-                await getRoutine().then(
-                    function(results) {
-                        return results
-                    }
-                )
-            ).to.be.false;
-        })
-    })
+    // context('with no arguments', function() {
+    //     it('should return object', async function () {
+    //         expect(
+    //             await getRoutine().then(
+    //                 function(results) {
+    //                     return results
+    //                 }
+    //             )
+    //         ).to.be.false;
+    //     })
+    // })
 
     context('with non-num userID ', function() {
         it('should return false', async function () {

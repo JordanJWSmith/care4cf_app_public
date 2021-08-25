@@ -77,6 +77,6 @@ module.exports = async function(userID) {
     // console.log(activitiesResults, typeCheck(activitiesResults));
     // console.log(testPacket, typeCheck(testPacket));
 
-    return typeCheck(testPacket)
-    // return typeCheck(activitiesResults);
+    // return typeCheck(testPacket)
+    return typeCheck(activitiesResults);
 }

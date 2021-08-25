@@ -8,6 +8,7 @@
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
+        <script type="text/javascript" src="/javascripts/abbreviate.js"></script> 
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     </head>
 
@@ -114,7 +115,7 @@
 
         <script>
 
-            console.log('normalSched: ', <%-normalSched %>)
+            // console.log('normalSched: ', <%-normalSched %>)
 
             if (!(navigator.onLine) && (!(getCook('accessToken')))) {
                 window.location.href = "/loginUser"
@@ -147,10 +148,10 @@
 
             if (navigator.onLine) {
                 var routines = JSON.parse(JSON.stringify(routinesString));
-                console.log('onlineRoutines: ', routines);
+                // console.log('onlineRoutines: ', routines);
             } else {
                 var routines = JSON.parse(window.localStorage.getItem('allNormals'));
-                console.log('offlineRoutines: ', routines);
+                // console.log('offlineRoutines: ', routines);
             }
             // console.log('routines: ', routines);
 
@@ -173,7 +174,7 @@
 
             function populateRoutineSection() {
                 var keys = Object.keys(routines);
-                // console.log('keys: ', keys);
+                console.log('keys: ', keys);
                 for (i=0; i<keys.length; i++) {
                     var schedID = keys[i];
                     var normalFlag = "";
@@ -181,8 +182,13 @@
                         normalFlag = "<img src='./images/tickIcon.png' style='height:4vh; position: absolute'>";
                     }
 
-                    document.getElementById('routineSection').innerHTML += '<button type="button"  class="collapsible" style="text-align:left; ">Routine ' + (i+1) + '<span style="float:right; margin-right: 10%">' + normalFlag + '</span></button>';
+                    var techDesc = JSON.parse(routines[schedID]['techniques']);
+
+                    var shortName = abbreviate(techDesc);
+
+                    document.getElementById('routineSection').innerHTML += '<button type="button" id="routineTitle'+i+'"  class="collapsible" style="text-align:left; "> '+ shortName +' <span style="float:right; margin-right: 10%">' + normalFlag + '</span></button>';
                     document.getElementById('routineSection').innerHTML += '<div class="content" id="routine'+i+'"></div>';
+                    
                     populateRoutineInfo(schedID, i);
 
                 }
@@ -199,9 +205,12 @@
                 table.setAttribute("id", "routineTable"+ind);
                 document.getElementById('routine'+ind).appendChild(table);
 
+                
+
                 for (var i = 0; i < keys.length; i++) {
-                    title = keys[i];
-                    description = routines[scheduleID][title];
+                    var title = keys[i];
+                    var description = routines[scheduleID][title];
+
                     if (description) {
                         document.getElementById('routineTable'+ind).innerHTML += '<tr><td><img src="./images/'+title+'Icon.png" style="max-height: 6vh;"></td><td><div id="'+ title +ind+'"></div></td></tr>';
                         // document.getElementById(title+ind).innerHTML += 
@@ -291,6 +300,35 @@
                 // routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }
+
+            // function abbreviate(stringList) {
+            //     var abb = "";
+            //     stringList.forEach(element => abb += abbrev(element) + '/');
+            //     return abb.slice(0, -1);
+
+            //     // stringList.forEach(element => console.log(element))
+            //     // console.log('abb: ', abb);
+            //     // var abb = "";
+            //     // if ((!stringList) || (stringList.length == 0)) {
+            //     //     return abb;
+            //     // }
+            //     // for (i=0; i<stringList.length; i++) {
+            //     //     abb += (abbrev(stringList[i])) + "/"
+            //     // }
+            //     // return abb.slice(0, -1);
+            // }
+
+
+            // function abbrev(string) {
+            //     var s = string.toUpperCase();
+            //     if (!(s.trim().indexOf(' ') != -1)) {
+            //         return string;
+            //     } else {
+            //         return s.match(/\b([A-Z])/g).join('')
+            //     }
+            
+            // }
+
 
 
 
