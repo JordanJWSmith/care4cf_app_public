@@ -217,31 +217,39 @@ router.get('/w/:offset', function(req, res, next) {
             .then(function(routineResults) {
               getWeekActivities(results.userID, parseInt(offset))
                 .then(function(weekResults) {
-                  // console.log('weekResults: ', weekResults);
-                  if (r) {
-                    // console.log('r true');
-                    var dateList = weekResults.dateList.reverse()
-                    var prevDay = "incrementDate()";
-                    var nextDay = "decrementDate()";
-                    
-                  } else {
-                    var dateList = weekResults.dateList
-                    var prevDay = "decrementDate()";
-                    var nextDay = "incrementDate()";
-                  }
+                  getAllNormals(results.userID)
+                .then(function(allNormalsResults) {
+                  getAllActivities(results.userID)
+                  .then(function(allActivitiesResults){
+                    // console.log('weekResults: ', weekResults);
+                    if (r) {
+                      // console.log('r true');
+                      var dateList = weekResults.dateList.reverse()
+                      var prevDay = "incrementDate()";
+                      var nextDay = "decrementDate()";
+                      
+                    } else {
+                      var dateList = weekResults.dateList
+                      var prevDay = "decrementDate()";
+                      var nextDay = "incrementDate()";
+                    }
 
-                  res.render('logActivity', {
-                    title: 'Welcome user '+ results.userID, 
-                    user: results.userID,
-                    routineTypes: JSON.stringify(routineResults),
-                    weekActivities: JSON.stringify(weekResults.routine),
-                    dateList: JSON.stringify(dateList),
-                    startDate: JSON.stringify(weekResults.startDate),
-                    routineDict: JSON.stringify(weekResults.routineDict),
-                    prevDay: prevDay,
-                    nextDay: nextDay
-                    })
+                    res.render('logActivity', {
+                      title: 'Welcome user '+ results.userID, 
+                      user: results.userID,
+                      routineTypes: JSON.stringify(routineResults),
+                      weekActivities: JSON.stringify(weekResults.routine),
+                      dateList: JSON.stringify(dateList),
+                      startDate: JSON.stringify(weekResults.startDate),
+                      routineDict: JSON.stringify(weekResults.routineDict),
+                      prevDay: prevDay,
+                      nextDay: nextDay,
+                      allNormals: JSON.stringify(allNormalsResults),
+                      allActivities: JSON.stringify(allActivitiesResults)
+                      })
+                  })
                 })
+              })
             })
           }
         })

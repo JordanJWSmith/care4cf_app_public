@@ -77,7 +77,7 @@
                 <!-- <a href="/newSchedule"> -->
                     <!-- <button onclick="isOnline()">Save a new schedule</button> -->
                     <button class="navButton" style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;" onclick='window.location="/newSchedule"'>
-                        <img id="myRoutinesButton" src="./images/plusIcon.png" height="100%">
+                        <img id="myRoutinesButton" src="./images/plusIcon.png" style="height:4vh">
                     </button>
                 
                 <% } else { %>
@@ -186,7 +186,7 @@
 
                     var shortName = abbreviate(techDesc);
 
-                    document.getElementById('routineSection').innerHTML += '<button type="button" id="routineTitle'+i+'"  class="collapsible" style="text-align:left; "> '+ shortName +' <span style="float:right; margin-right: 10%">' + normalFlag + '</span></button>';
+                    document.getElementById('routineSection').innerHTML += '<button type="button" id="routineTitle'+i+'"  class="collapsible" style="text-align:left; "> '+ shortName +' <span style="float:right; margin-right: 10%; margin-bottom: 10%">' + normalFlag + '</span></button>';
                     document.getElementById('routineSection').innerHTML += '<div class="content" id="routine'+i+'"></div>';
                     
                     populateRoutineInfo(schedID, i);

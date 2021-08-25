@@ -94,12 +94,12 @@
 
             <div id="navButtonContainer">
                 <!-- <a href="/normalRoutine"> -->
-                    <button class="navButton" style="margin-right: 5vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" height="100%"></button>
+                    <button class="navButton" style="margin-right: 5vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" style="height:4vh"></button>
                 <!-- </a> -->
-                    <button id="mainNavButton" class="navButtonDisabled" style="margin: auto; height: 13vh; width: 13vh; border: #2FB9CA;border-width: thick;border-style: solid;"><img id="mainButton" height="100%"></button>
+                    <button id="mainNavButton" class="navButtonDisabled" style="margin: auto; height: 13vh; width: 13vh; border: #2FB9CA;border-width: thick;border-style: solid;"><img id="mainButton" style="height:5vh"></button>
                 
                 <!-- <a href="/calendar"> -->
-                    <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'><img id="calendarButton" height="100%"></button>
+                    <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'><img id="calendarButton" style="height:4vh"></button>
                 <!-- </a> -->
                 
             </div>
@@ -109,9 +109,29 @@
 
         <script>
 
+            var url = new URL(document.URL);
+            if (url.pathname.slice(0, 2) == "/w") {
+                var path = "../images/"
+            } else {
+                var path = "./images/";
+            }
+
+
+            
+            
+            // if (navigator.onLine) {
+            //     console.log('saving to local');
+            //     window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
+            //     window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
+            //     window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
+            // } else {
+            //     console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
+            //     routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
+            // }
+
             var routineTypes = <%- routineTypes %>;
             var weekActivities = <%-weekActivities %>;
-            var dateList = <%- dateList %>
+            var dateList = <%- dateList %>;
             var startDate = <%- startDate %>;
             var routineDict = <%- routineDict %>;
             var user = <%- user %>;
@@ -132,12 +152,7 @@
             // console.log('allNormals: ', allNormals);
             // 
 
-            var url = new URL(document.URL);
-            if (url.pathname.slice(0, 2) == "/w") {
-                var path = "../images/"
-            } else {
-                var path = "./images/"
-            }
+            
 
             document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";
             document.getElementById('normalRoutineButtonPrompt').src = path + "Sample_User_Icon.png";
