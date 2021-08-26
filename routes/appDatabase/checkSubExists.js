@@ -11,7 +11,7 @@ module.exports = async function(subscription) {
     var hash = crypto.createHash('md5').update(sub).digest("hex"); 
     // console.log('hash: ', hash);
 
-    var checkSub = "SELECT * FROM subscriptions WHERE hashSubscription = ?";
+    var checkSub = "SELECT hashSubscription FROM subscriptions WHERE hashSubscription = ?";
     var checkSubValue = [hash];
     var checkSubResult = await readData(checkSub, checkSubValue)
 

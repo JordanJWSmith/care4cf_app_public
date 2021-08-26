@@ -14,12 +14,12 @@ function logout() {
             d.shift();
         }
     }
-    // if (!(navigator.onLine) && (!(getCook('accessToken')))) {
-    //     // console.log('offline logout')
-    //     // console.log(document.cookie);
-    //     window.location.href = "/loginUser"
-    // } else {
-    //     location.reload();
-    // }
-    window.location.href = "/loginUser"
+    if (!(navigator.onLine) && (!(getCook('accessToken')))) {
+        // console.log('offline logout')
+        // console.log(document.cookie);
+        window.location.href = "/loginUser"
+    } else {
+        location.reload();
+    }
+    // window.location.href = "/loginUser"
 };

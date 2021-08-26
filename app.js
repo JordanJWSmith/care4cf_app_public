@@ -7,6 +7,7 @@ var logger = require('morgan');
 var webPush = require('web-push');
 var cron = require('node-cron');
 var favicon = require('serve-favicon'); 
+var compression = require('compression');
 
 // var fetch = require('fetch');
 // var axios = require('axios').default;
@@ -44,6 +45,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(compression());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

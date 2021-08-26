@@ -25,12 +25,26 @@
                 <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
             </a>
 
+            <a style="position:absolute; height: 3vh; right: 10vw; top:2vh; cursor:pointer" onclick="openHelpModal()">
+                <!-- <img id="helpButton" src="./images/hamburgerDots.png" height="100%"> -->
+                <button class="optionButton" style="font-size: 10pt">?</button>
+            </a>
+
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <p id="modalText" onclick="logout()">Log Out</p>
+                </div>
+            </div>
+
+            <div id="helpModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="modalText" style="letter-spacing: 0; cursor:default" onclick="">Are we missing a part of your routine? <br> Let us know: <br> e.main@ucl.ac.uk</p>
                 </div>
             </div>
             
@@ -452,15 +466,23 @@
 
             
             var modal = document.getElementById("myModal");
+            var helpModal = document.getElementById("helpModal");
+
             var span = document.getElementsByClassName("close");
 
             span[0].onclick = function() {
                 modal.style.display = "none";
             }
 
+            span[1].onclick = function() {
+                helpModal.style.display = "none";
+            }
+
             window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
+                } else if (event.target == helpModal) {
+                    helpModal.style.display = "none";
                 }
             }
 
@@ -468,6 +490,10 @@
                 // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
                 // routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
+            }
+
+            function openHelpModal() {
+                helpModal.style.display = "block";
             }
 
 

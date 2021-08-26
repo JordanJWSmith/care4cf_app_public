@@ -9,7 +9,7 @@ module.exports = async function(userID, date) {
     .then(async function(dateResults) {
         // console.log('dateResults getRoutine: ', dateResults)
         if (dateResults) {
-            // console.log('dateResults: ', dateResults[0].routineType);
+            // console.log('dateResults: ', dateResults);
             var routineType = dateResults[0].routineType;
 
             // CHANGE TO 3?

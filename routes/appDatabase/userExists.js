@@ -9,7 +9,7 @@ module.exports = async function(userID) {
     } else {
 
         // var checkLogin = 'SELECT * FROM users WHERE email = "' + email + '"';
-        var checkLogin =  "SELECT * FROM users WHERE userID = ?";
+        var checkLogin =  "SELECT userID FROM users WHERE userID = ?";
         var data = [userID];
         var results = await readData(checkLogin, data);
         // console.log('userExists results:', results);

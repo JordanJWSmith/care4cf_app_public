@@ -6,12 +6,15 @@ function routineDescription(description, element) {
     var table = document.createElement('table');
     table.setAttribute("id", "routineTable");
     // document.getElementById('routineDescription').appendChild(table);
+    document.getElementById(element).innerHTML += "<p>" + description['title'] + '<p>';
+    console.log('description: ', description)
     document.getElementById(element).appendChild(table);
 
     var keys = Object.keys(description);
 
     for (var i = 0; i < keys.length; i++) {
         title = keys[i];
+
         if ((title !== 'title') && (description[title])) {
             document.getElementById('routineTable').innerHTML += '<tr><td><img src="./images/'+title+'Icon.png" style="max-height: 6vh;"></td><td><div id="'+ title +'"></div></td></tr>';
             // document.getElementById('routineDescription').innerHTML += '<div id="' + title + 'routineContainer"></div>'

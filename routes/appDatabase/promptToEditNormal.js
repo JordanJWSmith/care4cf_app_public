@@ -24,8 +24,8 @@ module.exports = async function(userID) {
     // var getActivities = "SELECT * FROM activities WHERE (date = ? OR date = ? OR date = ?) AND userID = ?"
     // var getActivitiesValues = valList;
 
-    var getActivities = "SELECT * FROM activities WHERE userID = 160 AND scheduleID > 0 AND date != ? ORDER BY date DESC LIMIT 3"
-    var getActivitiesVal = dateString;
+    var getActivities = "SELECT * FROM activities WHERE userID = ? AND scheduleID > 0 AND date != ? ORDER BY date DESC LIMIT 3"
+    var getActivitiesVal = [userID, dateString];
     var activitiesResults = await readData(getActivities, getActivitiesVal)
     .then(function(results) {
         return results

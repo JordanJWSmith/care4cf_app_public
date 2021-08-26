@@ -7,7 +7,7 @@ module.exports = async function(userID) {
         return false;
     } else {
 
-        var allActivities = 'SELECT scheduleID, date FROM activities WHERE userID = ?';
+        var allActivities = 'SELECT scheduleID, date FROM activities WHERE userID = ? ORDER BY date';
         var allActivitiesValue = userID;
         var activities = await readData(allActivities, allActivitiesValue)
         .then(function(results) {

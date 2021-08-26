@@ -2,7 +2,7 @@ var readData = require('./readData');
 
 module.exports = async function(userID, date) {
 
-    var checkDate = "SELECT * FROM activities WHERE userID = ? AND date = ?";
+    var checkDate = "SELECT activityID, routineType FROM activities WHERE userID = ? AND date = ?";
     var checkDateValues = [userID, date];
 
     var dateResults = await readData(checkDate, checkDateValues)

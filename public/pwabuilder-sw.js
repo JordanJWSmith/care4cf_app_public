@@ -14,7 +14,7 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
-
+ 
 // This caches all the pages
 self.addEventListener( "install", function( event ){
     event.waitUntil(
@@ -88,7 +88,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   // new RegExp('/loginUser'),
   '/loginUser',
-  new workbox.strategies.CacheFirst({
+  new workbox.strategies.NetworkFirst({
     cacheName: CACHE
   })
 );
