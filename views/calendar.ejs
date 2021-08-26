@@ -14,6 +14,7 @@
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
+        <script type="text/javascript" src="/javascripts/dateDifference.js"></script> 
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     </head>
    
@@ -42,7 +43,11 @@
         
             <!-- Calendar adapted from https://codepen.io/nitroduck/pen/pmQoOY -->
 
-            <h1 style="margin-top: 9vh"><%= title%></h1>
+            <h1 style="margin-top: 9vh; margin-bottom: 2vh"><%= title%></h1>
+
+            <div id="progressBar">
+
+            </div>
 
             <div class="calendar" id="main">
                 <!-- <div class="jumbotron"> -->
@@ -52,7 +57,7 @@
                             <i> &#8592; </i>
                         </button>
                    
-                        <div class="text-center" style="text-align: center; font-size: 16pt; margin: 3vw">
+                        <div class="text-center" style="text-align: center; font-size: 16pt; margin-bottom: 3vw">
                             <!-- <button class="dayButton"  id="left" href="#">
                                 <i> &#8592; </i>
                             </button> -->
@@ -89,7 +94,7 @@
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span class="close">&times;</span>
-                    <p id="modalText"></p>
+                    <p id="modalText" style="cursor:default"></p>
                 </div>
             </div>
 
@@ -147,16 +152,6 @@
 
             var activities = JSON.parse(window.localStorage.getItem('allActivities'));
 
-            // if (navigator.onLine) {
-            //     
-            // } else {
-            //     console.log('offline activities');
-            //     var activities = JSON.parse(window.localStorage.getItem('allActivities'));
-            // }
-            
-            // console.log(activities);
-
-            // $(document).ready(function() {
                 var currentDate = new Date();
                 function generateCalendar(d) {
                     function monthDays(month, year) {
@@ -281,7 +276,7 @@
 
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close");
-            console.log(span);
+            // console.log(span);
             // var menuSpan = document.getElementsByClassName("close")[1];
 
             // When the user clicks on <span> (x), close the modal
@@ -307,7 +302,7 @@
                 // console.log(displayDate);
                 document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+displayDate+'</p>';
                 // routineDescription(activities[date], 'modalText');
-                console.log('activities: ', activities[date]);
+                // console.log('activities: ', activities[date]);
                 routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }
@@ -351,6 +346,7 @@
             
 
             function changeGamificationSettings(set) {
+                
                 if (!(navigator.onLine)) {
                     alert("Cannot update while offline");
                     return false;
@@ -360,29 +356,28 @@
                 var http = new XMLHttpRequest();
                 http.open("POST", "/editGamificationAPI", true);
                 http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-
-                // var params = "set=" + document.getElementById("setForm").value + "&user=" + document.getElementById("userForm").value; // probably use document.getElementById(...).value
                 var params = "set="+s+"&userID="+<%- userID %>;
                 http.send(params);
                 http.onload = function() {
-                    // alert(http.responseText);
-
-                        // if (s) {
-                            // document.getElementById("streaks").style.display = "block";
-                        // } else {
-                            // document.getElementById("streaks").style.display = "none";
-                        // }
-                        
                         menuModal.style.display = "none";
                         gamification = s;
                         // console.log(gamification);
                         updateStreaks(s);
-
                     }
                 }
-                
-                
             }
+
+
+            var firstDate = new Date((Object.keys(activities)[0]).replace(/-/g, "/"));
+            var dateDiff = dateDifference(firstDate, currentDate);
+
+            document.getElementById('progressBar').innerHTML = "<p style='margin: 1vh'>You are on day " + dateDiff + " of 365</p>";
+
+
+
+            // console.log('date difference: ', dateDifference(firstDate, currentDate));
+
+
 
             
 
