@@ -13,8 +13,8 @@ router.get('/', function (req, res, next) {
             console.log('user not logged in at index. Redirecting to login...')
             res.redirect('/loginUser');
         } else {
-            getAllNormals(results.userID)
-            .then(function(allNormalsResults) {
+            // getAllNormals(results.userID)
+            // .then(function(allNormalsResults) {
                 getNormalSchedID(results.userID)
                 .then(function(normalSchedIDResult) {
                     // var normalSched = normalSchedIDResult[0].scheduleID;
@@ -24,13 +24,13 @@ router.get('/', function (req, res, next) {
                     // res.render('myRoutines', {
                         res.render('myRoutines', {
                         title: 'Routines',
-                        routines: JSON.stringify(allNormalsResults),
+                        // routines: JSON.stringify(allNormalsResults),
                         normalSched: normalSched,
                         user: results.userID,
                         somethingDifferent: false
                     })
                 })                
-            })           
+            // })           
         }
     })
 })

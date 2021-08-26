@@ -84,7 +84,7 @@
             <!-- <a href="/somethingDifferent/logNew">
                 <button>Something else</button>
             </a> -->
-                    <button class="optionButton" onclick='window.location="/newSchedule?n=1"' style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;">Something Different</button>
+                    <button class="optionButton" onclick='window.location="/somethingDifferent/logNew"' style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;">Something Different</button>
                 <% } %>
 
             <% if (!somethingDifferent) { %>
@@ -143,16 +143,18 @@
             // }
 
             // console.log(document.cookie);
-            var routinesString = <%- routines %>;
             
 
-            if (navigator.onLine) {
-                var routines = JSON.parse(JSON.stringify(routinesString));
-                // console.log('onlineRoutines: ', routines);
-            } else {
-                var routines = JSON.parse(window.localStorage.getItem('allNormals'));
-                // console.log('offlineRoutines: ', routines);
-            }
+            var routines = JSON.parse(window.localStorage.getItem('allNormals'));
+            
+
+            // if (navigator.onLine) {
+            //     var routines = JSON.parse(JSON.stringify(routinesString));
+            //     // console.log('onlineRoutines: ', routines);
+            // } else {
+            //     var routines = JSON.parse(window.localStorage.getItem('allNormals'));
+            //     // console.log('offlineRoutines: ', routines);
+            // }
             // console.log('routines: ', routines);
 
             <% if (somethingDifferent) { %>

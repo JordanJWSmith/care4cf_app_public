@@ -15,8 +15,8 @@ router.get('/', function (req, res, next) {
           res.redirect('/loginUser');
         } else {
             var userID = results.userID;
-            getAllActivities(userID)
-            .then(function(activitiesResults) {
+            // getAllActivities(userID)
+            // .then(function(activitiesResults) {
                 getActivityDates(userID)
                 .then(function(streakResults) {
                     // console.log('streakResults: ', streakResults)
@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
                         // }
                         res.render('calendar', {
                             title: 'My History',
-                            activities: JSON.stringify(activitiesResults),
+                            // activities: JSON.stringify(activitiesResults),
                             currentStreak: streakResults.currentStreak,
                             longestStreak: streakResults.longestStreak,
                             gamification: parseInt(gamifResults),
@@ -41,7 +41,7 @@ router.get('/', function (req, res, next) {
                 })
                 // console.log('activitiesResults: ', activitiesResults);
                 
-            })
+            // })
             
         } 
     })

@@ -16,7 +16,7 @@
     <body>
         <div class="container" style="display: table;">
 
-            <img src="./images/backArrowIcon.png" onclick="window.history.back()"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+            <img id="backArrowButton" src="./images/backArrowIcon.png" onclick="window.history.back()"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
 
             <h1 style="margin-top: 9vh"><%= title %></h1>
             <!-- <p>What's your normal airway clearance routine?</p> -->
@@ -118,7 +118,7 @@
                     <br><br>
 
                     <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit">
-                        <img src="images/tickIcon.png" style="height:4vh">
+                        <img id="tickButton" src="images/tickIcon.png" style="height:4vh">
                     </button>
                 </form>
             </div>  
@@ -136,20 +136,38 @@
 
             // console.log('saveAsNormal: ', <%- saveAsNormal %>);
 
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            var saN = urlParams.get('n');
-            if (saN) {
-                var saveAsNormal = false;
+            // const queryString = window.location.search;
+            // const urlParams = new URLSearchParams(queryString);
+            // var saN = urlParams.get('n');
+            // if (saN) {
+            //     var saveAsNormal = false;
+            // } else {
+            //     var saveAsNormal = <%- saveAsNormal %>;
+            // }
+
+            var url = new URL(document.URL);
+            // console.log('url: ', url.pathname);
+            // console.log('index', url.pathname.indexOf('logNew'))
+            // console.log(url.pathname.indexOf('logNew') !== -1)
+            if (url.pathname.indexOf('logNew') !== -1) {
+                var path = "../images/";
             } else {
-                var saveAsNormal = <%- saveAsNormal %>;
+                var path = "./images/";
             }
+
+            document.getElementById("backArrowButton").src = path + 'backArrowIcon.png';
+            document.getElementById("hamburgerButton").src = path + 'hamburgerDots.png';
+            document.getElementById("tickButton").src = path + 'tickIcon.png';
+
+
+            var saveAsNormal = <%- saveAsNormal %>;
 
             console.log('saveAsNormal: ', saveAsNormal);
 
             // Add these to forms
             var activityType = <%- activityType %>;
             var chosenDate = <%- chosenDate %>;
+            console.log('activityType and Date: ', activityType, chosenDate);
 
             var savedSched = <%- sched %>;
             

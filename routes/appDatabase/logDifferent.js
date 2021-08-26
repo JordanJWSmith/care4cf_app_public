@@ -5,7 +5,8 @@ module.exports = async function(userID, date, scheduleID, activityType) {
     var insertDiffActivity = "INSERT INTO activities (userID, date, scheduleID, routineType) VALUES (?, ?, ?, ?)";
     var diffValues = [userID, date, scheduleID, activityType];
     await readData(insertDiffActivity, diffValues)
-    .then(function() {
+    .then(function(results) {
+        console.log('logDifferent Results: ', results)
         return true;
     })
 

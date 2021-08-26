@@ -39,7 +39,7 @@ self.addEventListener( "install", function( event ){
                       './images/favicon.ico',
                       './images/Sample_User_Icon.png',
                       './images/techniquesIcon.png',
-                      './images/circleicon.png',
+                      './images/circleIcon.png',
                       './images/myRoutinesIcon.png',
                       './images/tickIcon.png',
                       './images/plusIcon.png',
@@ -88,7 +88,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   // new RegExp('/loginUser'),
   '/loginUser',
-  new workbox.strategies.NetworkFirst({
+  new workbox.strategies.CacheFirst({
     cacheName: CACHE
   })
 );

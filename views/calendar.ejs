@@ -145,12 +145,14 @@
                 window.location.href = "/loginUser"
             }
 
-            if (navigator.onLine) {
-                var activities = <%- activities %>;
-            } else {
-                console.log('offline activities');
-                var activities = JSON.parse(window.localStorage.getItem('allActivities'));
-            }
+            var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+
+            // if (navigator.onLine) {
+            //     
+            // } else {
+            //     console.log('offline activities');
+            //     var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+            // }
             
             // console.log(activities);
 

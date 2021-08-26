@@ -23,8 +23,8 @@ router.get('/', function (req, res, next) {
             console.log('user not logged in at index. Redirecting to login...')
             res.redirect('/loginUser');
         } else {
-            getAllNormals(results.userID)
-            .then(function(allNormalsResults) {
+            // getAllNormals(results.userID)
+            // .then(function(allNormalsResults) {
                 getNormalSchedID(results.userID)
                 .then(function(normalSchedIDResult) {
                     promptToEditNormal(results.userID)
@@ -37,7 +37,7 @@ router.get('/', function (req, res, next) {
                         // console.log(chosenDate);
                         res.render('myRoutines', {
                             title: 'Which activities did you do?',
-                            routines: JSON.stringify(allNormalsResults),
+                            // routines: JSON.stringify(allNormalsResults),
                             normalSched: normalSched,
                             user: results.userID,
                             chosenDate: chosenDate,
@@ -48,7 +48,7 @@ router.get('/', function (req, res, next) {
                     })
                    
                 })                
-            })           
+            // })           
         }
     })
 })
