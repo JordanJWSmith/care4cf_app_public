@@ -31,35 +31,35 @@ module.exports = async function(userID) {
         return results
     })
 
-    var testPacket = [
-        {
-          activityID: 52,
-          userID: 160,
-          date: 2021-08-14,
-          scheduleID: 93,
-          routineType: 2,
-          productive: null,
-          mood: null
-        },
-         {
-          activityID: 51,
-          userID: 160,
-          date: 2021-08-13,
-          scheduleID: 93,
-          routineType: 2,
-          productive: null,
-          mood: null
-        },
-         {
-          activityID: 49,
-          userID: 160,
-          date: 2021-08-12,
-          scheduleID: 93,
-          routineType: 2,
-          productive: null,
-          mood: null
-        }
-      ]
+    // var testPacket = [
+    //     {
+    //       activityID: 52,
+    //       userID: 160,
+    //       date: 2021-08-14,
+    //       scheduleID: 93,
+    //       routineType: 2,
+    //       productive: null,
+    //       mood: null
+    //     },
+    //      {
+    //       activityID: 51,
+    //       userID: 160,
+    //       date: 2021-08-13,
+    //       scheduleID: 93,
+    //       routineType: 2,
+    //       productive: null,
+    //       mood: null
+    //     },
+    //      {
+    //       activityID: 49,
+    //       userID: 160,
+    //       date: 2021-08-12,
+    //       scheduleID: 93,
+    //       routineType: 2,
+    //       productive: null,
+    //       mood: null
+    //     }
+    //   ]
 
     function typeCheck(a) {
         if (a.length == 3) {
