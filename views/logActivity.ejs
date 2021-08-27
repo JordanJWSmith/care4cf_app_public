@@ -393,8 +393,8 @@
                 // disableButton(today);   
                 dayCounter++;
                 // console.log('dayCounter: ', dayCounter)
-                console.log('length: ', dateList.length);
-                console.log('dayCounter: ', dayCounter);
+                // console.log('length: ', dateList.length);
+                // console.log('dayCounter: ', dayCounter);
 
                 if ((dayCounter == (dateList.length-1)) && (!(navigator.onLine))) {
                     document.getElementById('prevDay').innerHTML = '';
@@ -406,7 +406,7 @@
                     disableButton(newDay);
                     populateMainSection()
                 } else {
-                    console.log('online? ', navigator.onLine);
+                    // console.log('online? ', navigator.onLine);
                     // if (navigator.onLine) {
                         var newDay = new Date(dateList[dayCounter-1].replace(/-/g, "/"));
                         // console.log('newDay: ', newDay)

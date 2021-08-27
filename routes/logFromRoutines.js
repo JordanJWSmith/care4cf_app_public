@@ -1,3 +1,5 @@
+// NO LONGER USED?
+
 var express = require('express');
 const getAllNormals = require('./appDatabase/getAllNormals');
 const getNormalSchedID = require('./appDatabase/getNormalSchedID');

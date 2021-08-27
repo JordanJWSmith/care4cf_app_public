@@ -29,36 +29,54 @@ router.get('/', function (req, res, next) {
             //     var end = Date.now();
             //     console.log(`Promise.all() execution time: ${end - start} ms`)
             // })
-            
-            
 
+            Promise.all([
+                getActivityDates(userID),
+                getGamifSettings(userID)
+            ])
+            .then((values) => {
+                console.log('promise values: ', values);
+                
+                var currentStreak = values[0].currentStreak;
+                var longestStreak = values[0].longestStreak;
+                var gamification = values[1];
+
+                res.render('calendar', {
+                    title: 'My History',
+                    currentStreak: currentStreak,
+                    longestStreak: longestStreak,
+                    gamification: parseInt(gamification),
+                    userID: userID
+                })
+            })
+            
             // getAllActivities(userID)
             // .then(function(activitiesResults) {
-                var chainStart = Date.now();
-                getActivityDates(userID)
-                .then(function(streakResults) {
-                    // console.log('streakResults: ', streakResults)
-                    getGamifSettings(userID)
-                    .then(function(gamifResults) {
-                        var chainEnd = Date.now();
-                        console.log(`Promise chain execution time: ${chainEnd - chainStart} ms`);
-                        // console.log('gamif Results: ', parseInt(gamifResults));
-                        // if (parseInt(gamifResults)) {
-                        //     console.log('gamification active')
-                        // } else {
-                        //     console.log('gamification inactive')
-                        // }
-                        res.render('calendar', {
-                            title: 'My History',
-                            // activities: JSON.stringify(activitiesResults),
-                            currentStreak: streakResults.currentStreak,
-                            longestStreak: streakResults.longestStreak,
-                            gamification: parseInt(gamifResults),
-                            userID: userID
-                        })
-                    })
+                // var chainStart = Date.now();
+                // getActivityDates(userID)
+                // .then(function(streakResults) {
+                //     // console.log('streakResults: ', streakResults)
+                //     getGamifSettings(userID)
+                //     .then(function(gamifResults) {
+                //         var chainEnd = Date.now();
+                //         console.log(`Promise chain execution time: ${chainEnd - chainStart} ms`);
+                //         // console.log('gamif Results: ', parseInt(gamifResults));
+                //         // if (parseInt(gamifResults)) {
+                //         //     console.log('gamification active')
+                //         // } else {
+                //         //     console.log('gamification inactive')
+                //         // }
+                //         res.render('calendar', {
+                //             title: 'My History',
+                //             // activities: JSON.stringify(activitiesResults),
+                //             currentStreak: streakResults.currentStreak,
+                //             longestStreak: streakResults.longestStreak,
+                //             gamification: parseInt(gamifResults),
+                //             userID: userID
+                //         })
+                //     })
                     
-                })
+                // })
                 // console.log('activitiesResults: ', activitiesResults);
                 
             // })

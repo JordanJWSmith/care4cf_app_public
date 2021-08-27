@@ -35,7 +35,8 @@ userExistsPriv(email)
         // User exists in private database
         console.log('user exists in private database');
         var userID = results.userID;
-        userExists(userID).then(async function(userResults) {
+        userExists(userID)
+        .then(async function(userResults) {
             if (userResults.logIn) {
                 console.log('user exists in app database');
                 // User exists in app database

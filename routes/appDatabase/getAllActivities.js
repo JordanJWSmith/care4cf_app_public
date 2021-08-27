@@ -12,7 +12,7 @@ module.exports = async function(userID) {
         var allActivitiesValue = userID;
         var activities = await readData(allActivities, allActivitiesValue)
         .then(function(results) {
-            console.log('getAllActivities: ', results);
+            // console.log('getAllActivities: ', results);
             return results;
         })
 

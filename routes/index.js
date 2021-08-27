@@ -241,7 +241,7 @@ router.post('/scheduleData', async function(req, res, next) {
 router.post('/logNewActivity', async function(req, res, next) {
   const details = req.body;
   // console.log('activity type: ', details.activityType);
-  console.log('(index) date: ', details.chosenDate, typeof details.chosenDate);
+  // console.log('(index) date: ', details.chosenDate, typeof details.chosenDate);
   // console.log('user: ', details.user);
 
   // CHECK THIS STILL WORKS
@@ -251,7 +251,7 @@ router.post('/logNewActivity', async function(req, res, next) {
     .then(res.redirect('/'));
 
   } else if (details.activityType == 2) {
-    console.log('logging something different');
+    // console.log('logging something different');
     req.session.chosenDate = JSON.stringify(details.chosenDate);
     req.session.activityType =  details.activityType;
     req.session.saveAsNormal = false;
@@ -259,7 +259,7 @@ router.post('/logNewActivity', async function(req, res, next) {
     res.redirect('/somethingDifferent');
     
   } else if (details.activityType == 3) {
-    console.log('logging no activities');
+    // console.log('logging no activities');
     await getNoActivityReasons()
     .then(function(results) {
       res.render('noActivity', {
@@ -297,49 +297,93 @@ router.get('/w/:offset', function(req, res, next) {
         console.log('user not logged in at index. Redirecting to login...')
         res.redirect('/loginUser');
       } else {
-        checkForNormal(results.userID)
-        .then(function(checkResults) {
-          if (checkResults.scheduleExists) {
-            getRoutineTypes()
-            .then(function(routineResults) {
-              getWeekActivities(results.userID, parseInt(offset))
-                .then(function(weekResults) {
-                  getAllNormals(results.userID)
-                .then(function(allNormalsResults) {
-                  getAllActivities(results.userID)
-                  .then(function(allActivitiesResults){
-                    // console.log('weekResults: ', weekResults);
-                    if (r) {
-                      // console.log('r true');
-                      var dateList = weekResults.dateList.reverse()
-                      var prevDay = "incrementDate()";
-                      var nextDay = "decrementDate()";
-                      
-                    } else {
-                      var dateList = weekResults.dateList
-                      var prevDay = "decrementDate()";
-                      var nextDay = "incrementDate()";
-                    }
 
-                    res.render('logActivity', {
-                      title: 'Welcome user '+ results.userID, 
-                      user: results.userID,
-                      routineTypes: JSON.stringify(routineResults),
-                      weekActivities: JSON.stringify(weekResults.routine),
-                      dateList: JSON.stringify(dateList),
-                      startDate: JSON.stringify(weekResults.startDate),
-                      routineDict: JSON.stringify(weekResults.routineDict),
-                      prevDay: prevDay,
-                      nextDay: nextDay,
-                      allNormals: JSON.stringify(allNormalsResults),
-                      allActivities: JSON.stringify(allActivitiesResults)
-                      })
-                  })
-                })
-              })
-            })
+        Promise.all([
+          checkForNormal(results.userID),
+          getRoutineTypes(),
+          getWeekActivities(results.userID, parseInt(offset)),
+          getAllNormals(results.userID),
+          getAllActivities(results.userID)
+        ])
+        .then((values) => {
+          console.log('blockPromise values: ', values)
+        
+          var routineTypes = values[1];
+          // var weekActivities = values[2].routine;
+          // var dateList = values[2].dateList;
+          // var startDate = values[2].startDate;
+          var routineDict = values[2].routineDict;
+          var allNormals = values[3];
+          var allActivities = values[4];
+
+          if (r) {
+            var dateList = values[2].dateList.reverse();
+            var prevDay = "incrementDate()";
+            var nextDay = "decrementDate()";
+          } else {
+            var dateList = values[2].dateList;
+            var prevDay = "decrementDate()";
+            var nextDay = "incrementDate()";
           }
+
+          res.render('logActivity', {
+            title: 'Welcome user '+ results.userID, 
+            user: results.userID,
+            routineTypes: JSON.stringify(routineTypes),
+            // weekActivities: JSON.stringify(weekResults.routine),
+            dateList: JSON.stringify(dateList),
+            // startDate: JSON.stringify(weekResults.startDate),
+            routineDict: JSON.stringify(routineDict),
+            prevDay: prevDay,
+            nextDay: nextDay,
+            allNormals: JSON.stringify(allNormals),
+            allActivities: JSON.stringify(allActivities)
+          })
         })
+
+        // checkForNormal(results.userID)
+        // .then(function(checkResults) {
+        //   if (checkResults.scheduleExists) {
+        //     getRoutineTypes()
+        //     .then(function(routineResults) {
+        //       getWeekActivities(results.userID, parseInt(offset))
+        //         .then(function(weekResults) {
+        //           getAllNormals(results.userID)
+        //         .then(function(allNormalsResults) {
+        //           getAllActivities(results.userID)
+        //           .then(function(allActivitiesResults){
+        //             // console.log('weekResults: ', weekResults);
+        //             if (r) {
+        //               // console.log('r true');
+        //               var dateList = weekResults.dateList.reverse()
+        //               var prevDay = "incrementDate()";
+        //               var nextDay = "decrementDate()";
+                      
+        //             } else {
+        //               var dateList = weekResults.dateList
+        //               var prevDay = "decrementDate()";
+        //               var nextDay = "incrementDate()";
+        //             }
+
+        //             res.render('logActivity', {
+        //               title: 'Welcome user '+ results.userID, 
+        //               user: results.userID,
+        //               routineTypes: JSON.stringify(routineResults),
+        //               weekActivities: JSON.stringify(weekResults.routine),
+        //               dateList: JSON.stringify(dateList),
+        //               startDate: JSON.stringify(weekResults.startDate),
+        //               routineDict: JSON.stringify(weekResults.routineDict),
+        //               prevDay: prevDay,
+        //               nextDay: nextDay,
+        //               allNormals: JSON.stringify(allNormalsResults),
+        //               allActivities: JSON.stringify(allActivitiesResults)
+        //               })
+        //           })
+        //         })
+        //       })
+        //     })
+        //   }
+        // })
       }
     })
   }

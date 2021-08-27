@@ -82,41 +82,74 @@ router.get('/logNew', function (req, res, next) {
         if (!results.logIn) {
             res.render('loginUser', {title: 'Please sign in'});
         } else {
-            getTechniques()
-            .then(function(techResults) {
-                getDurations()
-                .then(function(durationResults) {
-                getAdjuncts()
-                .then(function(adjunctResults) {
-                    getAdjunctTimes()
-                    .then(function(adjunctTimeResults) {
-                        getFrequencies()
-                        .then(function(frequencyResults) {
-                            // promptToEditNormal(results.userID)
-                            // .then(function(promptResults) {
-                                res.render('newSchedule', 
-                                // res.render('logFromRoutines', 
-                                {
-                                    title: 'What activities did you do?', 
-                                    user: results.userID, 
-                                    techniques: JSON.stringify(techResults),
-                                    durations: JSON.stringify(durationResults),
-                                    adjuncts: JSON.stringify(adjunctResults),
-                                    adjunctTimes: JSON.stringify(adjunctTimeResults),
-                                    frequencies: JSON.stringify(frequencyResults),
-                                    chosenDate: chosenDate,
-                                    activityType: activityType,
-                                    saveAsNormal: saveAsNormal,
-                                    sched: sched
-                                })
-                          
-                            // })
-                        })
-                    })
+
+            Promise.all([
+                getTechniques(),
+                getDurations(),
+                getAdjuncts(),
+                getAdjunctTimes(),
+                getFrequencies()
+            ])
+            .then((values) => {
+                console.log('promiseBlock values: ', values);
+                var techniques = values[0];
+                var durations = values[1];
+                var adjuncts = values[2];
+                var adjunctTimes = values[3];
+                var frequencies = values[4];
+
+                res.render('newSchedule', {
+                    title: 'What activities did you do?',
+                    user: results.userID,
+                    techniques: JSON.stringify(techniques),
+                    durations: JSON.stringify(durations),
+                    adjuncts: JSON.stringify(adjuncts),
+                    adjunctTimes: JSON.stringify(adjunctTimes),
+                    frequencies: JSON.stringify(frequencies),
+                    chosenDate: chosenDate,
+                    activityType: activityType,
+                    saveAsNormal: saveAsNormal,
+                    sched: sched
+
                 })
-                })
-                // console.log(results); 
+
             })
+
+
+            // getTechniques()
+            // .then(function(techResults) {
+            //     getDurations()
+            //     .then(function(durationResults) {
+            //     getAdjuncts()
+            //     .then(function(adjunctResults) {
+            //         getAdjunctTimes()
+            //         .then(function(adjunctTimeResults) {
+            //             getFrequencies()
+            //             .then(function(frequencyResults) {
+            //                 // promptToEditNormal(results.userID)
+            //                 // .then(function(promptResults) {
+            //                     res.render('newSchedule', 
+            //                     // res.render('logFromRoutines', 
+            //                     {
+            //                         title: 'What activities did you do?', 
+            //                         user: results.userID, 
+            //                         techniques: JSON.stringify(techResults),
+            //                         durations: JSON.stringify(durationResults),
+            //                         adjuncts: JSON.stringify(adjunctResults),
+            //                         adjunctTimes: JSON.stringify(adjunctTimeResults),
+            //                         frequencies: JSON.stringify(frequencyResults),
+            //                         chosenDate: chosenDate,
+            //                         activityType: activityType,
+            //                         saveAsNormal: saveAsNormal,
+            //                         sched: sched
+            //                     })
+            //                 // })
+            //             })
+            //         })
+            //     })
+            //     })
+            //     // console.log(results); 
+            // })
             // res.render('newSchedule', {title: 'What airway clearance did you do?'});
         }
     })
