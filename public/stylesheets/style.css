@@ -380,6 +380,15 @@ pwa-auth::part(signInButton) {
   display: inline-block
 }
 
+#calendarMain {
+  background-color: rgba(222, 227, 238, 0.7);
+  padding: 2vh;
+  width: 80%;
+  margin: auto;
+  border-radius: 10px;
+  max-width: 500px;
+}
+
 
 
 /* .word {

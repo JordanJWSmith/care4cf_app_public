@@ -25,7 +25,8 @@ const userDetails = req.body;
 var email = userDetails.email;
 var token = userDetails.token;
 
-userExistsPriv(email).then(function(results) {
+userExistsPriv(email)
+.then(function(results) {
     // console.log(' userExists results (should be false):',  results)
     if (!results.logIn) {
         // User does not exist in private database
@@ -47,7 +48,7 @@ userExistsPriv(email).then(function(results) {
                 // User does not exist in app database
                 console.log('user does not exist in app database. Creating new row...');
                 // createUser
-                await newUser({userID: userID, msalToken: token})
+                await newUser(userID)
                 .then(async function() {
                     await updateToken(token, userID)
                 })

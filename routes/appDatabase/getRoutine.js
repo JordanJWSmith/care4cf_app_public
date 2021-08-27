@@ -64,7 +64,7 @@ module.exports = async function(userID, date) {
                     return descriptionResults;
 
             } else {
-                // console.log('no activities');
+                // console.log('getRoutine: no activities');
                 resDict = {}
                 var activityID = dateResults[0].activityID;
                 var getReason = `
@@ -80,13 +80,14 @@ module.exports = async function(userID, date) {
                     // console.log('activityType: ', reasonResults[1]);
                     resDict['title'] = reasonResults[1][0].routine;
                     resDict['description'] = reasonResults[0][0].description;
-                    // console.log('resDict: ', resDict);
+                    // console.log('getRoutine resDict for no activity: ', resDict);
                     return resDict;
                 })
+                // console.log('getRoutine getReasonResults for no activity:', getReasonResults);
                 return getReasonResults;
             }
         } else {
-            // console.log(false);
+            // console.log('dateResult failed');
             return false
         }
     })

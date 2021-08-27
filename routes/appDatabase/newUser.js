@@ -4,15 +4,16 @@ const updateToken = require('./updateToken');
 // const fetch = require('node-fetch');
 
 
-module.exports = async function(userDetails) {
-    // console.log('new user Details: ', userDetails);
+module.exports = async function(userID) {
+    console.log('new user Details: ', userID);
 
 
-    var newUser = 'INSERT INTO users SET ? ';
+    var newUser = 'INSERT INTO users VALUES (?, 1) ';
+    newUserValues = [userID];
 
     // var results = await updateRecords(newUser, userDetails);
     // console.log('newUser results:', results);
-    await readData(newUser, userDetails)
+    await readData(newUser, newUserValues)
     .then(async function(results) {
         // var accessToken = userDetails.msalToken;
         // var userID = userDetails.userID;

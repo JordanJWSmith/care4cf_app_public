@@ -14,8 +14,8 @@ const logDifferent = require('./appDatabase/logDifferent');
 const getRoutineTypes = require('./appDatabase/getRoutineTypes');
 const getNoActivityReasons = require('./appDatabase/getNoActivityReasons');
 const getFrequencies = require('./appDatabase/getFrequencies');
-const getRoutine = require('./appDatabase/getRoutine');
-const checkForDate = require('./appDatabase/checkForDate');
+// const getRoutine = require('./appDatabase/getRoutine');
+// const checkForDate = require('./appDatabase/checkForDate');
 const getWeekActivities = require('./appDatabase/getWeekActivities');
 const promptToEditNormal = require('./appDatabase/promptToEditNormal');
 const getAllNormals = require('./appDatabase/getAllNormals');
@@ -32,83 +32,170 @@ router.get('/', function(req, res, next) {
       console.log('user not logged in at index. Redirecting to login...')
       res.redirect('/loginUser');
     } else {
-      checkForNormal(results.userID)
-      .then(function(checkResults) {
-        if (checkResults.scheduleExists) {
-          getRoutineTypes()
-          .then(function(routineResults) {
-              getWeekActivities(results.userID, 0)
-              .then(function(weekResults) {
-                getAllNormals(results.userID)
-                .then(function(allNormalsResults) {
-                  getAllActivities(results.userID)
-                  .then(function(allActivitiesResults){
-                    var prevDay = "decrementDate()";
-                    var nextDay = "incrementDate()";
+      var blockStart = Date.now();
+      Promise.all([
+        checkForNormal(results.userID),
+        getRoutineTypes(),
+        getWeekActivities(results.userID, 0),
+        getAllNormals(results.userID),
+        getAllActivities(results.userID)
+      ])
+      .then((values) => {
+        // console.log('blockPromise values: ', values);
 
-                    res.render('logActivity', {
-                      title: 'Welcome user '+ results.userID, 
-                      user: results.userID,
-                      routineTypes: JSON.stringify(routineResults),
-                      weekActivities: JSON.stringify(weekResults.routine),
-                      dateList: JSON.stringify(weekResults.dateList),
-                      startDate: JSON.stringify(weekResults.startDate),
-                      routineDict: JSON.stringify(weekResults.routineDict),
-                      prevDay: prevDay,
-                      nextDay: nextDay,
-                      allNormals: JSON.stringify(allNormalsResults),
-                      allActivities: JSON.stringify(allActivitiesResults)
-                    })
-                  })
+        var blockEnd = Date.now();
+        console.log(`logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
+
+        var scheduleExists = values[0].scheduleExists;
+
+        if (scheduleExists) { 
+
+          var routineTypes = values[1];
+          // var weekActivities = values[2].routine;
+          var dateList = values[2].dateList;
+          // var startDate = values[2].startDate;
+          var routineDict = values[2].routineDict;
+          var allNormals = values[3];
+          var allActivities = values[4];
+
+          var prevDay = "decrementDate()";
+          var nextDay = "incrementDate()";
+
+          res.render('logActivity', {
+            title: 'Welcome user '+ results.userID, 
+            user: results.userID,
+            routineTypes: JSON.stringify(routineTypes),
+            // weekActivities: JSON.stringify(weekActivities),
+            dateList: JSON.stringify(dateList),
+            // startDate: JSON.stringify(startDate),
+            routineDict: JSON.stringify(routineDict),
+            prevDay: prevDay,
+            nextDay: nextDay,
+            allNormals: JSON.stringify(allNormals),
+            allActivities: JSON.stringify(allActivities)
+          })
+
+          // block end
+
+    // })
+    //   .then(function() {
+    //     var blockEnd = Date.now();
+    //     console.log(`Promise.all() execution time: ${blockEnd - blockStart} ms`)
+    // })
+      
+
+
+      // var chainStart = Date.now()
+      // checkForNormal(results.userID)
+      // .then(function(checkResults) {
+      //   if (checkResults.scheduleExists) {
+      //     getRoutineTypes()
+      //     .then(function(routineResults) {
+      //         getWeekActivities(results.userID, 0)
+      //         .then(function(weekResults) {
+      //           getAllNormals(results.userID)
+      //           .then(function(allNormalsResults) {
+      //             getAllActivities(results.userID)
+      //             .then(function(allActivitiesResults){
+
+      //               var chainEnd = Date.now();
+      //               console.log(`Promise chain execution time: ${chainEnd - chainStart} ms`);
+
+      //               var prevDay = "decrementDate()";
+      //               var nextDay = "incrementDate()";
+
+      //               res.render('logActivity', {
+      //                 title: 'Welcome user '+ results.userID, 
+      //                 user: results.userID,
+      //                 routineTypes: JSON.stringify(routineResults),
+      //                 weekActivities: JSON.stringify(weekResults.routine),
+      //                 dateList: JSON.stringify(weekResults.dateList),
+      //                 startDate: JSON.stringify(weekResults.startDate),
+      //                 routineDict: JSON.stringify(weekResults.routineDict),
+      //                 prevDay: prevDay,
+      //                 nextDay: nextDay,
+      //                 allNormals: JSON.stringify(allNormalsResults),
+      //                 allActivities: JSON.stringify(allActivitiesResults)
+      //               })
+      //             })
                   
-                // console.log('routineResults: ', getRoutineResults);
-                // console.log('startDate: ', weekResults.startDate);
-                // console.log('routineDict: ', weekResults.routineDict);
+      //           // console.log('routineResults: ', getRoutineResults);
+      //           // console.log('startDate: ', weekResults.startDate);
+      //           // console.log('routineDict: ', weekResults.routineDict);
 
                 
-                })
-              })
-          })
+      //           })
+      //         })
+      //     })
           
         } else {
-          getTechniques()
-          .then(function(techResults) {
-            getDurations()
-            .then(function(durationResults) {
-              getAdjuncts()
-              .then(function(adjunctResults) {
-                getAdjunctTimes()
-                .then(function(adjunctTimeResults) {
-                  getFrequencies()
-                  .then(function(frequencyResults) {
-                    res.render('newSchedule', {
-                      title: 'Welcome, user ' + results.userID +'.', 
-                      user: results.userID, 
-                      techniques: JSON.stringify(techResults),
-                      durations: JSON.stringify(durationResults),
-                      adjuncts: JSON.stringify(adjunctResults),
-                      adjunctTimes: JSON.stringify(adjunctTimeResults),
-                      frequencies: JSON.stringify(frequencyResults),
-                      chosenDate: false,
-                      activityType: false,
-                      saveAsNormal: true,
-                      sched: false
-                    })
-                  }
-                    
-                  )
-                  
-                })
-                
-              })
-              
+          Promise.all([
+            getTechniques(),
+            getDurations(),
+            getAdjuncts(),
+            getAdjunctTimes(),
+            getFrequencies()
+          ])
+          .then((values) => {
+            // console.log('promise values for new user: ', values);
+            var techniques = values[0];
+            var durations = values[1];
+            var adjuncts = values[2];
+            var adjunctTimes = values[3];
+            var frequencies = values[4];
+
+            res.render('newSchedule', {
+              title: 'Welcome! What\'s your normal airway clearance routine?', 
+              user: results.userID, 
+              techniques: JSON.stringify(techniques),
+              durations: JSON.stringify(durations),
+              adjuncts: JSON.stringify(adjuncts),
+              adjunctTimes: JSON.stringify(adjunctTimes),
+              frequencies: JSON.stringify(frequencies),
+              chosenDate: false,
+              activityType: false,
+              saveAsNormal: true,
+              sched: false
             })
-            
           })
+
+          // getTechniques()
+          // .then(function(techResults) {
+          //   getDurations()
+          //   .then(function(durationResults) {
+          //     getAdjuncts()
+          //     .then(function(adjunctResults) {
+          //       getAdjunctTimes()
+          //       .then(function(adjunctTimeResults) {
+          //         getFrequencies()
+          //         .then(function(frequencyResults) {
+          //           res.render('newSchedule', {
+          //             title: 'Welcome! What\'s your normal airway clearance routine?', 
+          //             user: results.userID, 
+          //             techniques: JSON.stringify(techResults),
+          //             durations: JSON.stringify(durationResults),
+          //             adjuncts: JSON.stringify(adjunctResults),
+          //             adjunctTimes: JSON.stringify(adjunctTimeResults),
+          //             frequencies: JSON.stringify(frequencyResults),
+          //             chosenDate: false,
+          //             activityType: false,
+          //             saveAsNormal: true,
+          //             sched: false
+          //           })
+          //         }
+                    
+          //         )
+                  
+          //       })
+                
+          //     })
+              
+          //   })
+            
+          // })
             
         }
       })
-      
     }
   })
 });

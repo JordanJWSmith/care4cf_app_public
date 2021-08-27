@@ -18,11 +18,11 @@ module.exports = async function(userID) {
             dateArr.push(dateFormat);
         }
 
-        console.log('dates: ', dateArr);
+        // console.log('dates: ', dateArr);
 
         var streakSummary = dateStreaks.summary(dateArr);
 
-        console.log('streak summary: ', dateStreaks.summary(dateArr));
+        // console.log('streak summary: ', dateStreaks.summary(dateArr));
 
         if (!streakSummary.todayInStreak) {
             streakSummary.currentStreak = 0;

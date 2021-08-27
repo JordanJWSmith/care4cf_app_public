@@ -39,7 +39,7 @@ module.exports = async function(userID) {
     })
     
 
-    console.log('normalResults: ', normalResults);
+    // console.log('normalResults: ', normalResults);
     return normalResults;
 }
 

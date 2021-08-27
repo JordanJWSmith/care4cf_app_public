@@ -129,9 +129,11 @@
             // }
 
             var routineTypes = <%- routineTypes %>;
-            var weekActivities = <%-weekActivities %>;
+           
             var dateList = <%- dateList %>;
-            var startDate = <%- startDate %>;
+            // console.log('dateList: ', dateList);
+            // console.log('routineDict keys: ', Object.keys(routineTypes))
+            
             var routineDict = <%- routineDict %>;
             var user = <%- user %>;
             var allNormals = <%- allNormals %>;
@@ -357,9 +359,6 @@
                 document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                 document.getElementById('user').innerHTML = "<input type='hidden' name='user' value='" + <%- user %> + "'>";
             }
-
-            
-            
 
 
             function getDisplayDate(date) {

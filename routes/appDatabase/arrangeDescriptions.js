@@ -1,6 +1,11 @@
-var readData = require('./readData');
-
 module.exports = async function(routineResults) {
+/** 
+* Takes an array of objects 
+* @summary Takes an array of objects and returns an object containing key:value pairs representing a complete description of one routine
+* @param {Array} routineResults - An array of objects, where each object is a different element of a routine (techniques, frequency, duration, adjuncts)
+* @return {JSON} A JSON-formatted object containing an accurate description of one routine
+*/
+    
 
     // console.log('routineResults: ', routineResults);
 
@@ -17,7 +22,7 @@ module.exports = async function(routineResults) {
     }
 
     adjunctList = []
-    // THROWS ERROR
+    
     if (routineResults.length > 2) {
         for (var i = 0; i < routineResults[2].length; i++) {
             adjunctList.push([routineResults[2][i].adjunctTitle, routineResults[3][i].adjunctTime]);

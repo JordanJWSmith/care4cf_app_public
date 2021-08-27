@@ -60,13 +60,15 @@
                     } else {
                     var email = signIn.email;
                     var name = signIn.name;
-                    var token = signIn.providerData.accessToken;
+                    // var token = signIn.providerData.accessToken;
+                    var token = signIn.providerData.idToken.rawIdToken;
+
                     var expiration_date = new Date();
                     expiration_date.setFullYear(expiration_date.getFullYear() + 1);
                     // console.log("Access token: ", token);
                     // console.log("Email: ", email);
                     // console.log("Name: ", name);
-                    // console.log("providerData: ", signIn.providerData);
+                    console.log("providerData: ", signIn.providerData);
                     document.cookie="accessToken=" + token + "; expires=" + expiration_date.toUTCString();
                     document.getElementById("email").innerHTML += "<input type='hidden' name='email' value='" + email + "'>";
                     document.getElementById("token").innerHTML += "<input type='hidden' name='token' value='" + token + "'>";
