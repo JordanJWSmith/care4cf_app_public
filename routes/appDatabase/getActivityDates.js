@@ -4,33 +4,39 @@ var moment = require('moment');
 
 module.exports = async function(userID) {
 
-        var getDates =  "SELECT date FROM activities WHERE userID = ?";
-        var getDatesValue = [userID];
-        var results = await readData(getDates, getDatesValue);
+    if (typeof userID !== 'number') {
+        return false;
+    }
 
-        var dateArr = []
-        for (i=0; i<results.length; i++) {
-            // console.log('date: ', results[i].date, typeof results[i].date);
-            // var dateFormat = (results[i].date)
-            var dateFormat = moment(results[i].date).add(1, 'days');
-            // console.log('valid? ', da);
-            // console.log(new Date((dateFormat, typeof dateFormat)));
-            dateArr.push(dateFormat);
-        }
+    var getDates =  "SELECT date FROM activities WHERE userID = ?";
+    var getDatesValue = [userID];
+    var results = await readData(getDates, getDatesValue);
 
-        // console.log('dates: ', dateArr);
+    var dateArr = []
+    for (i=0; i<results.length; i++) {
+        // console.log('date: ', results[i].date, typeof results[i].date);
+        // var dateFormat = (results[i].date)
+        var dateFormat = moment(results[i].date).add(1, 'days');
+        // console.log('valid? ', da);
+        // console.log(new Date((dateFormat, typeof dateFormat)));
+        dateArr.push(dateFormat);
+    }
 
-        var streakSummary = dateStreaks.summary(dateArr);
+    // console.log('dates: ', dateArr);
 
-        // console.log('streak summary: ', dateStreaks.summary(dateArr));
+    var streakSummary = dateStreaks.summary(dateArr);
 
-        if (!streakSummary.todayInStreak) {
-            streakSummary.currentStreak = 0;
-        }
+    // console.log('streak summary: ', dateStreaks.summary(dateArr));
 
-        // console.log('dates: ', results)
-        
-        return streakSummary;
+    if (!streakSummary.todayInStreak) {
+        streakSummary.currentStreak = 0;
+    }
+
+    // console.log('dates: ', results)
+
+    // console.log('getActivityDates streakSummaray: ', streakSummary);
+    
+    return streakSummary;
            
         
     }
