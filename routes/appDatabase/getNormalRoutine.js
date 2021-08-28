@@ -3,6 +3,12 @@ const arrangeDescriptions = require('./arrangeDescriptions');
 const idsToDescriptions = require('./idsToDescriptions');
 
 module.exports = async function(userID) {
+/** 
+* @summary Retrieves a description of a given user's current normal schedule
+* @param {number} userID - The current user's ID against which to check saved schedules
+* @return {object} An object containing descriptions of the given user's current normal schedule
+*/
+    
 
     // if ((typeof userID !== "number") || (arguments.length !== 1)) {
     //     return false

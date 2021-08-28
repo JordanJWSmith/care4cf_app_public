@@ -4,6 +4,14 @@ var moment = require('moment');
 
 module.exports = async function(userID) {
 
+    /** 
+    * Brief description of the function here.
+    * @summary Checks the current user's logging activity and returns details of logging streaks
+    * @param {number} userID - The current user's ID against which to check activity
+    * @return {object} An object containing logging streak information
+    */
+    
+
     if (typeof userID !== 'number') {
         return false;
     }

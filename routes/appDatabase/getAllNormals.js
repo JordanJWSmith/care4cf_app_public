@@ -2,7 +2,15 @@ var readData = require('./readData');
 const arrangeDescriptions = require('./arrangeDescriptions');
 const idsToDescriptions = require('./idsToDescriptions');
 
+
+
 module.exports = async function(userID) {
+
+    /** 
+    * @summary Retrieves descriptions of all schedules saved by a given user
+    * @param {number} userID - The current user's ID against which to check saved routines
+    * @return {object} An object containing decriptions of the give user's saved schedules
+    */
 
     if (typeof userID !== "number") {
         return false;

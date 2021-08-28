@@ -5,6 +5,15 @@ var readData = require('./readData');
 
 module.exports = async function(userID, date) {
 
+/** 
+* Brief description of the function here.
+* @summary Retrieve a description of a given user's activity logged on a given date
+* @param {number} userID - The current user's ID against which to check activities
+* @param {string} date - A string representing the given date against which to check activity
+* @return {object} A description of the activity logged by the given user on the given date. If none, return false.
+*/
+    
+
     if ((typeof userID !== 'number') || (typeof date !== "string") || (arguments.length !== 2)) {
         // console.log('incorrect userID');
         return false;

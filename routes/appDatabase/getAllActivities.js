@@ -2,6 +2,12 @@ const getRoutine = require('./getRoutine');
 var readData = require('./readData');
 
 module.exports = async function(userID) {
+/** 
+* @summary Retrieve details of all activities logged by a given user
+* @param {number} userID - The current user's ID against which to check activities
+* @return {object} An object containing details of all activities logged by the given user
+*/
+    
 
     if (typeof userID !== 'number')  {
         console.log('incorrect userID');
