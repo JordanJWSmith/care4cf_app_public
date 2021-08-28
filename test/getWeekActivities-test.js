@@ -5,7 +5,7 @@ describe('#getWeekActivities()', function() {
     var args = Array.prototype.slice.call(arguments);
 
     context('with non-num userID', function() {
-        it('should return error', async function() {
+        it('should return false', async function() {
             expect(
                 await getWeekActivities('test', 1)
                 .then(

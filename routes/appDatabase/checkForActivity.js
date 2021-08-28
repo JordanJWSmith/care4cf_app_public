@@ -1,8 +1,10 @@
+// NO LONGER USED
+
 var readData = require('./readData');
 
 module.exports = async function(userID) {
 
-    // var checkActivity = "SELECT"
+    
 
     if ( (typeof userID !== "number")) {
         return {

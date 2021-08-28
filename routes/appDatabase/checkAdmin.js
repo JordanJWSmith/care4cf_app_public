@@ -4,7 +4,8 @@ const readData = require('./readData');
 
 module.exports = async function(userID) {
 
-    if ( (typeof userID !== "number")) {
+    if (typeof userID !== "number") {
+        // console.log('userID is not number')
         return false   
     } else {
 
@@ -23,6 +24,7 @@ module.exports = async function(userID) {
 
             return (results.length > 0) 
         } else {
+            console.log('email does not exist')
             return false
         }
         

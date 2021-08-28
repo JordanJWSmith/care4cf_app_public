@@ -1,19 +1,12 @@
 var readData = require('./readData');
-
-function buildQuery(sql, index, colName, res) {
-    for (var i = 0; i < res[index].length; i++) {
-        if (i == (res[index].length - 1)) {
-            sql = sql.concat(colName + ' = ' + res[index][i][colName] + '; ');
-        } else {
-            sql = sql.concat(colName + ' = ' + res[index][i][colName] + ' OR ');
-        }
-    
-    }
-    // console.log('SQL: ', sql)
-    return sql;
-}
+var buildQuery = require('./buildQuery');
 
 module.exports = async function(routineResults) {
+
+    if ((typeof routineResults !== "object") || (Object.keys(routineResults).length < 1)) {
+        console.log('idsToDescriptions not an object')
+        return false
+    }
 
     // console.log('IDToDescription routineResults: ', routineResults);
 

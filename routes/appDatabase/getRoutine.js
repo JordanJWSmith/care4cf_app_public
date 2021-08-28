@@ -5,6 +5,11 @@ var readData = require('./readData');
 
 module.exports = async function(userID, date) {
 
+    if ((typeof userID !== 'number') || (typeof date !== "string") || (arguments.length !== 2)) {
+        // console.log('incorrect userID');
+        return false;
+    }
+
     var dateCheck = await checkForDate(userID, date)
     .then(async function(dateResults) {
         // console.log('dateResults getRoutine: ', dateResults)

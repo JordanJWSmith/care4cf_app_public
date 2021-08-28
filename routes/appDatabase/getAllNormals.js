@@ -4,6 +4,10 @@ const idsToDescriptions = require('./idsToDescriptions');
 
 module.exports = async function(userID) {
 
+    if (typeof userID !== "number") {
+        return false;
+    }
+
     var allNormals = "SELECT scheduleID FROM normalschedules WHERE userID = ?";
     var allNormalsValue = [userID];
 

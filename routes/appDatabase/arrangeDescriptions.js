@@ -6,8 +6,12 @@ module.exports = async function(routineResults) {
 * @return {JSON} A JSON-formatted object containing an accurate description of one routine
 */
     
-
+    // console.log('type of routineResults: ', typeof routineResults);
     // console.log('routineResults: ', routineResults);
+
+    if ((typeof routineResults !== "object") || (Object.keys(routineResults).length == 0)) {
+        return false
+    }
 
     techList = []
     for (var i = 0; i < routineResults[0].length; i++) {
@@ -50,6 +54,9 @@ module.exports = async function(routineResults) {
         resDict['adjuncts'] = false;
         // resDict['adjunctTimes'] = false;
     }
+
+
+    // console.log('arrangeDescription returned object: ', resDict, typeof resDict);
 
     return resDict;
 }

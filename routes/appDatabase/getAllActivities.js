@@ -3,7 +3,7 @@ var readData = require('./readData');
 
 module.exports = async function(userID) {
 
-    if ((typeof userID !== 'number') || arguments.length !== 1) {
+    if (typeof userID !== 'number')  {
         console.log('incorrect userID');
         return false;
     } else {
@@ -19,10 +19,6 @@ module.exports = async function(userID) {
         var routineDict = {};
 
         for (x=0; x<activities.length; x++) {
-            // console.log('COUNTER: ', x)
-            // console.log('activities: ', activities)
-            // console.log('activities length: ', activities.length);
-            // console.log('activities date: ', activities[i].date);
             var scheduleID = activities[x].scheduleID;
             var date = activities[x].date;
             dateString = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate());

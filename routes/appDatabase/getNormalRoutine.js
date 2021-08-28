@@ -4,6 +4,14 @@ const idsToDescriptions = require('./idsToDescriptions');
 
 module.exports = async function(userID) {
 
+    // if ((typeof userID !== "number") || (arguments.length !== 1)) {
+    //     return false
+    // }
+
+    if (typeof userID !== "number") {
+        return false
+    }
+
     var getNormal =  `
     SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = (
         SELECT scheduleID FROM normalschedules WHERE main = 1 AND userID = ?
@@ -22,6 +30,10 @@ module.exports = async function(userID) {
 
     var normalResults = await readData(getNormal, getNormalValues)
     .then(async function(getNormalResults) {
+        if (getNormalResults[0].length < 1) {
+            // console.log('getNormalRoutine: No normal results')
+            return false
+        }
         // console.log('idResults: ', getNormalResults);
         descriptions = await idsToDescriptions(getNormalResults)
         .then(async function(descResults) {

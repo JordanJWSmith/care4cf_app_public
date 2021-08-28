@@ -2,6 +2,13 @@ var readData = require('./readData');
 
 module.exports = async function(userID, date) {
 
+    // console.log('date', date, typeof date);
+
+    if ((typeof userID !== 'number') || (typeof date !== "string") || (arguments.length !== 2)) {
+        // console.log('incorrect userID');
+        return false;
+    }
+
     var checkDate = "SELECT activityID, routineType FROM activities WHERE userID = ? AND date = ?";
     var checkDateValues = [userID, date];
 

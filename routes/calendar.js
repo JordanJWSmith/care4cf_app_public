@@ -35,7 +35,7 @@ router.get('/', function (req, res, next) {
                 getGamifSettings(userID)
             ])
             .then((values) => {
-                console.log('promise values: ', values);
+                // console.log('promise values: ', values);
                 
                 var currentStreak = values[0].currentStreak;
                 var longestStreak = values[0].longestStreak;
