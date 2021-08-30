@@ -162,10 +162,13 @@ router.post('/logActivity', async function(req, res, next) {
     var scheduleID = req.body.scheduleID;
     
     // if promptToEditNormal, redirect to myRoutines instead
+    // changeCookie here
     await logDifferent(userID, chosenDate, scheduleID, 2)
     .then(async function() {
         await promptToEditNormal(userID)
         .then(function(promptResults) {
+            console.log('setting dataUpdate cookie');
+            req.session.dataUpdate = true;
             console.log(promptResults)
             if (promptResults) {
                 res.redirect('/?np=true')

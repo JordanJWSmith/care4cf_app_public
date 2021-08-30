@@ -32,170 +32,223 @@ router.get('/', function(req, res, next) {
       console.log('user not logged in at index. Redirecting to login...')
       res.redirect('/loginUser');
     } else {
-      var blockStart = Date.now();
-      Promise.all([
-        checkForNormal(results.userID),
-        getRoutineTypes(),
-        getWeekActivities(results.userID, 0),
-        getAllNormals(results.userID),
-        getAllActivities(results.userID)
-      ])
-      .then((values) => {
-        // console.log('blockPromise values: ', values);
 
-        var blockEnd = Date.now();
-        console.log(`logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
+      var updateFlag = req.session.dataUpdate;
 
-        var scheduleExists = values[0].scheduleExists;
+      if (updateFlag) {
+        console.log('dataUpdate exists, must update');
+        var shouldUpdate = true;
+      } else {
+        console.log('dataUpdate does not exist. No update needed.');
+        var shouldUpdate = false;
+      }
 
-        if (scheduleExists) { 
+      req.session.dataUpdate = null;
 
-          var routineTypes = values[1];
-          // var weekActivities = values[2].routine;
-          var dateList = values[2].dateList;
-          // var startDate = values[2].startDate;
-          var routineDict = values[2].routineDict;
-          var allNormals = values[3];
-          var allActivities = values[4];
+      var scheduleExists, routineTypes, dateList, allNormals, allActivities, routineDict;
 
-          var prevDay = "decrementDate()";
-          var nextDay = "incrementDate()";
-
-          res.render('logActivity', {
-            title: 'Welcome user '+ results.userID, 
-            user: results.userID,
-            routineTypes: JSON.stringify(routineTypes),
-            // weekActivities: JSON.stringify(weekActivities),
-            dateList: JSON.stringify(dateList),
-            // startDate: JSON.stringify(startDate),
-            routineDict: JSON.stringify(routineDict),
-            prevDay: prevDay,
-            nextDay: nextDay,
-            allNormals: JSON.stringify(allNormals),
-            allActivities: JSON.stringify(allActivities)
-          })
-
-          // block end
-
-    // })
-    //   .then(function() {
-    //     var blockEnd = Date.now();
-    //     console.log(`Promise.all() execution time: ${blockEnd - blockStart} ms`)
-    // })
       
+      if (shouldUpdate) {
 
+        var blockStart = Date.now();
+        Promise.all([
+          checkForNormal(results.userID),
+          getRoutineTypes(),
+          getWeekActivities(results.userID, 0),
+          getAllNormals(results.userID),
+          getAllActivities(results.userID)
+        ])
+        .then((values) => {
+          // console.log('update values: ', values)
+          var blockEnd = Date.now();
+          console.log(`update logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
 
-      // var chainStart = Date.now()
-      // checkForNormal(results.userID)
-      // .then(function(checkResults) {
-      //   if (checkResults.scheduleExists) {
-      //     getRoutineTypes()
-      //     .then(function(routineResults) {
-      //         getWeekActivities(results.userID, 0)
-      //         .then(function(weekResults) {
-      //           getAllNormals(results.userID)
-      //           .then(function(allNormalsResults) {
-      //             getAllActivities(results.userID)
-      //             .then(function(allActivitiesResults){
+          scheduleExists = values[0].scheduleExists;
+          routineTypes = values[1];
+          dateList = values[2].dateList;
+          allNormals = JSON.stringify(values[3]);
+          allActivities = JSON.stringify(values[4]);
+          routineDict = JSON.stringify(values[2].routineDict);
 
-      //               var chainEnd = Date.now();
-      //               console.log(`Promise chain execution time: ${chainEnd - chainStart} ms`);
+          if (scheduleExists) { 
 
-      //               var prevDay = "decrementDate()";
-      //               var nextDay = "incrementDate()";
-
-      //               res.render('logActivity', {
-      //                 title: 'Welcome user '+ results.userID, 
-      //                 user: results.userID,
-      //                 routineTypes: JSON.stringify(routineResults),
-      //                 weekActivities: JSON.stringify(weekResults.routine),
-      //                 dateList: JSON.stringify(weekResults.dateList),
-      //                 startDate: JSON.stringify(weekResults.startDate),
-      //                 routineDict: JSON.stringify(weekResults.routineDict),
-      //                 prevDay: prevDay,
-      //                 nextDay: nextDay,
-      //                 allNormals: JSON.stringify(allNormalsResults),
-      //                 allActivities: JSON.stringify(allActivitiesResults)
-      //               })
-      //             })
-                  
-      //           // console.log('routineResults: ', getRoutineResults);
-      //           // console.log('startDate: ', weekResults.startDate);
-      //           // console.log('routineDict: ', weekResults.routineDict);
-
-                
-      //           })
-      //         })
-      //     })
-          
-        } else {
-          Promise.all([
-            getTechniques(),
-            getDurations(),
-            getAdjuncts(),
-            getAdjunctTimes(),
-            getFrequencies()
-          ])
-          .then((values) => {
-            // console.log('promise values for new user: ', values);
-            var techniques = values[0];
-            var durations = values[1];
-            var adjuncts = values[2];
-            var adjunctTimes = values[3];
-            var frequencies = values[4];
-
-            res.render('newSchedule', {
-              title: 'Welcome! What\'s your normal airway clearance routine?', 
-              user: results.userID, 
-              techniques: JSON.stringify(techniques),
-              durations: JSON.stringify(durations),
-              adjuncts: JSON.stringify(adjuncts),
-              adjunctTimes: JSON.stringify(adjunctTimes),
-              frequencies: JSON.stringify(frequencies),
-              chosenDate: false,
-              activityType: false,
-              saveAsNormal: true,
-              sched: false
+            var prevDay = "decrementDate()";
+            var nextDay = "incrementDate()";
+  
+            res.render('logActivity', {
+              title: 'Welcome user '+ results.userID, 
+              user: results.userID,
+              routineTypes: JSON.stringify(routineTypes),
+              dateList: JSON.stringify(dateList),
+              routineDict: routineDict,
+              prevDay: prevDay,
+              nextDay: nextDay,
+              allNormals: allNormals,
+              allActivities: allActivities,
+              update: shouldUpdate
             })
-          })
+  
+            
+          } else {
+            console.log('schedule does not exist');
+            Promise.all([
+              getTechniques(),
+              getDurations(),
+              getAdjuncts(),
+              getAdjunctTimes(),
+              getFrequencies()
+            ])
+            .then((values) => {
+              var techniques = values[0];
+              var durations = values[1];
+              var adjuncts = values[2];
+              var adjunctTimes = values[3];
+              var frequencies = values[4];
+  
+              res.render('newSchedule', {
+                title: 'Welcome! What\'s your normal airway clearance routine?', 
+                user: results.userID, 
+                techniques: JSON.stringify(techniques),
+                durations: JSON.stringify(durations),
+                adjuncts: JSON.stringify(adjuncts),
+                adjunctTimes: JSON.stringify(adjunctTimes),
+                frequencies: JSON.stringify(frequencies),
+                chosenDate: false,
+                activityType: false,
+                saveAsNormal: true,
+                sched: false
+              })
+            })
+          }
 
-          // getTechniques()
-          // .then(function(techResults) {
-          //   getDurations()
-          //   .then(function(durationResults) {
-          //     getAdjuncts()
-          //     .then(function(adjunctResults) {
-          //       getAdjunctTimes()
-          //       .then(function(adjunctTimeResults) {
-          //         getFrequencies()
-          //         .then(function(frequencyResults) {
-          //           res.render('newSchedule', {
-          //             title: 'Welcome! What\'s your normal airway clearance routine?', 
-          //             user: results.userID, 
-          //             techniques: JSON.stringify(techResults),
-          //             durations: JSON.stringify(durationResults),
-          //             adjuncts: JSON.stringify(adjunctResults),
-          //             adjunctTimes: JSON.stringify(adjunctTimeResults),
-          //             frequencies: JSON.stringify(frequencyResults),
-          //             chosenDate: false,
-          //             activityType: false,
-          //             saveAsNormal: true,
-          //             sched: false
-          //           })
-          //         }
-                    
-          //         )
-                  
-          //       })
-                
-          //     })
-              
-          //   })
+
+        })
+
+      } else {
+        var blockStart = Date.now();
+        Promise.all([
+          checkForNormal(results.userID),
+          getRoutineTypes(),
+          getWeekActivities(results.userID, 0)
+        ])
+        .then((values) => {
+          // console.log('non-update vaalues: ', values)
+          var blockEnd = Date.now();
+          console.log(`non-update logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
+
+          scheduleExists = values[0].scheduleExists;
+          routineTypes = values[1];
+          dateList = values[2].dateList;
+          allNormals = false;
+          allActivities = false;
+          routineDict = false;
+
+          if (scheduleExists) { 
+
+            var prevDay = "decrementDate()";
+            var nextDay = "incrementDate()";
+  
+            res.render('logActivity', {
+              title: 'Welcome user '+ results.userID, 
+              user: results.userID,
+              routineTypes: JSON.stringify(routineTypes),
+              dateList: JSON.stringify(dateList),
+              routineDict: routineDict,
+              prevDay: prevDay,
+              nextDay: nextDay,
+              allNormals: allNormals,
+              allActivities: allActivities,
+              update: shouldUpdate
+            })
+  
             
-          // })
-            
-        }
-      })
+          } else {
+            console.log('schedule does not exist');
+            Promise.all([
+              getTechniques(),
+              getDurations(),
+              getAdjuncts(),
+              getAdjunctTimes(),
+              getFrequencies()
+            ])
+            .then((values) => {
+              var techniques = values[0];
+              var durations = values[1];
+              var adjuncts = values[2];
+              var adjunctTimes = values[3];
+              var frequencies = values[4];
+  
+              res.render('newSchedule', {
+                title: 'Welcome! What\'s your normal airway clearance routine?', 
+                user: results.userID, 
+                techniques: JSON.stringify(techniques),
+                durations: JSON.stringify(durations),
+                adjuncts: JSON.stringify(adjuncts),
+                adjunctTimes: JSON.stringify(adjunctTimes),
+                frequencies: JSON.stringify(frequencies),
+                chosenDate: false,
+                activityType: false,
+                saveAsNormal: true,
+                sched: false
+              })
+            })
+          }
+        })
+      }
+
+        // scheduleExists = values[0].scheduleExists;
+
+        // if (scheduleExists) { 
+
+        //   var prevDay = "decrementDate()";
+        //   var nextDay = "incrementDate()";
+
+        //   res.render('logActivity', {
+        //     title: 'Welcome user '+ results.userID, 
+        //     user: results.userID,
+        //     routineTypes: JSON.stringify(routineTypes),
+        //     dateList: JSON.stringify(dateList),
+        //     routineDict: routineDict,
+        //     prevDay: prevDay,
+        //     nextDay: nextDay,
+        //     allNormals: allNormals,
+        //     allActivities: allActivities,
+        //     update: shouldUpdate
+        //   })
+
+          
+        // } else {
+        //   console.log('schedule does not exist');
+        //   Promise.all([
+        //     getTechniques(),
+        //     getDurations(),
+        //     getAdjuncts(),
+        //     getAdjunctTimes(),
+        //     getFrequencies()
+        //   ])
+        //   .then((values) => {
+        //     var techniques = values[0];
+        //     var durations = values[1];
+        //     var adjuncts = values[2];
+        //     var adjunctTimes = values[3];
+        //     var frequencies = values[4];
+
+        //     res.render('newSchedule', {
+        //       title: 'Welcome! What\'s your normal airway clearance routine?', 
+        //       user: results.userID, 
+        //       techniques: JSON.stringify(techniques),
+        //       durations: JSON.stringify(durations),
+        //       adjuncts: JSON.stringify(adjuncts),
+        //       adjunctTimes: JSON.stringify(adjunctTimes),
+        //       frequencies: JSON.stringify(frequencies),
+        //       chosenDate: false,
+        //       activityType: false,
+        //       saveAsNormal: true,
+        //       sched: false
+        //     })
+        //   })
+        // }
+      // })
     }
   })
 });
@@ -213,6 +266,7 @@ router.post('/scheduleData', async function(req, res, next) {
   await saveSchedule(scheduleDetails)
 
   .then(async function(results) {
+    req.session.dataUpdate = true;
 
     if ((Object.keys(scheduleDetails).includes('activityType')) && (Object.keys(scheduleDetails).includes('chosenDate'))) {
       // console.log('index schedID: ', results[1][0]['LAST_INSERT_ID()']);
@@ -222,6 +276,8 @@ router.post('/scheduleData', async function(req, res, next) {
       .then(async function() {
         await promptToEditNormal(scheduleDetails.user) 
         .then(function(promptResults) {
+          console.log('setting dataUpdate cookie')
+          // changeCookie here
           if (promptResults) {
             res.redirect('/?np=true')
           } else {
@@ -244,11 +300,15 @@ router.post('/logNewActivity', async function(req, res, next) {
   // console.log('(index) date: ', details.chosenDate, typeof details.chosenDate);
   // console.log('user: ', details.user);
 
-  // CHECK THIS STILL WORKS
   if (details.activityType == 1) {
     console.log('logging normal activity');
     await logNormal(details.user, details.chosenDate, details.activityType)
-    .then(res.redirect('/'));
+    .then(function() {
+      console.log('setting dataUpdate cookie');
+      req.session.dataUpdate = true;
+      res.redirect('/')
+    });
+    // changeCookie here
 
   } else if (details.activityType == 2) {
     // console.log('logging something different');
@@ -275,9 +335,13 @@ router.post('/logNewActivity', async function(req, res, next) {
 router.post('/noActivities', async function(req, res, next) {
   var reasonID = req.body.reasonID;
   var details = JSON.parse(req.body.details);
+  // changeCookie here
   await logNoActivities(details.user, details.chosenDate, details.activityType, reasonID)
-  .then(res.redirect('/'))
-
+  .then(function() {
+    console.log('setting dataUpdate cookie');
+    req.session.dataUpdate = true;
+    res.redirect('/')
+  })
 })
 
 router.get('/w/:offset', function(req, res, next) {
@@ -306,15 +370,15 @@ router.get('/w/:offset', function(req, res, next) {
           getAllActivities(results.userID)
         ])
         .then((values) => {
-          console.log('blockPromise values: ', values)
+          // console.log('blockPromise values: ', values)
         
           var routineTypes = values[1];
           // var weekActivities = values[2].routine;
           // var dateList = values[2].dateList;
           // var startDate = values[2].startDate;
-          var routineDict = values[2].routineDict;
-          var allNormals = values[3];
-          var allActivities = values[4];
+          var routineDict = JSON.stringify(values[2].routineDict);
+          var allNormals = JSON.stringify(values[3]);
+          var allActivities = JSON.stringify(values[4]);
 
           if (r) {
             var dateList = values[2].dateList.reverse();
@@ -333,11 +397,12 @@ router.get('/w/:offset', function(req, res, next) {
             // weekActivities: JSON.stringify(weekResults.routine),
             dateList: JSON.stringify(dateList),
             // startDate: JSON.stringify(weekResults.startDate),
-            routineDict: JSON.stringify(routineDict),
+            routineDict: routineDict,
             prevDay: prevDay,
             nextDay: nextDay,
-            allNormals: JSON.stringify(allNormals),
-            allActivities: JSON.stringify(allActivities)
+            allNormals: allNormals,
+            allActivities: allActivities,
+            update: true
           })
         })
 

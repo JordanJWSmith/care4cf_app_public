@@ -203,18 +203,15 @@ self.addEventListener('fetch', (event) => {
     event.respondWith((async () => {
       try {
         const preloadResp = await event.preloadResponse;
-        console.log('preloadResp: ', preloadResp)
 
         if (preloadResp) {
           return preloadResp;
         }
 
         const networkResp = await fetch(event.request);
-        console.log('networkResp: ', networkResp);
         return networkResp;
       } catch (error) {
 
-        console.log('error');
         const cache = await caches.open(CACHE);
         const cachedResp = await cache.match(offlineFallbackPage);
         return cachedResp;
