@@ -17,6 +17,7 @@ self.addEventListener("message", (event) => {
  
 // This caches all the pages
 self.addEventListener( "install", function( event ){
+  // console.log(workbox.strategies);
     event.waitUntil(
         caches.open( CACHE )
               .then(function( cache ){
@@ -104,7 +105,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   // new RegExp('/newSchedule'),
   '/newSchedule',
-  new workbox.strategies.NetworkFirst({
+  new workbox.strategies.StaleWhileRevalidate({
     cacheName: CACHE
   })
 );

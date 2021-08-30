@@ -106,24 +106,45 @@
             var allActivities = <%- allActivities %>;
             var update = <%- update %>;
 
-            if ((navigator.onLine) && (update) && (!offsetPage)) {
+            var firstUpdate = false;
+
+            function checkLocal() {
+                if ((!update) && ((!(window.localStorage.getItem('routineDict'))) 
+                || (!(window.localStorage.getItem('allNormals'))) 
+                || (!(window.localStorage.getItem('allActivities'))) 
+                || (!(window.localStorage.getItem('dateList'))))) {
+                    var firstUpdate = true;
+                    console.log('firstUpdate');
+                    document.cookie = "dataUpdate=true";
+                    // window.sessionStorage.setItem('dataUpdate', 'true');
+                    window.location = "/";
+                    return true;
+                }
+            }
+            
+            checkLocal()
+            // .then(function() {
+                if (((navigator.onLine) && (update) && (!offsetPage)) || (firstUpdate)) {
                 console.log('saving to local');
                 window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
                 window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
                 window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
                 window.localStorage.setItem('dateList', JSON.stringify(dateList));
-            } else {
-                console.log('should retrieve from local');
-                allActivities = JSON.parse(window.localStorage.getItem('allActivities'));
-                if (!offsetPage) {
-                    console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
-                    routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
-                    dateList = JSON.parse(window.localStorage.getItem('dateList'));
+                } else {
+                    console.log('should retrieve from local');
+                    allActivities = JSON.parse(window.localStorage.getItem('allActivities'));
+                    if (!offsetPage) {
+                        console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
+                        routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
+                        dateList = JSON.parse(window.localStorage.getItem('dateList'));
+                    }
                 }
-            }
+            // })
+                
+            
 
-            console.log('routineDict: ', routineDict);
-            console.log('allActivities: ', allActivities)
+            // console.log('routineDict: ', routineDict);
+            // console.log('allActivities: ', allActivities)
 
 
             document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";

@@ -34,8 +34,10 @@ router.get('/', function(req, res, next) {
     } else {
 
       var updateFlag = req.session.dataUpdate;
+      var firstUpdateFlag = req.cookies.dataUpdate;
+      console.log('firstUpdateFlag: ', firstUpdateFlag)
 
-      if (updateFlag) {
+      if ((updateFlag) || (firstUpdateFlag)) {
         console.log('dataUpdate exists, must update');
         var shouldUpdate = true;
       } else {
@@ -45,6 +47,8 @@ router.get('/', function(req, res, next) {
       }
 
       req.session.dataUpdate = null;
+      // req.cookies.dataUpdate = "; expires=Thu, 01-Jan-1970 00:00:01 GMT;";
+      res.clearCookie('dataUpdate');
 
       var scheduleExists, routineTypes, dateList, allNormals, allActivities, routineDict;
 
