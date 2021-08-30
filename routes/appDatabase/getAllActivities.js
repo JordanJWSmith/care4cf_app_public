@@ -39,7 +39,7 @@ module.exports = async function(userID) {
 
         }
 
-        // console.log(routineDict);
+        // console.log('allActivities routineDict: ', routineDict);
         return routineDict;
     }
 

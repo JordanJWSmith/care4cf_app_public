@@ -13,7 +13,7 @@ module.exports = async function(routineResults) {
         return false
     }
 
-    techList = []
+    var techList = []
     for (var i = 0; i < routineResults[0].length; i++) {
         // console.log('techs: ', routineResults[0][i]);
         if (routineResults[0][i].subtitle) {
@@ -25,7 +25,7 @@ module.exports = async function(routineResults) {
         }
     }
 
-    adjunctList = []
+    var adjunctList = []
     
     if (routineResults.length > 2) {
         for (var i = 0; i < routineResults[2].length; i++) {
@@ -41,7 +41,7 @@ module.exports = async function(routineResults) {
 
     // console.log('routineResults: ', routineResults);
     // console.log('length: ', routineResults.length);
-    resDict = {};
+    var resDict = {};
     resDict['techniques'] = JSON.stringify(techList);
     resDict['duration'] = routineResults[1][0].duration;
     resDict['frequency'] = routineResults[1][0].frequency;

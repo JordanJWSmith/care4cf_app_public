@@ -92,30 +92,38 @@
             var url = new URL(document.URL);
             if (url.pathname.slice(0, 2) == "/w") {
                 var path = "../images/"
+                var offsetPage = true;
             } else {
                 var path = "./images/";
+                var offsetPage = false;
             }
 
             var routineTypes = <%- routineTypes %>;
-           
             var dateList = <%- dateList %>;
-            
             var routineDict = <%- routineDict %>;
             var user = <%- user %>;
             var allNormals = <%- allNormals %>;
             var allActivities = <%- allActivities %>;
             var update = <%- update %>;
 
-
-            if ((navigator.onLine) && (update)) {
+            if ((navigator.onLine) && (update) && (!offsetPage)) {
                 console.log('saving to local');
                 window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
                 window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
                 window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
+                window.localStorage.setItem('dateList', JSON.stringify(dateList));
             } else {
-                console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
-                routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
+                console.log('should retrieve from local');
+                allActivities = JSON.parse(window.localStorage.getItem('allActivities'));
+                if (!offsetPage) {
+                    console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
+                    routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
+                    dateList = JSON.parse(window.localStorage.getItem('dateList'));
+                }
             }
+
+            console.log('routineDict: ', routineDict);
+            console.log('allActivities: ', allActivities)
 
 
             document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";
@@ -204,6 +212,8 @@
                 
                 var dateString = dateList[dayCounter];
                 var activities = routineDict[dateString];
+                // var activities = allActivities[dateString];
+                console.log('dateString: ', dateString);
                 document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
                 document.getElementById('routine').innerHTML += '<div id="routineDescription"></div>';
                 document.getElementById('routineDescription').style['background-color'] = 'rgba(222, 227, 238, 0.7)';

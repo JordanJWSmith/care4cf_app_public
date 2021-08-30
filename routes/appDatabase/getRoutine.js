@@ -25,10 +25,11 @@ module.exports = async function(userID, date) {
         if (dateResults) {
             // console.log('dateResults: ', dateResults);
             var routineType = dateResults[0].routineType;
+            console.log('routineType: ', routineType);
 
             // CHANGE TO 3?
             if (routineType < 3) {
-                // console.log('get routine');
+                console.log('getRoutine: normal or different');
                     var getIDs =  `
                         SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = (
                             SELECT scheduleID FROM activities WHERE userID = ? AND date = ?
@@ -78,8 +79,8 @@ module.exports = async function(userID, date) {
                     return descriptionResults;
 
             } else {
-                // console.log('getRoutine: no activities');
-                resDict = {}
+                console.log('getRoutine: no activities');
+                var resDict = {}
                 var activityID = dateResults[0].activityID;
                 var getReason = `
                     SELECT description FROM noactivitydescriptions WHERE reasonID = (
@@ -92,12 +93,13 @@ module.exports = async function(userID, date) {
                 .then(function(reasonResults) {
                     // console.log('reasonResults: ', reasonResults[0]);
                     // console.log('activityType: ', reasonResults[1]);
+                    // console.log('reasonResults: ', reasonResults);
                     resDict['title'] = reasonResults[1][0].routine;
                     resDict['description'] = reasonResults[0][0].description;
-                    // console.log('getRoutine resDict for no activity: ', resDict);
+                    // console.log('getRoutine resDict for no activity: ', date,  resDict);
                     return resDict;
                 })
-                // console.log('getRoutine getReasonResults for no activity:', getReasonResults);
+                // console.log('getRoutine getReasonResults for no activity:', date, getReasonResults);
                 return getReasonResults;
             }
         } else {

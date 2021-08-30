@@ -8,8 +8,8 @@ module.exports = async function(scheduleDetails) {
 */
     
 
-    techDict = {};
-    adjunctDict = {};
+    var techDict = {};
+    var adjunctDict = {};
     var duration = scheduleDetails.duration;
     var frequency = scheduleDetails.frequency;
     var saveAsNormal = JSON.parse(scheduleDetails.saveAsNormal);

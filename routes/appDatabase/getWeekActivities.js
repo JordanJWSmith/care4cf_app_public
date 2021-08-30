@@ -47,6 +47,7 @@ module.exports = async function(userID, offset) {
         // console.log('dateList: ', dateList)
         // console.log('routineList: ', routineList);
         // console.log('startDate: ', startDate);
+        // console.log('routineDict from funcftion: ', routineDict);
         return {
             // routine: routineList,
             dateList: dateList,

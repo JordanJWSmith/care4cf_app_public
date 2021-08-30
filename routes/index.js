@@ -40,6 +40,7 @@ router.get('/', function(req, res, next) {
         var shouldUpdate = true;
       } else {
         console.log('dataUpdate does not exist. No update needed.');
+        // var shouldUpdate = false;
         var shouldUpdate = false;
       }
 
@@ -125,11 +126,12 @@ router.get('/', function(req, res, next) {
         })
 
       } else {
+
         var blockStart = Date.now();
         Promise.all([
           checkForNormal(results.userID),
           getRoutineTypes(),
-          getWeekActivities(results.userID, 0)
+          // getWeekActivities(results.userID, 0)
         ])
         .then((values) => {
           // console.log('non-update vaalues: ', values)
@@ -138,10 +140,12 @@ router.get('/', function(req, res, next) {
 
           scheduleExists = values[0].scheduleExists;
           routineTypes = values[1];
-          dateList = values[2].dateList;
-          allNormals = false;
-          allActivities = false;
-          routineDict = false;
+          // dateList = JSON.stringify(values[2].dateList);
+          var dateList = false;
+          var allNormals = false;
+          var allActivities = false;
+          // routineDict = JSON.stringify(values[2].routineDict);
+          var routineDict = false;
 
           if (scheduleExists) { 
 
@@ -152,7 +156,7 @@ router.get('/', function(req, res, next) {
               title: 'Welcome user '+ results.userID, 
               user: results.userID,
               routineTypes: JSON.stringify(routineTypes),
-              dateList: JSON.stringify(dateList),
+              dateList: dateList,
               routineDict: routineDict,
               prevDay: prevDay,
               nextDay: nextDay,
@@ -350,6 +354,7 @@ router.get('/w/:offset', function(req, res, next) {
     console.log('incorrect offset');
     res.redirect('/');
   } else {
+
     var r = req.query.r;
     console.log('r: ', r);
 
@@ -366,8 +371,8 @@ router.get('/w/:offset', function(req, res, next) {
           checkForNormal(results.userID),
           getRoutineTypes(),
           getWeekActivities(results.userID, parseInt(offset)),
-          getAllNormals(results.userID),
-          getAllActivities(results.userID)
+          // getAllNormals(results.userID),
+          // getAllActivities(results.userID)
         ])
         .then((values) => {
           // console.log('blockPromise values: ', values)
@@ -377,8 +382,8 @@ router.get('/w/:offset', function(req, res, next) {
           // var dateList = values[2].dateList;
           // var startDate = values[2].startDate;
           var routineDict = JSON.stringify(values[2].routineDict);
-          var allNormals = JSON.stringify(values[3]);
-          var allActivities = JSON.stringify(values[4]);
+          // var allNormals = JSON.stringify(values[3]);
+          // var allActivities = JSON.stringify(values[4]);
 
           if (r) {
             var dateList = values[2].dateList.reverse();
@@ -400,8 +405,8 @@ router.get('/w/:offset', function(req, res, next) {
             routineDict: routineDict,
             prevDay: prevDay,
             nextDay: nextDay,
-            allNormals: allNormals,
-            allActivities: allActivities,
+            allNormals: false,
+            allActivities: false,
             update: true
           })
         })
