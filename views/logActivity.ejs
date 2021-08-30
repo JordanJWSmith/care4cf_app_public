@@ -7,12 +7,10 @@
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
         <script type="module" src="/pwabuilder-sw-register.js"></script>
-        <!-- <script type="module" src="/courierTest.js"></script> -->
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-        <!-- <script src="https://static.cleverpush.com/channel/loader/pCGzsj9JXF7JG6rps.js" async></script> -->
         
 
     </head>
@@ -32,7 +30,6 @@
                 </div>
             </div>
 
-            <!-- <button onclick="promptModal()">Open prompt</button> -->
 
             <div id="updateNormalModal" class="modal">
 
@@ -52,7 +49,6 @@
             </div>
 
        
-            <!-- <h1><%= title %></h1> -->
             <div id="outer">
                 <div id="prevDay" class="inner">
                     <button class="dayButton" style="left: 7vw" onclick= <%= prevDay %>> &#8592;</button>
@@ -63,44 +59,28 @@
                 </div>
                 <span>&nbsp;</span>
                 <div id="nextDay" class="inner">
-                    <!-- &#8594; -->
                 </div>
             </div>
             
-            <!-- <div id="prevDay">
-                <button onclick= <%= prevDay %>> Previous Day</button>
-            </div> -->
-            
-            <!-- <button onclick= "decrementDate()">Previous Day</button> -->
-            <!-- <div id="nextDay">
-            </div> -->
             <br><br>
 
             <div id="mainSection">
 
             </div>
             <br><br>
-            <!-- <a href="/normalRoutine">
-                <button>My Normal Routine</button>
-            </a> -->
-    
-            <!-- <br><br>
-            <a href="/calendar">
-                <button>My History</button>
-            </a> -->
     
             <br><br>
-            <!-- <button onclick="logout()">Log Out</button> -->
 
             <div id="navButtonContainer">
-                <!-- <a href="/normalRoutine"> -->
-                    <button class="navButton" style="margin-right: 5vw" onclick='window.location="/normalRoutine"'><img id="normalRoutineButton" style="height:4vh"></button>
-                <!-- </a> -->
-                    <button id="mainNavButton" class="navButtonDisabled" style="margin: auto; height: 13vh; width: 13vh; border: #2FB9CA;border-width: thick;border-style: solid;"><img id="mainButton" style="height:5vh"></button>
-                
-                <!-- <a href="/calendar"> -->
-                    <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'><img id="calendarButton" style="height:4vh"></button>
-                <!-- </a> -->
+                    <button class="navButton" style="margin-right: 5vw" onclick='window.location="/normalRoutine"'>
+                        <img id="normalRoutineButton" style="height:4vh">
+                    </button>
+                    <button id="mainNavButton" class="navButtonDisabled" style="margin: auto; height: 13vh; width: 13vh; border: #2FB9CA;border-width: thick;border-style: solid;">
+                        <img id="mainButton" style="height:5vh">
+                    </button>
+                    <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'>
+                        <img id="calendarButton" style="height:4vh">
+                    </button>
                 
             </div>
         </div>
@@ -116,30 +96,15 @@
                 var path = "./images/";
             }
 
-            
-            
-            // if (navigator.onLine) {
-            //     console.log('saving to local');
-            //     window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
-            //     window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
-            //     window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
-            // } else {
-            //     console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
-            //     routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
-            // }
-
             var routineTypes = <%- routineTypes %>;
            
             var dateList = <%- dateList %>;
-            // console.log('dateList: ', dateList);
-            // console.log('routineDict keys: ', Object.keys(routineTypes))
             
             var routineDict = <%- routineDict %>;
             var user = <%- user %>;
             var allNormals = <%- allNormals %>;
             var allActivities = <%- allActivities %>;
 
-            // console.log(document.URL);
             if (navigator.onLine) {
                 console.log('saving to local');
                 window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
@@ -149,19 +114,13 @@
                 console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
                 routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
             }
-            
-            // console.log('allNormals: ', allNormals);
-            // 
 
-            
 
             document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";
             document.getElementById('normalRoutineButtonPrompt').src = path + "Sample_User_Icon.png";
             document.getElementById('calendarButton').src = path + "Calendar_Icon.png";
             document.getElementById('hamburgerButton').src = path + "hamburgerDots.png";
-            // document.getElementById('mainButton').src = path + "logo.png";
             document.getElementById('mainButton').src = path + "circleIcon.png";
-
 
             if (url.searchParams.get('np')) {
                 console.log('open modal');
@@ -169,43 +128,23 @@
                
             }
          
-
-            // console.log('online?:', navigator.onLine);
-
             if (!(navigator.onLine) && (!(getCook('accessToken')))) {
                 window.location.href = "/loginUser"
             }
-            // if (!getCook('accessToken')) {
-            //     console.log('login cookie')
-
-            // }
+ 
 
             function isOnline() {
+            /** 
+            * Check if browser is current online, return false if not
+            * @return {Boolean} false
+            */
+                
                 if (!(navigator.onLine)) {
                     alert("Cannot update while offline");
                     return false;
                 }
-                // alert("Cannot update while offline");
-                // return false;
-                // console.log('isOnline');
-                // alert("Test");
-                // return false;
             }
 
-
-
-            // function getCook(cookiename) {
-            //     // Get name followed by anything except a semicolon
-            //     var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
-            //     // Return everything after the equal sign, or an empty string if the cookie name not found
-            //     return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
-            // }
-
-           
-
-            // console.log(dateList);
-            // console.log(weekActivities);
-            // console.log(routineDict);
 
             var dayCounter = 0;
 
@@ -215,35 +154,28 @@
 
 
             var today = new Date(dateList[dayCounter].replace(/-/g, "/"));
-            // console.log(today);
-            // var today = new Date(startDate);
             var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
             document.getElementById('date').innerHTML = getDisplayDate(date);
-            // console.log(startDate);
 
                 
             populateMainSection()
             disableButton(today);
 
             function populateMainSection() {
-                // if (weekActivities[dayCounter]) {
+            /** 
+            * @summary Populate the main section of the page with the logged routine if it exists, otherwise logging buttons
+            */
+                            
                 var dateString = dateList[dayCounter];
-                // console.log('dateString: ', dateString);
                 if (routineDict[dateString]) {
-                    // var activities = JSON.stringify(weekActivities[dayCounter]);
                     document.getElementById('mainSection').innerHTML = '<div id="routine"></div>';
                     document.getElementById('mainSection').style.position = "relative";
-                    // document.getElementById('mainSection').style.position = "absolute";
                     document.getElementById('mainSection').style['margin-top'] = "15vh";
-                    // document.getElementById('mainSection').style['margin-top'] = "0vh";
                     populateRoutine();
 
                 } else {
-                    // console.log('currentDate:', currentDate );
-                    // console.log('dateString:', dateString );
                     var dateStringDate = new Date(dateString.replace(/-/g, "/"));
                     var diffDays = Math.round(Math.abs((dateStringDate - currentDay) / oneDay));
-                    // console.log('difference: ', diffDays);
                     if (diffDays > 3) {
                         document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
                         document.getElementById('mainSection').style.position = "relative";
@@ -258,31 +190,19 @@
                         document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                         populateButtons();
                         populateForm();
-                    }
-                    // var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
-                    // console.log('difference: ', )
-
-                    
+                    }                   
                 }
             }
 
             function populateRoutine() {
+            /** 
+            * @summary Display a description of the user's logged routine
+            */
+                
                 var dateString = dateList[dayCounter];
                 var activities = routineDict[dateString];
-                // console.log('dateString: ', dateString);
-                // console.log('activities: ', activities)
-                // console.log('title: ', activities.title);
-                // var stringActivities = JSON.stringify(weekActivities[dayCounter]);
-                // var activities = JSON.parse(stringActivities);
-                // console.log(activities);
-                // document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
                 document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
-                // delete activities.title;
-                // delete activities.title;
-                // var keys = Object.keys(activities);
                 document.getElementById('routine').innerHTML += '<div id="routineDescription"></div>';
-                        // document.getElementById('routine').innerHTML += '<div id="icons" style="height: 100%; "></div>'
-
                 document.getElementById('routineDescription').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
                 document.getElementById('routineDescription').style['padding'] = '2vh';
                 document.getElementById('routineDescription').style['width'] = '80%';
@@ -296,35 +216,16 @@
                 table.setAttribute("id", "routineTable");
                 document.getElementById('routineDescription').appendChild(table);
 
-                
-                // document.getElementById('routineDescription').innerHTML += '<table style="width:100%></table>';
-
                 var keys = Object.keys(activities);
                 
                 for (var i = 0; i < keys.length; i++) {
                     title = keys[i];
-                    console.log(title);
                     if ((title !== 'title') && (activities[title])) {
-
                         
                         document.getElementById('routineTable').innerHTML += '<tr><td><img src="'+path+title+'Icon.png" style="max-height: 6vh;"></td><td><div id="'+ title +'"></div></td></tr>';
-
-                        // console.log('title: ', title); 
-                        // console.log('content: ', activities[title]);
                         document.getElementById('routineDescription').innerHTML += '<div id="' + title + 'routineContainer"></div>'
-                        
-                        // document.getElementById(title + 'routineContainer').innerHTML += '<div id="'+ title +'icon">Icon</div>';
                         document.getElementById(title + 'routineContainer').innerHTML += '<div id="'+ title +'"></div>';
-                        
                         document.getElementById(title).style['padding'] = '1vh';
-                        // document.getElementById(title).style['padding-left'] = '20%';
-
-                        // document.getElementById(title).innerHTML += '<dt>' + title + ':</dt>';
-                        // document.getElementById(title).innerHTML += '<div class="alignleft" id="iconTest">Test</div>';
-                        
-
-
-                        // document.getElementById(title).style['opacity'] = '0.4';
 
                         if (activities[title][0] == '[') {
                             activitiesList = JSON.parse(activities[title]);
@@ -339,16 +240,18 @@
                             document.getElementById(title).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + activities[title] + '</dd>';
                         }
                     }
-                    
-                    // console.log(activities[title]);
                 }
             }
 
 
             function populateButtons() {
+
+            /** 
+            * @summary Display logging buttons
+            */
+
                 for (var i = 0; i < routineTypes['results'].length; i++) {
                 document.getElementById('buttons').innerHTML += '<div class="buttonContainer"><button class="routineButton" name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button></div>';
-                // document.getElementById('buttons').innerHTML += '<br>';
                 console.log(routineTypes['results'][i]['routineID']);
                 }
 
@@ -356,45 +259,55 @@
 
 
             function populateForm() {
+
+            /** 
+            * @summary Populate the submission form with the user's chosen date and the userID
+            */
+                
                 document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                 document.getElementById('user').innerHTML = "<input type='hidden' name='user' value='" + <%- user %> + "'>";
             }
 
 
             function getDisplayDate(date) {
+
+            /** 
+            * @summary Convert a given dateString into a long-formatted date
+            * @param {string} date - The chosen date to convert
+            * @return {string} The long-formatted date
+            */
+                
                 newToday = new Date();
                 if (date == newToday.getFullYear()+'-'+(newToday.getMonth()+1)+'-'+newToday.getDate()) {
                     var displayDate = 'Today <br> &nbsp;' ;
                 } else {
                     var displayDate = dateToString(date);
                 }
-                // console.log('date: ', date, typeof date);
-                // console.log(dateToString(date));
-                // return dateToString(date);
                 return displayDate
             }
 
             function disableButton(today) {
+            /** 
+            * @summary Disable the 'next day' button if you are viewing the current date
+            * @param {string} today - A datestring containing the currently displayed date
+            */
+                
                 newToday = new Date();
                 newToday.setDate(newToday.getDate()-1);
                 if (today >= newToday) {
                     document.getElementById('nextDay').innerHTML = '';
                 } else {
                     document.getElementById('nextDay').innerHTML = '<button class="dayButton" style="right: 7vw" onclick=<%= nextDay %> >&#8594;</button>';
-                    // document.getElementById('nextDay').innerHTML = '<button onclick="incrementDate()">Next Day</button>';
                 }
             }
             
             function decrementDate() {
-                // today.setDate(today.getDate()-1);
-                // date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
 
-                // document.getElementById('date').innerHTML = getDisplayDate(date);
-                // disableButton(today);   
+            /** 
+            * @summary Cycle to the previous day
+            */
+                
                 dayCounter++;
-                // console.log('dayCounter: ', dayCounter)
-                // console.log('length: ', dateList.length);
-                // console.log('dayCounter: ', dayCounter);
 
                 if ((dayCounter == (dateList.length-1)) && (!(navigator.onLine))) {
                     document.getElementById('prevDay').innerHTML = '';
@@ -406,65 +319,28 @@
                     disableButton(newDay);
                     populateMainSection()
                 } else {
-                    // console.log('online? ', navigator.onLine);
-                    // if (navigator.onLine) {
                         var newDay = new Date(dateList[dayCounter-1].replace(/-/g, "/"));
-                        // console.log('newDay: ', newDay)
                         var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
-                        // console.log('diffDays: ', diffDays)
                         var weeklyOffset = Math.floor((diffDays)/7);
-                        // console.log('weeklyOffset: ', weeklyOffset)
-                        window.location = '/w/'+ weeklyOffset;
-                    // } else {
-                    //     document.getElementById('prevDay').innerHTML = '';
-                    // }
-                    
+                        window.location = '/w/'+ weeklyOffset;                   
                 }
-
-                // document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
-                // newDay = new Date(dateList[dayCounter]);
-                // disableButton(newDay);
-                // var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
-                // console.log('diffDays: ', diffDays);
-                // // console.log('week offset: ', Math.floor(diffDays/7));
-                // var weeklyOffset = Math.floor((diffDays)/7);
-                // console.log('weekOffset: ', weeklyOffset);
-                // if (dayCounter > (dateList.length-1)) {
-                // // if (dayCounter == 7) {
-                //     window.location = '/w/'+ weeklyOffset;
-                // }
-                // // console.log('dayCounter: ', dayCounter);
-                // // console.log(weekActivities[dayCounter]);
-                // populateMainSection()
             }
 
-            function incrementDate() { 
-                document.getElementById('prevDay').innerHTML = '<button class="dayButton" style="left: 7vw" onclick= <%= prevDay %> >&#8592;</button>';
 
-                // dayCounter--;
+            function incrementDate() { 
+            /** 
+            * @summary Cycle to the next day
+            */
                 
-                // today.setDate(today.getDate()+1);
-                // date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate());
-                // document.getElementById('date').innerHTML = getDisplayDate(date);
-                // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
-                // disableButton(today);
-                // if (dayCounter == 0) {
-                //     window.location = '/w/'+ weeklyOffset;
-                // }
+                document.getElementById('prevDay').innerHTML = '<button class="dayButton" style="left: 7vw" onclick= <%= prevDay %> >&#8592;</button>';
                 dayCounter--;
-                // console.log('dayCounter: ', dayCounter)
 
                 if (dayCounter == -1) {
                     var newDay = new Date(dateList[dayCounter+1].replace(/-/g, "/"));
                     var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
-                    // var weeklyOffset = (Math.floor((diffDays)/7) - 1);
-
-                    // IF (r==1), location = /weeklyOffset+1
-                    // console.log('href: ', window.location.href);
-                    var url_string = window.location.href; //window.location.href
+                    var url_string = window.location.href; 
                     var url = new URL(url_string);
                     var r = url.searchParams.get("r");
-                    // console.log('r: ', r);
                     if (r) {
                         var weeklyOffset = (Math.floor((diffDays)/7));
                         window.location = '/w/'+ weeklyOffset;
@@ -472,29 +348,12 @@
                         var weeklyOffset = (Math.floor((diffDays)/7) - 1);
                         window.location = '/w/'+ weeklyOffset + '?r=1';
                     }
-                    // console.log(qs);
-                    // console.log('weekOffset: ', weeklyOffset);
-                    // window.location = '/w/'+ weeklyOffset + '?r=1';
                 } else {
                     document.getElementById('date').innerHTML = getDisplayDate(dateList[dayCounter]);
                     var newDay = new Date(dateList[dayCounter].replace(/-/g, "/"));
                     disableButton(newDay);
                     populateMainSection()
                 }
-
-                
-                // document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + date + "'>";
-                // newDay = new Date(dateList[dayCounter]);
-                // disableButton(newDay);
-                // var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay));
-                // console.log('diffDays: ', diffDays);
-                // // console.log('week offset: ', Math.floor((diffDays)/7));
-                // var weeklyOffset = (Math.floor((diffDays)/7));
-                // console.log('weekOffset: ', weeklyOffset);
-                
-                // console.log('dayCounter: ', dayCounter);
-                // console.log(weekActivities[dayCounter]);
-                // populateMainSection()
             }
 
             // Get the modal
@@ -508,12 +367,10 @@
             // When the user clicks on <span> (x), close the modal
             span[0].onclick = function() {
                 modal.style.display = "none";
-                // updateNormalModal.style.display = "none";
             }
 
             span[1].onclick = function() {
                 updateNormalModal.style.display = "none";
-                // updateNormalModal.style.display = "none";
             }
 
             // When the user clicks anywhere outside of the modal, close it
@@ -526,88 +383,23 @@
             }
 
             function openModal() {
-                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
-                // routineDescription(activities[date], 'modalText');
+            /** 
+            * Open the logout modal
+            */
                 modal.style.display = "block";
             }
 
             function promptModal() {
-                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
-                // routineDescription(activities[date], 'modalText');
+            /** 
+            * Open the prompt modal
+            */
                 updateNormalModal.style.display = "block";
             }
 
         </script>
-
         
-
-        
-
-
         <br><br>
-        <!-- <script>
-            function deleteAllCookies() {
-              var cookies = document.cookie.split(";");
-            //   console.log(cookies);
-              for (var i = 0; i < cookies.length; i++) {
-                  var cookie = cookies[i];
-                  var eqPos = cookie.indexOf("=");
-                  var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-                  console.log('name: ', name);
-                  document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                //   console.log(document.cookie);
-              }
-              location.reload();
-            // window.location.href = "/";
-            } 
-
-            function deleteAllCookies2 () {
-                var cookies = document.cookie.split("; ");
-                console.log(cookies);
-                for (var c = 0; c < cookies.length; c++) {
-                    var d = window.location.hostname.split(".");
-                    while (d.length > 0) {
-                        var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path=';
-                        var p = location.pathname.split('/');
-                        document.cookie = cookieBase + '/';
-                        while (p.length > 0) {
-                            document.cookie = cookieBase + p.join('/');
-                            p.pop();
-                        };
-                        d.shift();
-                    }
-                }
-                location.reload();
-            };
-
-        </script> -->
-
-       
-
-        <!-- firebase: -->
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-<!-- <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script> -->
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<!-- <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script> -->
-
-<!-- <script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyCWJjbwRZbzpnuXwgjPaAKTA6vCUCu_CjY",
-    authDomain: "care4cf.firebaseapp.com",
-    projectId: "care4cf",
-    storageBucket: "care4cf.appspot.com",
-    messagingSenderId: "894516146550",
-    appId: "1:894516146550:web:b1a2598dd910f263df8a57",
-    measurementId: "G-1MDX03Z5FW"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script> -->
+        
     </body>
 
 </html>

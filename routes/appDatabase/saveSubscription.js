@@ -3,6 +3,14 @@ var readData = require('./readData');
 var crypto = require('crypto');
 
 module.exports = async function(subscription) {
+
+/** 
+* Brief description of the function here.
+* @summary Takes a subscription object and stores it in the database
+* @param {string} subscription - A stringified JSON object containing details of a user's subscription and the current user's accessToken
+* @return {object} An object containing results of the database query
+*/
+    
     console.log('received subscription to save: ', subscription);
     var subObject = subscription.subscription;
     var token = subscription.token;

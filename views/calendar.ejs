@@ -132,7 +132,7 @@
                 window.location.href = "/loginUser"
             }
 
-            
+
             var activities = JSON.parse(window.localStorage.getItem('allActivities'));
             console.log('activities: ', activities)
 
@@ -198,19 +198,31 @@
             }
 
             function openModal(date) {
+
+            /** 
+            * Open and populate the routine description modal
+            * @param {string} date - A string containing the date of the routine to display.
+            */
                 var displayDate = dateToString(date);
                 document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+displayDate+'</p>';
                 routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }
 
+
             function openMenuModal() {
+                /**
+                 * Open the menu modal
+                 */
                 menuModal.style.display = "block";
             }
 
             var gamification = <%- gamification %>;
 
             function updateStreaks() {
+                /**
+                 * Update the gamification display settings
+                 */
                 if (gamification) {
                 document.getElementById("gamificationTrigger").innerHTML = '<p id="menuModalTextGamification" class="modalText" onclick="changeGamificationSettings(1)"></p>'
                 document.getElementById("menuModalTextGamification").innerHTML = "Disable Logging Streaks";
@@ -226,6 +238,11 @@
             
 
             function changeGamificationSettings(set) {
+
+            /** 
+            * @summary Change the user's stored gamification settings, reflect this in the display
+            * @param {number} set - The user's current gamification settings
+            */
                 
                 if (!(navigator.onLine)) {
                     alert("Cannot update while offline");

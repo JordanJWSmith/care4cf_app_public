@@ -20,7 +20,6 @@
             </a>
 
             <h1 style="margin-top: 9vh"><%= title %></h1>
-            <!-- <p> Welcome, user <%= user %></p> -->
 
             <div id="routineDescription">
                 
@@ -39,54 +38,17 @@
                 </div>
             </div>
 
-            <!-- <dl> -->
-                <!-- <a id="techniques">
-                    <dt>Techniques:</dt> -->
-                        <!-- <dd>- black hot drink</dd> -->
-                <!-- </a>
-                <br>
-                <a id="duration">
-                    <dt>Duration: <%= duration %></dt> -->
-                        <!-- <dd>- white cold drink</dd> -->
-                <!-- </a>
-                <br>
-                <a id="frequency">
-                    <dt>Frequency: <%= frequency %></dt> -->
-                        <!-- <dd>- white cold drink</dd> -->
-                <!-- </a>
-                <br>
-                <a id="adjuncts"> -->
-                    <!-- <dt>Adjuncts:</dt> -->
-                        <!-- <dd>- white cold drink</dd> -->
-                <!-- </a>
-                
-            </dl> -->
-
-            <!-- <br><br>
-            <a href="/myRoutines">
-                <button>See My Routines</button>
-            </a>
-
-            <br><br>
-            <a href="/">
-                <button>Log Activity</button>
-            </a> -->
-
             <div id="navButtonContainer">
-                <!-- <a href="/normalRoutine"> -->
                     <button class="navButtonDisabled" style="margin-right: 5vw; border: #2FB9CA; border-width: thick; border-style: solid;">
                         <img id="normalRoutineButton" src="./images/Sample_User_Icon.png" style="height:4vh">
                     </button>
-                <!-- </a> -->
-                    <!-- <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/normalRoutine"'><img id="mainButton" height="100%"></button> -->
+                
                     <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/"'>
                         <img id="mainButton" src="./images/circleIcon.png" style="height:5vh">
                     </button>
-                <!-- <a href="/calendar"> -->
                     <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'>
                         <img id="calendarButton" src="./images/Calendar_Icon.png" style="height:4vh">
                     </button>
-                <!-- </a> -->
                 
             </div>
 
@@ -100,12 +62,10 @@
             var adjuncts = <%- adjuncts %>;
 
             function populateRoutineSection() {
-                // console.log(techniques);
-                // console.log(duration);
-                // console.log(frequency);
-                // console.log(adjuncts);
-
-
+                /** 
+                * @summary Populate the routine section of the page
+                */
+                
                 document.getElementById('routineDescription').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
                 document.getElementById('routineDescription').style['padding'] = '2vh';
                 document.getElementById('routineDescription').style['width'] = '80%';
@@ -148,27 +108,6 @@
                 window.location.href = "/loginUser"
             }
 
-            // var techniques = <%- techniques %>;
-            // console.log('techniques: ', techniques);
-            // for (var i = 0; i < techniques.length; i++) {
-            //     document.getElementById('techniques').innerHTML += "<dd>- " + techniques[i] + "</dd>";
-            // }
-
-            // var duration = <%- duration %>;
-            // console.log('duration: ', duration);
-
-            // var frequency = <%- frequency %>;
-            // console.log('frequency: ', frequency);
-
-            // var adjuncts = <%- adjuncts %>;
-            // console.log('adjuncts: ', adjuncts)
-            // if (adjuncts) {
-            //     document.getElementById('adjuncts').innerHTML += "<dt>Adjuncts: </dd>";
-            //     for (var i = 0; i < adjuncts.length; i++) {
-            //         document.getElementById('adjuncts').innerHTML += "<dd>- " + adjuncts[i][0] + " (" + adjuncts[i][1] + ")" + "</dd>";
-            //     }
-            // }
-
             var modal = document.getElementById("myModal");
             var span = document.getElementsByClassName("close");
 
@@ -183,17 +122,10 @@
             }
 
             function openModal() {
-                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
-                // routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }
-
-            
-            
         
         </script>
   
-
-
     </body>
 </html>

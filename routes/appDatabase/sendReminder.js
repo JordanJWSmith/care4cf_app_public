@@ -4,6 +4,11 @@ var readData = require('./readData');
 
 
 module.exports = async function() {
+/** 
+* @summary Gets subscription objects for all users who have not logged an activity today, and sends them a push notification
+* @return {number} A count of how many notifications have been sent
+*/
+    
 
 var counter = 0;
 

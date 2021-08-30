@@ -6,6 +6,12 @@ const updateToken = require('./updateToken');
 
 module.exports = async function(userID) {
     console.log('new user Details: ', userID);
+/** 
+* @summary Add a new user to the database
+* @param {number} userID - The ID of the current user to add to the database
+* @return {Boolean} True
+*/
+    
 
 
     var newUser = 'INSERT INTO users VALUES (?, 1) ';

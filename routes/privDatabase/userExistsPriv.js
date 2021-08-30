@@ -2,6 +2,13 @@ var readPrivData = require('./readPrivData');
 
 module.exports = async function(email) {
 
+/** 
+* @summary Check to see if a user exists in the private database
+* @param {string} email - The email address of the user to check
+* @return {object} An object containing a Boolean to signify whether the user exists, and if true, the user's userID
+*/
+    
+
     if ( (typeof email !== "string")) {
         return {
             logIn: false 

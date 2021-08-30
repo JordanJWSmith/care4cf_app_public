@@ -6,12 +6,9 @@
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
-        <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
-        <!-- <script type="text/javascript" src="/javascripts/selectStyling.js"></script>  -->
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     </head>
     <body>
         <div class="container" style="display: table;">
@@ -19,14 +16,12 @@
             <img id="backArrowButton"  onclick="window.history.back()"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
 
             <h1 style="margin-top: 9vh"><%= title %></h1>
-            <!-- <p>What's your normal airway clearance routine?</p> -->
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
                 <img id="hamburgerButton"  height="100%">
             </a>
 
             <a style="position:absolute; height: 3vh; right: 10vw; top:2vh; cursor:pointer" onclick="openHelpModal()">
-                <!-- <img id="helpButton" src="./images/hamburgerDots.png" height="100%"> -->
                 <button class="optionButton" style="font-size: 10pt">?</button>
             </a>
 
@@ -90,9 +85,6 @@
                     <div id="frequency">
                         <select id='frequencyDropdown' name="frequency" required>
                             <option value="" selected disabled hidden>Frequency per Day</option>
-                            <!-- <option value=1>Once</option>
-                            <option value=2>Twice</option>
-                            <option value=3>Three times</option>  -->
                         </select>
                     </div>
 
@@ -115,7 +107,6 @@
                         </div>
                         
                         <div id=removeAdjunctButtonDiv style="display: none; padding-left: 2vw; padding-top: 2vh">
-                            <!-- <button type="button" onclick="removeAdjunct()">Remove Adjunct</button> -->
                         </div>
                     </div>
                     
@@ -144,25 +135,8 @@
             if (!(navigator.onLine) && (!(getCook('accessToken')))) {
                 window.location.href = "/loginUser"
             }
-            // var today = new Date();
-            // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            // console.log(date);
-
-            // console.log('saveAsNormal: ', <%- saveAsNormal %>);
-
-            // const queryString = window.location.search;
-            // const urlParams = new URLSearchParams(queryString);
-            // var saN = urlParams.get('n');
-            // if (saN) {
-            //     var saveAsNormal = false;
-            // } else {
-            //     var saveAsNormal = <%- saveAsNormal %>;
-            // }
 
             var url = new URL(document.URL);
-            // console.log('url: ', url.pathname);
-            // console.log('index', url.pathname.indexOf('logNew'))
-            // console.log(url.pathname.indexOf('logNew') !== -1)
             if (url.pathname.indexOf('logNew') !== -1) {
                 var path = "../images/";
             } else {
@@ -196,23 +170,24 @@
             
             
 
-
-            // document.getElementById("date").innerHTML += "<input type='hidden' name='date' value='" + date + "'>";
             document.getElementById("saveAsNormal").innerHTML += "<input type='hidden' name='saveAsNormal' value='" + saveAsNormal + "'>";
             document.getElementById("user").innerHTML += "<input type='hidden' name='user' value='" + <%- user %> + "'>";
 
+
             function populateTechniquesBox(n) {
+            /** 
+            * Populate the 'techniques' section with a dropdown list
+            * @param {number} n - The position of the dropdown in the list of dropdowns
+            */
+                
                 var options = <%- techniques %>;
                 var techList = [];
                 var typeList = [];
                 for (var i = 0; i < options['results'].length; i++) {
-                    // console.log(options['results'][i]);
                     if (!typeList.includes(options['results'][i].techniqueType)) {
                         typeList.push(options['results'][i].techniqueType);
                         var og = document.createElement('optgroup');
                         og.label = options['results'][i].techniqueType;
-                        // og.innerHTML = 'label=' + options['results'][i].techniqueType;
-                        // dropdownLabel = '<optgroup label=' + options['results'][i].techniqueType + '>'
                         document.getElementById("dropdown"+n).appendChild(og);
                     }
                     if (!techList.includes(options['results'][i].title)) {
@@ -220,7 +195,6 @@
                         var o = document.createElement('option');
                         o.value = options['results'][i].techniqueID;
                         o.innerHTML = options['results'][i].title;
-                        // dropdownOptions = '<option value=' + options['results'][i].techniqueID + '>' + options['results'][i].title + '</option>';
                         document.getElementById("dropdown"+n).appendChild(o);
                     }
                 }
@@ -229,8 +203,13 @@
             populateTechniquesBox(0);
             
             function subtitleExists(n) {
+            /** 
+            * @summary Display an extra box if the chosen technique has sub-options
+            * @param {number} n - The position of the dropdown in the list of dropdowns
+            * @return {function} addBox() - adds another dropdown box for the sub-options
+            */
+                
                 var value = document.getElementById("dropdown"+n).value;
-                console.log('chosen value: ', value);
                 var options = <%- techniques %>;
                 // for each row in results
                 for (var i = 0; i < options['results'].length; i++) {
@@ -251,10 +230,17 @@
                 }
             }
 
+
             function addBox(title, n) {
+            /** 
+            * @summary Add another dropdown box to list the sub-options
+            * @param {string} title - The group of options being chosen. Will display as 'Type of [title]'
+            * @param {number} n - The position of the dropdown in the list of dropdowns
+            * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
+            */
+                
                 var options = <%- techniques %>;
                 document.getElementById("secondFormBox"+n).innerHTML = '<select id="secondDropdown'+n+'" name=subact'+n+' required></select>';
-                // var secondDropdownHTML = '<option value="" selected disabled hidden>Type of '+title+'</option>';
                 var ot = document.createElement('option');
                 ot.value = ""
                 ot.selected = true;
@@ -269,27 +255,24 @@
                         var o = document.createElement('option');
                         o.value = subValue;
                         o.innerHTML = subtitle;
-                        // var secondDropdownHTMLOptions = '<option value=' + subValue + '>' + subtitle + '</option>';
                         document.getElementById("secondDropdown"+n).appendChild(o);
                     }
                 }
             }
 
-            function addNewTechnique(n) {
-                // add IF statement to catch box already existing?
 
-                // if (document.getElementById('formBox'+n)) {
-                //     console.log('element already exists');
-                //     document.getElementById('formBox'+n).remove()
-                // }
+            function addNewTechnique(n) {
+            /** 
+            * Add another dropdown box to list another technique
+            * @param {number} n - The position of the dropdown in the list of dropdowns
+            */
+                
 
                 var fb = document.createElement('div');
                 fb.id = 'formBox'+n;
                 fb.style = "padding-top: 2vh;"
-                // fb.style.display = "block";
                 var sfb = document.createElement('div');
                 sfb.id = 'secondFormBox'+n;
-                // sfb.style.display = "block";
                 document.getElementById('techniques').appendChild(fb);
                 document.getElementById('techniques').appendChild(sfb);
 
@@ -298,7 +281,6 @@
                 s.required = true;
                 s.name = 'act'+n;
                 s.setAttribute("onchange", "subtitleExists("+n+")");
-                // console.log(s);
                 document.getElementById('formBox'+n).appendChild(s);
 
                 var o = document.createElement('option');
@@ -315,8 +297,10 @@
 
 
             function incrementCounter() {
+                /** 
+                * @summary Increment the technique counter and add another technique box
+                */
                 counter++;
-                console.log('counter: ', counter);
                 addNewTechnique(counter);
                 if (counter > 0) {
                     document.getElementById("removeButtonDiv").innerHTML = '<button class="optionButton" type="button" id="removeButton" onclick="removeTechnique()" style="margin: auto;">&#8211;</button>';
@@ -326,11 +310,11 @@
             }
 
             function removeTechnique() {
+                /** 
+                * Brief description of the function here.
+                * @summary Decrement the technique counter and remove a technique box
+                */
                 if (counter > 0) {
-                    // document.getElementById("formBox"+counter).innerHTML = "";
-                    // document.getElementById("secondFormBox"+counter).innerHTML = "";
-                    // document.getElementById("formBox"+counter).style = "padding-top: 0";
-                    // document.getElementById("secondFormBox"+counter).style.display = "none";
                     document.getElementById("formBox"+counter).remove();
                     document.getElementById("secondFormBox"+counter).remove();
                     counter--;
@@ -339,7 +323,6 @@
                         document.getElementById("removeButtonDiv").innerHTML = "";
                         document.getElementById("removeButtonDiv").style.display = "none";
                     }
-                    // console.log('counter: ', counter);
                 }
                 
             }
@@ -347,6 +330,12 @@
             
 
             function populateDurationsBox() {
+                /** 
+                * @summary Populate the durations dropdown with its options
+                * @param {ParamDataTypeHere} parameterNameHere - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
+                * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
+                */
+                
                 var durations = <%- durations %>;
                 for (var i = 0; i < durations['results'].length; i++) {
                     var o = document.createElement('option');
@@ -360,6 +349,10 @@
 
             
             function populateFrequenciesBox() {
+                /** 
+                * @summary Populate the frequencies dropdown with its options
+                */
+
                 var frequencies = <%- frequencies %>;
                 for (var i = 0; i < frequencies['results'].length; i++) {
                     var o = document.createElement('option');
@@ -372,8 +365,12 @@
             populateFrequenciesBox();
 
             function populateAdjunctsBox(n) {
+                /** 
+                * @summary Populate the adjuncts box with its options
+                * @param {number} n - The position of the dropdown in the list of dropdowns
+                */
+                
                 var adjuncts = <%- adjuncts %>;
-                // console.log(adjuncts);
                 for (var i = 0; i < adjuncts['results'].length; i++) {
                     var o = document.createElement('option');
                     o.value = adjuncts['results'][i].adjunctID;
@@ -385,8 +382,11 @@
             populateAdjunctsBox(0);
 
             function populateAdjunctTimeBox(n) {
+                /** 
+                * @summary Populate the adjunct times box with its options
+                * @param {number} n - The position of the dropdown in the list of dropdowns
+                */
                 var adjunctTimes = <%- adjunctTimes %>;
-                // console.log(adjunctTimes);
                 document.getElementById("adjunctTimeDiv"+n).innerHTML = '<select id="adjunctTime'+n+'" name="adjunctTime'+n+'" required></select>';
                 var ot = document.createElement('option');
                 ot.value = "";
@@ -407,6 +407,11 @@
             var adjunctCounter = 0;
 
             function addAdjunctBox(n) {
+            /** 
+            * @summary Add another adjuncts box
+            * @param {number} n - The position of the dropdown in the list of dropdowns
+            */
+                
                 d = document.createElement('div');
                 d.id = 'adjunctDiv'+n;
                 d.style = "padding-top: 2vh;"
@@ -426,7 +431,6 @@
                 o.innerHTML = 'Adjunct Medication';
                 document.getElementById('adjunctDropdown'+n).appendChild(o);
 
-
                 dt = document.createElement('div');
                 dt.id = 'adjunctTimeDiv'+n;
                 document.getElementById('adjuncts').appendChild(dt);
@@ -435,7 +439,11 @@
                 
             }
 
+
             function incrementAdjunctCounter() {
+            /** 
+            * @summary Increment the adjuncts counter and add another adjuncts dropdown
+            */
                 adjunctCounter++;
                 console.log('adjunctCounter: ', adjunctCounter);
                 addAdjunctBox(adjunctCounter);
@@ -447,9 +455,11 @@
             }
 
             function removeAdjunct() {
+                /** 
+                * @summary Decrement the adjuncts counter and remove an adjuncts dropdown
+                */
+                
                 if (adjunctCounter > 0) {
-                    // document.getElementById("adjunctDiv"+adjunctCounter).innerHTML = "";
-                    // document.getElementById("adjunctTimeDiv"+adjunctCounter).innerHTML = "";
                     document.getElementById("adjunctDiv"+adjunctCounter).remove();
                     document.getElementById("adjunctTimeDiv"+adjunctCounter).remove();
                     adjunctCounter--;
@@ -459,15 +469,12 @@
                         document.getElementById("removeAdjunctButtonDiv").innerHTML = "";
                         document.getElementById("removeAdjunctButtonDiv").style.display = "none";
                     }
-                    
                 }
-                
             }
 
-            
+
             var modal = document.getElementById("myModal");
             var helpModal = document.getElementById("helpModal");
-
             var span = document.getElementsByClassName("close");
 
             span[0].onclick = function() {
@@ -487,8 +494,6 @@
             }
 
             function openModal() {
-                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
-                // routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }
 
@@ -499,26 +504,7 @@
 
         </script>
 
-        <br>
-        <!-- <button onclick="incrementCounter()">Add Another Technique</button> -->
-
-
-
-        <!-- <script>
-            function deleteAllCookies() {
-              var cookies = document.cookie.split(";");
-              for (var i = 0; i < cookies.length; i++) {
-                  var cookie = cookies[i];
-                  var eqPos = cookie.indexOf("=");
-                  var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-                  document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-              }
-              location.reload();
-            } 
-          </script> -->
-          <br><br>
+        <br><br><br>
       
-          <button onclick="logout()">Log Out</button>
-
     </body>
 </html>

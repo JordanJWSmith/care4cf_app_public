@@ -3,6 +3,13 @@ var buildQuery = require('./buildQuery');
 
 module.exports = async function(routineResults) {
 
+/** 
+* @summary Take an object containing IDs representing elements of a routine, and return an object containing the associated descriptions
+* @param {object} routineResults - An object containing IDs representing one complete routine (i.e. techniqueIDs, frequencyID, durationID, adjunctIDs, adjunctTimeIDs)
+* @return {object} An object containing a description of one routine
+*/
+    
+
     if ((typeof routineResults !== "object") || (Object.keys(routineResults).length < 1)) {
         console.log('idsToDescriptions not an object')
         return false

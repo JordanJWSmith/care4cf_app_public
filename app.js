@@ -9,12 +9,6 @@ var cron = require('node-cron');
 var favicon = require('serve-favicon'); 
 var compression = require('compression');
 
-// var fetch = require('fetch');
-// var axios = require('axios').default;
-
-
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var buttonsRouter = require('./routes/buttons');
@@ -30,12 +24,9 @@ var registerRouter = require('./routes/register');
 var sendNotificationRouter = require('./routes/sendNotification');
 var saveSubscriptionAPIRouter = require('./routes/saveSubscriptionAPI');
 var checkSubscriptionAPIRouter = require('./routes/checkSubscriptionAPI');
-// var checkSubscriptionAPIRouter = require('./routes/checkSubscriptionAPI');
 var editGamificationAPIRouter = require('./routes/editGamificationAPI');
 var adminRouter = require('./routes/admin')
 
-// var getSubscriptions = require('./routes/appDatabase/getSubscriptions');
-// var sendPush = require('./routes/appDatabase/sendPush');
 var sendReminder = require('./routes/appDatabase/sendReminder');
 
 
@@ -94,40 +85,11 @@ app.get('*', function(req, res) {
   res.redirect('https://' + req.headers.host + req.url)
 })
 
-// console.log(webPush.generateVAPIDKeys()); 
-// process.env.VAPID_PUBLIC_KEY = '';
-// if (process.env.VAPID_PUBLIC_KEY) {
-//   console.log('exist');
-// }
-// console.log(process.env)
-
-// console.log('before: ', process.env);
-
-// if ((!process.env.VAPID_PUBLIC_KEY) || (!process.env.VAPID_PRIVATE_KEY)) {
-//   console.log('does not exist');
-//   const VAPID_PUBLIC_KEY = webPush.generateVAPIDKeys().publicKey;
-//   const VAPID_PRIVATE_KEY = webPush.generateVAPIDKeys().privateKey;
-//   process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
-//   process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
-// }
-// console.log('after: ', process.env);
-
 const VAPID_PUBLIC_KEY = "BCrvW3Wqnj6Af3rcTamZLtzMvJX0gMCQLvmemsPQ9fruTTIFsQGoODQ1Zjn-6TRrV9bUtkpQAPQFSDQwSFGBnKg"
 const VAPID_PRIVATE_KEY = "ZnA0fY9H320xTpzTCWck1XJAbE9s9gTQ5ljOtoQq9eY";
 
 process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
 process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
-
-// console.log('app.js public: ', process.env.VAPID_PUBLIC_KEY);
-// console.log('app.js private: ', process.env.VAPID_PRIVATE_KEY);
-
-
-
-// process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
-// process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
-
-// console.log('public: ', VAPID_PUBLIC_KEY);
-// console.log('private: ', VAPID_PRIVATE_KEY);
 
 
 webPush.setGCMAPIKey('AIzaSyBjJ9i9OfBGzplXujpb-ft_452zF17BIjc');
@@ -138,133 +100,11 @@ webPush.setVapidDetails(
 );
 
 cron.schedule('0 20 * * *', function() {
-  // cron.schedule('* * * * *', function() {
-  // console.log('running a task every minute');
   sendReminder()
   .then(function(results) {
     console.log('sent ', results);
-    // console.log('function complete');
   })
 })
 
-  
-
-  // const rawResponse = await fetch('/sendNotification', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  //   },
-  // //   body: JSON.stringify({a: 1, b: 'Textual content'})
-  //     body: JSON.stringify(subscription)
-  // });
-  // const content = await rawResponse.text();
-
-  // console.log('SendNotifcontent: ', content);
-  // await showNotification()
-  // .then(console.log('After notification'));
-// })
-
-// async function cronPush() {
-//   console.log('cronPush');
-//   var axResponse = await axios.get('./routes/sendNotification')
-//   .then(function(response) {
-//     console.log(response);
-//     return response;
-//   })
-//   .catch(function(error) {
-//     console.log(error)
-//     return error;
-//   })
-//   }
-//   cronPush();
-
-  // var axResponse = await axios.post('/sendNotification')
-  // .then(function(response) {
-  //   console.log(response)
-  //   return response
-  // axios.post('/sendNotification', {
-  //   firstName: 'Fred',
-  //   lastName: 'Flintstone'
-  // })
-  // .then(function (response) {
-  //   console.log(response);
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-// }
-
-
-
-  // return axResponse;
-  // var response = await fetch.fetchUrl('/sendNotification', {
-  //   method:'POST',
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({title: 'test'})
-  // });
-  // var content = await response.text();
-  // return content;
-// }
-
-// function showNotification() {
-//   console.log('attempting notification');
-//   // console.log('notif: ', Notification.requestPermission());
-//   navigator.serviceWorker.ready
-//   console.log(navigator.serviceWorker)
-//   .then(function() {
-//     Notification.requestPermission(function(result) {
-//       console.log('request permission: ', result);
-//       if (result === 'granted') {
-//           navigator.serviceWorker.ready
-//           .then(async function(registration) {
-//               console.log('registration:', registration);
-//               var timeStamp = new Date()
-//               // console.log(msToHMS(timeStamp.getTime()));
-              
-//               await registration.showNotification('Vibration Sample' + timeStamp, {
-//                   body: 'Buzz! Buzz!',
-//                   // icon: '../images/touch/chrome-touch-icon-192x192.png',
-//                   vibrate: [200, 100, 200, 100, 200, 100, 200],
-//                   tag: 'vibration-sample'
-//               })
-//               .then(console.log('end of function'));
-//           });
-//       }
-//     })
-//   }
-//     // console.log(navigator.serviceWorker)
-    
-//   )
-  
-// }
-
-// app.use(function(app, route) {
-//   app.get(route + 'vapidPublicKey', function(req, res) {
-//     res.send(process.env.VAPID_PUBLIC_KEY);
-//   })
-// })
-
-
-
-// if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
-//   console.log("You must set the VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY "+
-//     "environment variables. You can use the following ones:");
-//   console.log(webPush.generateVAPIDKeys());
-//   return;
-// }
-
-// const VAPID_PUBLIC_KEY = webPush.generateVAPIDKeys().publicKey;
-// const VAPID_PRIVATE_KEY = webPush.generateVAPIDKeys().privateKey;
-
-// // Set the keys used for encrypting the push messages.
-// webPush.setVapidDetails(
-//   'https://serviceworke.rs/',
-//   process.env.VAPID_PUBLIC_KEY,
-//   process.env.VAPID_PRIVATE_KEY
-// );
 
 module.exports = app;

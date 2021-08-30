@@ -24,7 +24,6 @@
                     </select>
                     
                     <a id="details"></a>
-                    <!-- <a id="user"></a> -->
                     <br>
                     <div id="navButtonContainer">
                         <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit">
@@ -54,9 +53,6 @@
                 o.innerHTML = reasons['results'][i].description;
                 document.getElementById('reason').appendChild(o);
             }
-
-            // console.log('details: ',details);
-            // console.log('reasons: ', reasons);
 
             document.getElementById('details').innerHTML = "<input type='hidden' name='details' value='" + JSON.stringify(details) + "'>";
 

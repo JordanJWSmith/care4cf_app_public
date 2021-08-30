@@ -23,13 +23,10 @@
           text-align: left;
           outline: none;
           font-size: 15px;
-          /* border-radius: 10px; */
-          /* background-color:linear-gradient(90deg, rgba(128,128,128,1) 0%, rgba(154,154,154,1) 47%, rgba(216,216,216,1) 100%) */
         }
         
         .active, .collapsible:hover {
           background-color: #555;
-          /* border-radius: 10px; */
         }
         
         .content {
@@ -73,19 +70,13 @@
                     <p id="modalText" onclick="logout()">Log Out</p>
                 </div>
             </div>
-            <!-- <br><br> -->
 
             <% if (!somethingDifferent) { %>
-                <!-- <a href="/newSchedule"> -->
-                    <!-- <button onclick="isOnline()">Save a new schedule</button> -->
                     <button class="navButton" style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;" onclick='window.location="/newSchedule"'>
                         <img id="myRoutinesButton" src="./images/plusIcon.png" style="height:4vh">
                     </button>
                 
                 <% } else { %>
-            <!-- <a href="/somethingDifferent/logNew">
-                <button>Something else</button>
-            </a> -->
                     <button class="optionButton" onclick='window.location="/somethingDifferent/logNew"' style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;">Something Different</button>
                 <% } %>
 
@@ -102,28 +93,21 @@
                 </form>
             <% } %>
 
-            <!-- <br><br> -->
-            <!-- <a href="/normalRoutine">
-                <button >Back to Normal Routine</button>
-            </a> -->
-
-            <!-- <br><br> -->
-            <!-- <a href="/">
-                <button>Log Activity</button>
-            </a> -->
-            <!-- > -->
         </div>
 
 
         <script>
-
-            // console.log('normalSched: ', <%-normalSched %>)
 
             if (!(navigator.onLine) && (!(getCook('accessToken')))) {
                 window.location.href = "/loginUser"
             }
 
             function isOnline() {
+            /** 
+            * @summary Check to see if browser is online, return false if not
+            * @return {Boolean} False
+            */
+                
             if (!(navigator.onLine)) {
                 alert("Cannot update while offline");
                 return false;
@@ -132,51 +116,25 @@
             }
             }
 
-            // function getCook(cookiename) {
-            //     // Get name followed by anything except a semicolon
-            //     var cookiestring=RegExp(cookiename+"=[^;]+").exec(document.cookie);
-            //     // Return everything after the equal sign, or an empty string if the cookie name not found
-            //     return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./,"") : "");
-            // }
-
-            // if (getCook('offline')) {
-            //     alert("Cannot update while offline");
-            //     document.cookie = "offline=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            // }
-
-            // console.log(document.cookie);
-            
-
             var routines = JSON.parse(window.localStorage.getItem('allNormals'));
-            
-
-            // if (navigator.onLine) {
-            //     var routines = JSON.parse(JSON.stringify(routinesString));
-            //     // console.log('onlineRoutines: ', routines);
-            // } else {
-            //     var routines = JSON.parse(window.localStorage.getItem('allNormals'));
-            //     // console.log('offlineRoutines: ', routines);
-            // }
-            // console.log('routines: ', routines);
 
             <% if (somethingDifferent) { %>
-                // console.log('myRoutine page');
                 var somethingDifferent = true;
                 var chosenDate = [ <%- chosenDate %> ];
-                // console.log(chosenDate.length);
                 if (chosenDate.length == 0) {
                     window.location = "/";
                 }
             <% } %>
 
             var normalSched = <%- normalSched %>;
-            // console.log(normalSched);
 
             var user = <%- user %>;
-            // console.log('user: ', user);
-
 
             function populateRoutineSection() {
+            /** 
+            * Display a description of a routine
+            */
+                
                 var keys = Object.keys(routines);
                 console.log('keys: ', keys);
                 for (i=0; i<keys.length; i++) {
@@ -202,14 +160,16 @@
 
 
             function populateRoutineInfo(scheduleID, ind) {
-                // console.log('routines:', routines)
+            /** 
+            * @summary Format the routine description given its scheduleID and its position in the list of displayed routines
+            * @param {number} scheduleID - The chosen routine's scheduleID
+            * @param {number} ind - The routine's position in the list of displayed routines
+            */
+                
                 var keys = Object.keys(routines[scheduleID])
-                // console.log('keys: ', JSON.stringify(keys))
                 var table = document.createElement('table');
                 table.setAttribute("id", "routineTable"+ind);
                 document.getElementById('routine'+ind).appendChild(table);
-
-                
 
                 for (var i = 0; i < keys.length; i++) {
                     var title = keys[i];
@@ -217,9 +177,6 @@
 
                     if (description) {
                         document.getElementById('routineTable'+ind).innerHTML += '<tr><td><img src="./images/'+title+'Icon.png" style="max-height: 6vh;"></td><td><div id="'+ title +ind+'"></div></td></tr>';
-                        // document.getElementById(title+ind).innerHTML += 
-                        // document.getElementById('routine'+ind).innerHTML += '<a id="'+ title + ind +'"></a>';
-                        // document.getElementById(title+ind).innerHTML += '<dt>' + title + ':</dt>';
                             if (description[0] == '[') {
                                 descList = JSON.parse(description);
                                 for (var j=0; j<descList.length; j++) {
@@ -245,7 +202,14 @@
                 
             }
 
+
+
             function makeNormal(schedID) {
+            /** 
+            * @summary Submit form to make the chosen routine the current user's normal routine
+            * @param {number} schedID - The chosen routine's scheduleID
+            */
+                
                 if (navigator.onLine) {
                     document.getElementById('newNormalUser').innerHTML = "<input type='hidden' name='user' value='" + user + "'>";
                     document.getElementById('newNormalSchedule').innerHTML = "<input type='hidden' name='scheduleID' value='" + schedID + "'>";
@@ -256,7 +220,14 @@
                 
             }
 
+
             function logSchedule(schedID) {
+                /** 
+                * @summary Submit form to log the chosen activity
+                * @param {number} schedID - The chosen routine's scheduleID
+                */
+                
+
                 if (navigator.onLine) {
                     document.getElementById('logChosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + chosenDate[0] + "'>";
                     document.getElementById('logScheduleID').innerHTML = "<input type='hidden' name='scheduleID' value = '" + schedID +"'>";
@@ -300,41 +271,8 @@
             }
 
             function openModal() {
-                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
-                // routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }
-
-            // function abbreviate(stringList) {
-            //     var abb = "";
-            //     stringList.forEach(element => abb += abbrev(element) + '/');
-            //     return abb.slice(0, -1);
-
-            //     // stringList.forEach(element => console.log(element))
-            //     // console.log('abb: ', abb);
-            //     // var abb = "";
-            //     // if ((!stringList) || (stringList.length == 0)) {
-            //     //     return abb;
-            //     // }
-            //     // for (i=0; i<stringList.length; i++) {
-            //     //     abb += (abbrev(stringList[i])) + "/"
-            //     // }
-            //     // return abb.slice(0, -1);
-            // }
-
-
-            // function abbrev(string) {
-            //     var s = string.toUpperCase();
-            //     if (!(s.trim().indexOf(' ') != -1)) {
-            //         return string;
-            //     } else {
-            //         return s.match(/\b([A-Z])/g).join('')
-            //     }
-            
-            // }
-
-
-
 
         </script>
 

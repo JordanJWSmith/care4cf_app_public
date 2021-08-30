@@ -3,6 +3,14 @@ var readData = require('./readData');
 
 module.exports = async function(cookieToken) {
 
+/** 
+* Brief description of the function here.
+* @summary Checks the user's accessToken against the saved tokens for that user
+* @param {string} cookieToken - An accessToken JWT generated from pwaAuth Microsoft login and saved as a cookie
+* @return {object} An object containing a Boolean login status, and if true, the associated userID
+*/
+    
+
     if ((!cookieToken) || (typeof cookieToken !== "string")) {
         console.log('cookieToken not string')
         return {

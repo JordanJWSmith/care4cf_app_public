@@ -1,6 +1,12 @@
 var readData = require('./readData');
 
 module.exports = async function(scheduleDetails) {
+/** 
+* @summary Save a given schedule in the database
+* @param {object} scheduleDetails - An object containing details of the user's routine.
+* @return {object} An object containing results of the database query
+*/
+    
 
     techDict = {};
     adjunctDict = {};

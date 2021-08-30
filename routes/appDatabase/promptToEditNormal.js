@@ -3,6 +3,12 @@ var readData = require('./readData');
 
 
 module.exports = async function(userID) {
+/** 
+* @summary Check a given user's logging history to see if they need prompting to update their normal schedule
+* @param {number} userID - The ID of the current user against which the activities are checked
+* @return {Boolean} True if the given user's previous three activities logged are 'something different', false otherwise
+*/
+    
 
     // valList = []
     today = new Date();

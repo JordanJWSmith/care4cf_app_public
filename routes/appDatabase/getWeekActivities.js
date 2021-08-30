@@ -3,6 +3,15 @@ var readData = require('./readData');
 
 module.exports = async function(userID, offset) {
 
+/** 
+* Brief description of the function here.
+* @summary Get the routine descriptions of activities for a given week
+* @param {number} userID - The current user's ID against which to check activities
+* @param {number} offset - An offset to determine how many weeks in the past to jump (i.e. 0 -> current week, 1 -> one week ago)
+* @return {object} An object containing two objects: An array of dates comprising the given week, and an object containing descriptions of the activities logged within that week
+*/
+    
+
     if ((typeof userID !== 'number') || (typeof offset !== 'number') || arguments.length !== 2) {
         return false;
     } else {
