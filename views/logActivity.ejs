@@ -11,6 +11,7 @@
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <script type="text/javascript" src="/javascripts/checkLocal.js"></script> 
+        <script type="text/javascript" src="/javascripts/getDateList.js"></script> 
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
         
 
@@ -48,6 +49,16 @@
                     </p>
                 </div>
             </div>
+
+
+             <!-- <div id="loggingModal" class="modal"> -->
+
+                <!-- Modal content -->
+                <!-- <div class="modal-content"> -->
+                    <!-- <span class="close">&times;</span> -->
+                    <!-- <p id="modalText">Thanks! <br> We're logging that data.</p> -->
+                <!-- </div> -->
+            <!-- </div>  -->
 
        
             <div id="outer">
@@ -108,7 +119,14 @@
             var update = <%- update %>;
 
             var firstUpdate = false;
-            
+            // console.log('dateList: ', dateList);
+
+            if (!dateList) {
+                var dateList = getDateList();
+            }
+
+            // console.log('dateList: ', dateList);
+
             checkLocal()
             // .then(function() {
                 if (((navigator.onLine) && (update) && (!offsetPage)) || (firstUpdate)) {
@@ -116,17 +134,17 @@
                 window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
                 window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
                 window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
-                window.localStorage.setItem('dateList', JSON.stringify(dateList));
+                // window.localStorage.setItem('dateList', JSON.stringify(dateList));
                 } else {
                     console.log('should retrieve from local');
                     allActivities = JSON.parse(window.localStorage.getItem('allActivities'));
                     if (!offsetPage) {
                         console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
                         routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
-                        dateList = JSON.parse(window.localStorage.getItem('dateList'));
                     }
                 }
 
+            // console.log('using routineDict: ', routineDict);
 
 
             document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";
@@ -294,6 +312,7 @@
             */
                 
                 newToday = new Date();
+                console.log('current date: ', newToday);
                 if (date == newToday.getFullYear()+'-'+(newToday.getMonth()+1)+'-'+newToday.getDate()) {
                     var displayDate = 'Today <br> &nbsp;' ;
                 } else {
@@ -415,6 +434,12 @@
             */
                 updateNormalModal.style.display = "block";
             }
+
+            // function loggingModal() {
+            //     if (navigator.onLine) {
+            //         document.getElementById('loggingModal').style.display = "block";
+            //     }
+            // }
 
         </script>
 

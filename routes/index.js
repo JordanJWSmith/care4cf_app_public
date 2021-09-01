@@ -42,8 +42,8 @@ router.get('/', function(req, res, next) {
         var shouldUpdate = true;
       } else {
         console.log('dataUpdate does not exist. No update needed.');
-        // var shouldUpdate = false;
         var shouldUpdate = false;
+        // var shouldUpdate = true;
       }
 
       req.session.dataUpdate = null;
@@ -142,9 +142,9 @@ router.get('/', function(req, res, next) {
           var blockEnd = Date.now();
           console.log(`non-update logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
 
-          scheduleExists = values[0].scheduleExists;
-          routineTypes = values[1];
-          // dateList = JSON.stringify(values[2].dateList);
+          var scheduleExists = values[0].scheduleExists;
+          var routineTypes = values[1];
+          // var dateList = JSON.stringify(values[2].dateList);
           var dateList = false;
           var allNormals = false;
           var allActivities = false;

@@ -17,7 +17,7 @@ module.exports = async function(userID, offset) {
     } else {
 
         var today = new Date();
-        today.setDate(today.getDate() - (offset * 7))
+        today.setDate(today.getDate() - (offset * 7));
 
         // var start = new Date();
         // start.setDate(start.getDate() - (offset * 7));

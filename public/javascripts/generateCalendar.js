@@ -23,7 +23,7 @@ function generateCalendar(d) {
             // totalDays: monthDays(d.getMonth(), d.getFullYear()),
             totalDays: d.monthDays(),
             weekDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         };
         var start = new Date(d.getFullYear(), d.getMonth()).getDay();
         // console.log(d.getFullYear());
