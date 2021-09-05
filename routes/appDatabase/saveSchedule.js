@@ -32,7 +32,7 @@ module.exports = async function(scheduleDetails) {
                         techDict[i] = {'scheduleID': scheduleID, 'techniqueID': scheduleDetails['subact'+i]}
                     } else {
                         techDict[i] = {'scheduleID': scheduleID, 'techniqueID': scheduleDetails['act'+i]};
-                        techniqueValues = [scheduleID, scheduleDetails['subact'+i]];
+                        // var techniqueValues = [scheduleID, scheduleDetails['subact'+i]];
                     }
                 }
                 if (keys.includes('adjuncts'+i)) {
@@ -55,16 +55,16 @@ module.exports = async function(scheduleDetails) {
         }
     )
     .then(async function(insertResults) {
-        techKeys = Object.keys(techDict);
+        var techKeys = Object.keys(techDict);
         var insertTechniques = "INSERT INTO techniques SET ?";
         for (var i = 0; i < techKeys.length; i++) {
                 await readData(insertTechniques, techDict[i]);
             }
-            adjunctKeys = Object.keys(adjunctDict);
+            var adjunctKeys = Object.keys(adjunctDict);
             var insertAdjuncts = "INSERT INTO adjuncts SET ?";
-            for (var i = 0; i < adjunctKeys.length; i++) {
-                await readData(insertAdjuncts, adjunctDict[i]);
-            }   
+        for (var i = 0; i < adjunctKeys.length; i++) {
+            await readData(insertAdjuncts, adjunctDict[i]);
+        }   
         return insertResults
     })
 

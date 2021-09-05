@@ -15,7 +15,7 @@ router.post('/', async function(req, res) {
   var options = {
     TTL: 0
   };
-  console.log('subscription: ', req.body);
+  // console.log('subscription: ', req.body);
 
   await webPush.sendNotification(subscription, payload, options)
   .then(res.send(req.body))

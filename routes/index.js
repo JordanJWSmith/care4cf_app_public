@@ -29,13 +29,13 @@ router.get('/', function(req, res, next) {
   // console.log('integerCheck:', Number.isInteger(parseInt('5')));
   login(cookieToken).then(function(results) {
     if (!results.logIn) {
-      console.log('user not logged in at index. Redirecting to login...')
+      console.log('user not logged in at index. Redirecting to login...');
       res.redirect('/loginUser');
     } else {
 
       var updateFlag = req.session.dataUpdate;
       var firstUpdateFlag = req.cookies.dataUpdate;
-      console.log('firstUpdateFlag: ', firstUpdateFlag)
+      console.log('firstUpdateFlag: ', firstUpdateFlag);
 
       if ((updateFlag) || (firstUpdateFlag)) {
         console.log('dataUpdate exists, must update');
@@ -135,7 +135,7 @@ router.get('/', function(req, res, next) {
         Promise.all([
           checkForNormal(results.userID),
           getRoutineTypes(),
-          // getWeekActivities(results.userID, 0)
+          getWeekActivities(results.userID, 0)
         ])
         .then((values) => {
           // console.log('non-update vaalues: ', values)
@@ -144,12 +144,12 @@ router.get('/', function(req, res, next) {
 
           var scheduleExists = values[0].scheduleExists;
           var routineTypes = values[1];
-          // var dateList = JSON.stringify(values[2].dateList);
-          var dateList = false;
+          var dateList = JSON.stringify(values[2].dateList);
+          // var dateList = false;
           var allNormals = false;
           var allActivities = false;
-          // routineDict = JSON.stringify(values[2].routineDict);
-          var routineDict = false;
+          var routineDict = JSON.stringify(values[2].routineDict);
+          // var routineDict = false;
 
           if (scheduleExists) { 
 

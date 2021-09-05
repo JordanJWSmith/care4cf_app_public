@@ -100,6 +100,8 @@ webPush.setVapidDetails(
 );
 
 cron.schedule('0 20 * * *', function() {
+  // cron.schedule('* * * * *', function() {
+  
   sendReminder()
   .then(function(results) {
     console.log('sent ', results);
