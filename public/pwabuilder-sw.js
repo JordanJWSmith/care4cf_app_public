@@ -9,7 +9,7 @@ const CACHE = "pwabuilder-precache";
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
 self.addEventListener("message", (event) => {
-    console.log('messageTest');
+    // console.log('messageTest');
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }

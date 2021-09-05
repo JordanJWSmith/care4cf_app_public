@@ -64,7 +64,7 @@
 
                     var expiration_date = new Date();
                     expiration_date.setFullYear(expiration_date.getFullYear() + 1);
-                    console.log("providerData: ", signIn.providerData);
+                    // console.log("providerData: ", signIn.providerData);
                     document.cookie="accessToken=" + token + "; expires=" + expiration_date.toUTCString();
                     document.getElementById("email").innerHTML += "<input type='hidden' name='email' value='" + email + "'>";
                     document.getElementById("token").innerHTML += "<input type='hidden' name='token' value='" + token + "'>";

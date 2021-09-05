@@ -31,8 +31,8 @@ navigator.serviceWorker.ready
         return registration.pushManager.getSubscription()
             .then(async function (subscription) {
                 if (subscription) {
-                    console.log('subscription: ', subscription);
-                    console.log('options: ', subscription.options.applicationServerKey);
+                    // console.log('subscription: ', subscription);
+                    // console.log('options: ', subscription.options.applicationServerKey);
                   
                     if (navigator.onLine) {
                         var subExistResponse = await fetch('/checkSubscriptionAPI', {
