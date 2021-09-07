@@ -82,7 +82,7 @@ describe('#arrangeDescriptions()', function() {
 
     context('with array of real objects', function() {
         it('should return object', async function() {
-            expect(await arrangeDescriptions(testRoutine)).to.be.an('object')
+            expect(await arrangeDescriptions(realRoutine)).to.be.an('object')
         })
       })
     

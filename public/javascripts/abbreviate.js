@@ -1,4 +1,7 @@
 function abbreviate(stringList) {
+
+  // console.log('stringList: ', stringList);
+  
   var abb = "";
   if ((!stringList) || (stringList.length == 0) || (typeof stringList !== "object")) {
     return abb;

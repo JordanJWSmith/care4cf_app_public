@@ -21,45 +21,45 @@ router.get('/', function (req, res, next) {
 
 
 router.post('/verify', function(req, res, next) {
-const userDetails = req.body;
-var email = userDetails.email;
-var token = userDetails.token;
+    const userDetails = req.body;
+    var email = userDetails.email;
+    var token = userDetails.token;
 
-userExistsPriv(email)
-.then(function(results) {
-    // console.log(' userExists results (should be false):',  results)
-    if (!results.logIn) {
-        // User does not exist in private database
-        res.redirect('https://care4cf-register.azurewebsites.net/');
-    } else {
-        // User exists in private database
-        console.log('user exists in private database');
-        var userID = results.userID;
-        userExists(userID)
-        .then(async function(userResults) {
-            if (userResults.logIn) {
-                console.log('user exists in app database');
-                // User exists in app database
-                // updateToken
-                await updateToken(token, userID)
-                // Then redirect to index
-                .then(res.redirect('/'));
-                
-            } else {
-                // User does not exist in app database
-                console.log('user does not exist in app database. Creating new row...');
-                // createUser
-                await newUser(userID)
-                .then(async function() {
+    userExistsPriv(email)
+    .then(function(results) {
+        // console.log(' userExists results (should be false):',  results)
+        if (!results.logIn) {
+            // User does not exist in private database
+            res.redirect('https://care4cf-register.azurewebsites.net/');
+        } else {
+            // User exists in private database
+            console.log('user exists in private database');
+            var userID = results.userID;
+            userExists(userID)
+            .then(async function(userResults) {
+                if (userResults.logIn) {
+                    console.log('user exists in app database');
+                    // User exists in app database
+                    // updateToken
                     await updateToken(token, userID)
-                })
-                .then(res.redirect('/'));
+                    // Then redirect to index
+                    .then(res.redirect('/'));
+                    
+                } else {
+                    // User does not exist in app database
+                    console.log('user does not exist in app database. Creating new row...');
+                    // createUser
+                    await newUser(userID)
+                    .then(async function() {
+                        await updateToken(token, userID)
+                    })
+                    .then(res.redirect('/'));
 
-                // Then redirect to index
-            }
-        })
+                    // Then redirect to index
+                }
+            })
 
-    }
+        }
 
 
     // if (results.logIn) {
@@ -71,7 +71,7 @@ userExistsPriv(email)
     // var fName = name.split(",")[1].trim();
     // res.render('users', {title: 'Welcome', email: email, lName: lName, fName: fName, token: token});
     // }
-})
+    })
 // userExists().then()if userExists, updateToken and redirect to index.
 // if userNotExists, redirect to /new
 

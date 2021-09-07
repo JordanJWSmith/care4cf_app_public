@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --timeout 10000"
+    "test": "nyc mocha --timeout 10000"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
@@ -27,6 +27,7 @@
     "mysql": "^2.18.1",
     "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
+    "nyc": "^15.1.0",
     "pushpad": "^0.9.0",
     "serve-favicon": "^2.5.0",
     "set-cookie-parser": "^2.4.8",

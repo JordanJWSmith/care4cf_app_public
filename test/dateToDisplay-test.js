@@ -5,13 +5,19 @@ describe('#dateToDisplay()', function() {
 
     context('without arguments', function() {
         it('should return false', function() {
-            expect(dateToDisplay()).to.equal(false)
+            expect(dateToDisplay()).to.be.false
         })
     })
 
     context('with non-string', function() {
         it('should return false', function() {
-            expect(dateToDisplay(1)).to.equal(false)
+            expect(dateToDisplay(1)).to.be.false
+        })
+    })
+
+    context('with non-date string', function() {
+        it('should return formatted date', function() {
+            expect(dateToDisplay('test')).to.be.false
         })
     })
 

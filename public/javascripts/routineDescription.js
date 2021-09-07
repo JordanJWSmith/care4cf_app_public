@@ -7,7 +7,7 @@ function routineDescription(description, element) {
     table.setAttribute("id", "routineTable");
     // document.getElementById('routineDescription').appendChild(table);
     document.getElementById(element).innerHTML += "<p>" + description['title'] + '<p>';
-    console.log('description: ', description)
+    // console.log('description: ', description)
     document.getElementById(element).appendChild(table);
 
     var keys = Object.keys(description);

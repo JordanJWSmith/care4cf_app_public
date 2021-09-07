@@ -265,7 +265,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/scheduleData', async function(req, res, next) {
   const scheduleDetails = req.body;
-  console.log('scheduleDetails: ', scheduleDetails);
+  // console.log('scheduleDetails: ', scheduleDetails);
 
   req.session.chosenDate = null;
   req.session.activityType = null;

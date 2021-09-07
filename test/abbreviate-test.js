@@ -39,12 +39,4 @@ describe('#abbreviate()', function() {
     })
   })
   
-//   context('with non-number arguments', function() {
-//     it('should throw error', function() {
-//       expect(function() {
-//         sum(1, 2, '3', [4], 5)
-//       }).to.throw(TypeError, 'sum() expects only numbers.')
-//     })
-//   })
-  
 })

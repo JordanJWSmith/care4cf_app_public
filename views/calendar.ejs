@@ -241,7 +241,7 @@
 
             /** 
             * @summary Change the user's stored gamification settings, reflect this in the display
-            * @param {number} set - The user's current gamification settings
+            * @param {number} set - A Booleaan number denoting the user's current gamification settings
             */
                 
                 if (!(navigator.onLine)) {
@@ -263,6 +263,9 @@
             }
 
             var firstDate = new Date((Object.keys(activities)[0]).replace(/-/g, "/"));
+            // console.log('firstDate', firstDate, typeof firstDate);
+            // console.log('currentDate', currentDate, typeof currentDate);
+            // console.log('object type: ', Object.prototype.toString.call(firstDate));
             var dateDiff = dateDifference(firstDate, currentDate);
 
             document.getElementById('progressBar').innerHTML = "<p style='margin: 1vh'>You are on day " + dateDiff + " of 365</p>";            

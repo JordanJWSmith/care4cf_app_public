@@ -25,17 +25,14 @@ module.exports = async function(userID) {
         var routineDict = {};
 
         for (x=0; x<activities.length; x++) {
-            var scheduleID = activities[x].scheduleID;
+            // var scheduleID = activities[x].scheduleID;
             var date = activities[x].date;
-            dateString = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate());
-            // console.log('schedID and date: ', scheduleID, dateString);
+            var dateString = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate());
 
             await getRoutine(userID, dateString)
             .then(function(routineResult) {
-                // console.log('getAllActivities routineResults: ', routineResult);
                 routineDict[dateString] = routineResult;
             })
-            // console.log('  ');
 
         }
 

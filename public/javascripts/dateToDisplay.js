@@ -1,7 +1,9 @@
 function dateToString(date) {
-    if (typeof date !== "string") {
+    if ((typeof date !== "string") || (!(Date.parse(date)))) {
         return false
     }
+
+    console.log('date parse: ', Date.parse(date));
     
     convDate = new Date(date.replace(/-/g, "/"));
     console.log('convDate: ', convDate);

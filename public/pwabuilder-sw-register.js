@@ -70,6 +70,8 @@ navigator.serviceWorker.ready
                     return subscription;
                 }
 
+                // no subscription registered - register it
+
                 const response = await fetch('./vapidPublicKey');
                 const vapidPublicKey = await response.text();      
                 

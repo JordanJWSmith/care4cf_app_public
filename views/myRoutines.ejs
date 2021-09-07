@@ -146,6 +146,8 @@
 
                     var techDesc = JSON.parse(routines[schedID]['techniques']);
 
+                    // console.log('techDesc: ', techDesc);
+
                     var shortName = abbreviate(techDesc);
 
                     document.getElementById('routineSection').innerHTML += '<button type="button" id="routineTitle'+i+'"  class="collapsible" style="text-align:left; "> '+ shortName +' <span style="float:right; margin-right: 10%; margin-bottom: 10%">' + normalFlag + '</span></button>';
