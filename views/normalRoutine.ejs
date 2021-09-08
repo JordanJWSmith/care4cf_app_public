@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="User's normal routine">
+        <meta name="theme-color" content="#2FB9CA"/>
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap'&display=swap rel='stylesheet'>
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
+        <link rel="apple-touch-icon" href="/images/icon512.png">
            
     </head>
     <body>
@@ -16,7 +19,7 @@
         <div class="container">
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
-                <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
+                <img id="hamburgerButton" alt="options" src="./images/hamburgerDots.png" height="100%">
             </a>
 
             <h1 style="margin-top: 9vh"><%= title %></h1>
@@ -26,7 +29,7 @@
             </div>
 
             <button class="navButton" style="margin: auto; margin-top: 5vh;" onclick='window.location="/myRoutines"'>
-                <img id="myRoutinesButton" src="./images/myRoutinesIcon.png" style="height:4vh">
+                <img id="myRoutinesButton" alt="my routines" src="./images/myRoutinesIcon.png" style="height:4vh">
             </button>
 
             <div id="myModal" class="modal">
@@ -40,14 +43,14 @@
 
             <div id="navButtonContainer">
                     <button class="navButtonDisabled" style="margin-right: 5vw; border: #2FB9CA; border-width: thick; border-style: solid;">
-                        <img id="normalRoutineButton" src="./images/Sample_User_Icon.png" style="height:4vh">
+                        <img id="normalRoutineButton" alt="my normal routine" src="./images/Sample_User_Icon.png" style="height:4vh">
                     </button>
                 
                     <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/"'>
-                        <img id="mainButton" src="./images/circleIcon.png" style="height:5vh">
+                        <img id="mainButton" alt="main page" src="./images/circleIcon.png" style="height:5vh">
                     </button>
                     <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'>
-                        <img id="calendarButton" src="./images/Calendar_Icon.png" style="height:4vh">
+                        <img id="calendarButton" alt="my history" src="./images/Calendar_Icon.png" style="height:4vh">
                     </button>
                 
             </div>
@@ -79,20 +82,20 @@
                 table.setAttribute("id", "routineTable");
                 document.getElementById('routineDescription').appendChild(table);
 
-                document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/techniquesIcon.png' style='max-height: 6vh;'><td><td><div id='techniques'></div></td></tr>";
+                document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/techniquesIcon.png' alt='techniques' style='max-height: 6vh;'><td><td><div id='techniques'></div></td></tr>";
 
                 for (i=0; i<techniques.length; i++) {
                     document.getElementById("techniques").innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + techniques[i] + '</dd>';
                 }
 
-                document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/durationIcon.png' style='max-height: 6vh;'><td><td><div id='duration'></div></td></tr>";
+                document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/durationIcon.png' alt='duration' style='max-height: 6vh;'><td><td><div id='duration'></div></td></tr>";
                 document.getElementById("duration").innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + duration + '</dd>';
 
-                document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/frequencyIcon.png' style='max-height: 6vh;'><td><td><div id='frequency'></div></td></tr>";
+                document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/frequencyIcon.png' alt='frequency' style='max-height: 6vh;'><td><td><div id='frequency'></div></td></tr>";
                 document.getElementById("frequency").innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + frequency + '</dd>';
 
                 if (adjuncts) {
-                    document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/adjunctsIcon.png' style='max-height: 6vh;'><td><td><div id='adjuncts'></div></td></tr>";
+                    document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/adjunctsIcon.png' alt='adjuncts' style='max-height: 6vh;'><td><td><div id='adjuncts'></div></td></tr>";
                     for (i=0; i<adjuncts.length; i++) {
                         document.getElementById("adjuncts").innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + adjuncts[i][0] + ' ('+ adjuncts[i][1] +')</dd>';
 

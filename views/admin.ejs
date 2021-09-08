@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Admin page">
+        <meta name="theme-color" content="#2FB9CA"/>
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
@@ -10,15 +12,16 @@
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <!-- <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script>  -->
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
+        <link rel="apple-touch-icon" href="/images/icon512.png">
     </head>
     <body>
         <div class="container">
 
-            <img src="./images/backArrowIcon.png" onclick="window.location = '/'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+            <img src="./images/backArrowIcon.png" alt="back" onclick="window.location = '/'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
-                <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
+                <img id="hamburgerButton" alt="options" src="./images/hamburgerDots.png" height="100%">
             </a>
 
             <div id="myModal" class="modal">

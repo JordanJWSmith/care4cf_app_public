@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Save a new schedule">
+        <meta name="theme-color" content="#2FB9CA"/>
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
+        <link rel="apple-touch-icon" href="/images/icon512.png">
     </head>
     <body>
         <div class="container" style="display: table;">
 
-            <img id="backArrowButton"  onclick="window.history.back()"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+            <img id="backArrowButton" alt="back" onclick="window.history.back()"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
 
             <h1 style="margin-top: 9vh"><%= title %></h1>
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
-                <img id="hamburgerButton"  height="100%">
+                <img id="hamburgerButton" alt="options"  height="100%">
             </a>
 
             <a style="position:absolute; height: 3vh; right: 10vw; top:2vh; cursor:pointer" onclick="openHelpModal()">
@@ -123,7 +126,7 @@
                     <br><br>
 
                     <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit">
-                        <img id="tickButton" style="height:4vh">
+                        <img id="tickButton" alt="confirm" style="height:4vh">
                     </button>
                 </form>
             </div>  

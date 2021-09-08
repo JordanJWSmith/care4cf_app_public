@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Logging page">
+        <meta name="theme-color" content="#2FB9CA"/>
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
@@ -12,7 +15,10 @@
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <script type="text/javascript" src="/javascripts/checkLocal.js"></script> 
         <script type="text/javascript" src="/javascripts/getDateList.js"></script> 
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
+        <link rel="canonical" href="https://care4cf.azurewebsites.net/"/>
+        <link rel="apple-touch-icon" href="/images/icon512.png">
+
         
 
     </head>
@@ -20,7 +26,7 @@
         <div class="container">
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
-                <img id="hamburgerButton" height="100%">
+                <img id="hamburgerButton" alt="options" height="100%">
             </a>
 
             <div id="myModal" class="modal">
@@ -44,7 +50,7 @@
                         Update your normal routine?
                         <br><br>
                         <button class="navButton" margin="auto" onclick='window.location="/normalRoutine"'>
-                            <img id="normalRoutineButtonPrompt" height="100%">
+                            <img id="normalRoutineButtonPrompt" alt="my normal routine" height="100%">
                         </button>
                     </p>
                 </div>
@@ -85,13 +91,13 @@
 
             <div id="navButtonContainer">
                     <button class="navButton" style="margin-right: 5vw" onclick='window.location="/normalRoutine"'>
-                        <img id="normalRoutineButton" style="height:4vh">
+                        <img id="normalRoutineButton" alt="my normal routine" style="height:4vh">
                     </button>
                     <button id="mainNavButton" class="navButtonDisabled" style="margin: auto; height: 13vh; width: 13vh; border: #2FB9CA;border-width: thick;border-style: solid;">
-                        <img id="mainButton" style="height:5vh">
+                        <img id="mainButton" alt="main page" style="height:5vh">
                     </button>
                     <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'>
-                        <img id="calendarButton" style="height:4vh">
+                        <img id="calendarButton" alt="my history" style="height:4vh">
                     </button>
                 
             </div>
@@ -217,8 +223,10 @@
                         document.getElementById('mainSection').style['margin-top'] = "";
                         document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity" onsubmit="return isOnline()" ></form>';
                         document.getElementById('activityForm').innerHTML += '<div id="buttons"></div>';
-                        document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
-                        document.getElementById('activityForm').innerHTML += '<a id="user"></a>';
+                        // document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
+                        // document.getElementById('activityForm').innerHTML += '<a id="user"></a>';
+                        document.getElementById('activityForm').innerHTML += '<div id="chosenDate"></div>';
+                        document.getElementById('activityForm').innerHTML += '<div id="user"></div>';
                         document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                         populateButtons();
                         populateForm();

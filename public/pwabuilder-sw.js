@@ -168,6 +168,14 @@ workbox.routing.registerRoute(
   })
 );
 
+workbox.routing.registerRoute(
+  new RegExp('/jquery/jquery-3.6.0.min.js'),
+  // new workbox.strategies.StaleWhileRevalidate({
+    new workbox.strategies.CacheFirst({
+    cacheName: CACHE
+  })
+);
+
 // self.addEventListener("fetch", (event) => {
 //     console.log('e vent: ', event);
 // })
@@ -177,6 +185,11 @@ const offlineFallbackPage = "offline.html";
 const routineDescription = "javascripts/routineDescription.js";
 const getCook = "javascripts/getCook.js";
 const dateToDisplay = "javascripts/dateToDisplay.js";
+const abbreviate = "javascripts/abbreviate.js";
+const checkLocal = "javascripts/checkLocal.js";
+const generateCalendar = "javascripts/generateCalendar.js";
+const getDateList = "javascripts/getDateList.js";
+const jquery = "jquery/jquery-3.6.0.min.js";
 
 
 self.addEventListener('install', async (event) => {
@@ -187,6 +200,11 @@ self.addEventListener('install', async (event) => {
       cache.add(routineDescription);
       cache.add(getCook);
       cache.add(dateToDisplay);
+      cache.add(abbreviate);
+      cache.add(checkLocal);
+      cache.add(generateCalendar);
+      cache.add(getDateList);
+      cache.add(jquery);
     })
       // .then((cache) => cache.add(offlineFallbackPage))
       // .then((cache) => cache.add(routineDescription))

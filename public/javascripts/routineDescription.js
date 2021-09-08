@@ -16,7 +16,7 @@ function routineDescription(description, element) {
         title = keys[i];
 
         if ((title !== 'title') && (description[title])) {
-            document.getElementById('routineTable').innerHTML += '<tr><td><img src="./images/'+title+'Icon.png" style="max-height: 6vh;"></td><td><div id="'+ title +'"></div></td></tr>';
+            document.getElementById('routineTable').innerHTML += '<tr><td><img src="./images/'+title+'Icon.png" alt="'+title+'" style="max-height: 6vh;"></td><td><div id="'+ title +'"></div></td></tr>';
             // document.getElementById('routineDescription').innerHTML += '<div id="' + title + 'routineContainer"></div>'
             document.getElementById(element).innerHTML += '<div id="' + title + 'routineContainer"></div>'
 

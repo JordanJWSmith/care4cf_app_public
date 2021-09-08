@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="My routines">
+        <meta name="theme-color" content="#2FB9CA"/>
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/abbreviate.js"></script> 
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
+        <link rel="apple-touch-icon" href="/images/icon512.png">
     </head>
 
     <style>
@@ -42,14 +45,14 @@
         <div class="container" style="display: table;">
             <div>
                 <% if (!somethingDifferent) { %>
-                    <img src="./images/backArrowIcon.png" onclick="window.location='/normalRoutine'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+                    <img src="./images/backArrowIcon.png" alt="back" onclick="window.location='/normalRoutine'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
                 <% } else { %>
-                    <img src="./images/backArrowIcon.png" onclick="window.location='/'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
+                    <img src="./images/backArrowIcon.png" alt="back" onclick="window.location='/'"  style="position: absolute; height: 4vh; top: 2vh; left: 2vw; cursor: pointer">
                 <% } %>
                 </div>
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openModal()">
-                <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
+                <img id="hamburgerButton" alt="options" src="./images/hamburgerDots.png" height="100%">
             </a>
 
            
@@ -73,7 +76,7 @@
 
             <% if (!somethingDifferent) { %>
                     <button class="navButton" style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;" onclick='window.location="/newSchedule"'>
-                        <img id="myRoutinesButton" src="./images/plusIcon.png" style="height:4vh">
+                        <img id="myRoutinesButton" alt="my routines" src="./images/plusIcon.png" style="height:4vh">
                     </button>
                 
                 <% } else { %>
@@ -141,7 +144,7 @@
                     var schedID = keys[i];
                     var normalFlag = "";
                     if (schedID == normalSched) {
-                        normalFlag = "<img src='./images/tickIcon.png' style='height:4vh; position: absolute'>";
+                        normalFlag = "<img src='./images/tickIcon.png' alt='confirm' style='height:4vh; position: absolute'>";
                     }
 
                     var techDesc = JSON.parse(routines[schedID]['techniques']);

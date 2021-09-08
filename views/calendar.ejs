@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="User history">
+        <meta name="theme-color" content="#2FB9CA"/>
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
         <!-- <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script>  -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
-        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
         <script type="text/javascript" src="/javascripts/routineDescription.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/dateDifference.js"></script> 
         <script type="text/javascript" src="/javascripts/generateCalendar.js"></script>
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
+        <script src="./jquery/jquery-3.6.0.min.js"></script>
+        <link rel="apple-touch-icon" href="/images/icon512.png">
+        
+        
     </head>
    
     
@@ -25,7 +31,7 @@
         <div class="container" style="display: table;">
 
             <a style="position:absolute; height: 3vh; right: 2vw; top:2vh; cursor:pointer" onclick="openMenuModal()">
-                <img id="hamburgerButton" src="./images/hamburgerDots.png" height="100%">
+                <img id="hamburgerButton" alt="options" src="./images/hamburgerDots.png" height="100%">
             </a>
 
             <div id="menuModal" class="modal">
@@ -66,9 +72,12 @@
                             <span>&nbsp;</span>
 
                             </div>
-                        <button class="dayButton" style="position: absolute; right: 5%; top: 3%; font-size: 16pt;" id="right" href="#">
- 
-                        </button>
+                            <div id="rightDayButtonContainer">
+                                <button class="dayButton" style="position: absolute; right: 5%; top: 3%; font-size: 16pt; display: none" id="right" href="#">
+                                    <i> &#8594; </i>
+                                </button>
+                            </div>
+                        
                     </div>
                 <div class="row" >
                     <div class="col-sm-10 col-sm-offset-1">
@@ -93,13 +102,13 @@
             <div id="streaks">
                 <div class="streakRecord" style="margin-right:2vw">
                     <div style="margin-top: -2vh">
-                        <img src="./images/streakIcon.png" style="height: 4vh">
+                        <img src="./images/streakIcon.png" alt="logging streak" style="height: 4vh">
                     </div>
                     <div style="letter-spacing: 0; font-size:3vh"><%= currentStreak %></div>
                 </div>
                 <div class="streakRecord" style="margin-left:2vw">
                     <div style="margin-top: -2vh">
-                        <img src="./images/recordIcon.png" style="height: 4vh">
+                        <img src="./images/recordIcon.png" alt="logging record" style="height: 4vh">
                     </div>
                     <div style="letter-spacing: 0; font-size:3vh"><%= longestStreak %></div>
                     
@@ -109,13 +118,13 @@
 
             <div id="navButtonContainer">
                     <button class="navButton" style="margin-right: 5vw;" onclick='window.location="/normalRoutine"'>
-                        <img id="normalRoutineButton" src="./images/Sample_User_Icon.png" style="height:4vh">
+                        <img id="normalRoutineButton" alt="my normal routine" src="./images/Sample_User_Icon.png" style="height:4vh">
                     </button>
                     <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/"'>
-                        <img id="mainButton" src="./images/circleIcon.png" style="height:5vh">
+                        <img id="mainButton" alt="main page" src="./images/circleIcon.png" style="height:5vh">
                     </button>
                     <button class="navButtonDisabled" style="margin-left: 5vw; border: #2FB9CA; border-width: thick; border-style: solid;">
-                        <img id="calendarButton" src="./images/Calendar_Icon.png" style="height:4vh">
+                        <img id="calendarButton" alt="my history" src="./images/Calendar_Icon.png" style="height:4vh">
                     </button>
                 
             </div>
@@ -138,10 +147,13 @@
 
             var currentDate = new Date();
 
+           
+
             $('#left').click(function() {
                 $('table').text('');
                 // $('table').html('<tr></tr>');
                 actualDate = new Date();
+                document.getElementById('right').style.display = "block";
                 document.getElementById('right').innerHTML = "<i> &#8594; </i>";
                     if (currentDate.getMonth() === 0) {
                         currentDate = new Date(currentDate.getFullYear() - 1, 11);
@@ -157,14 +169,17 @@
                     if (currentDate.getMonth() === 11) {
                         currentDate = new Date(currentDate.getFullYear() + 1, 0); 
                         if ((currentDate.getMonth() == actualDate.getMonth()) && (currentDate.getFullYear() == actualDate.getFullYear())) {
-                            document.getElementById('right').innerHTML = "";
-                            document.getElementById('right').disabled = "true";
+                            document.getElementById('right').style.display = 'none';
+                            // console.log('remove right button');
+                            // document.getElementById('right').innerHTML = "";
+                            // document.getElementById('right').disabled = "true";
                         } 
                         generateCalendar(currentDate);
                     } else {
                         currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
                         if ((currentDate.getMonth() == actualDate.getMonth()) && (currentDate.getFullYear() == actualDate.getFullYear())) {
-                            document.getElementById('right').innerHTML = "";
+                            // document.getElementById('right').innerHTML = "";
+                            document.getElementById('right').style.display = 'none';
                         } 
                         generateCalendar(currentDate);
                     }

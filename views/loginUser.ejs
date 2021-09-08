@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Sign in">
+        <meta name="theme-color" content="#2FB9CA"/>
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script> 
         <script type="module" src="/pwabuilder-sw-register.js"></script>
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
+        <link rel="apple-touch-icon" href="/images/icon512.png">
     </head>
     <body>
         <div class="container">
 
             <div id="banner">
-                <div id="logo">
-                    <img style="height: 100%; opacity: 0.5" src="./images/uclLogo.svg">
+                <div id="uclLogo" class="logo">
+                    <img style="height: 100%; opacity: 0.5" src="./images/uclLogo.svg" alt="ucl logo">
                 </div>
-                <div id="logo">
-                    <img style="height: 100%" src="./images/msLogo.png">
+                <div id="msLogo" class="logo">
+                    <img style="height: 100%" src="./images/msLogo.png" alt="microsoft logo">
                 </div>
-                <div id="logo">
-                    <img style="height: 100%; opacity: 0.5" src="./images/uclGOSLogo.png">
+                <div id="uclGOSLogo" class="logo">
+                    <img style="height: 100%; opacity: 0.5" src="./images/uclGOSLogo.png" alt="ucl great ormond street logo">
                 </div>
                 
             </div>
