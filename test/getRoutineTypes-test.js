@@ -2,7 +2,7 @@ var getRoutineTypes = require('../routes/appDatabase/getRoutineTypes.js');
 var expect = require('chai').expect;
 
 describe('#getRoutineTypes()', function() {
-    var args = Array.prototype.slice.call(arguments);
+    // var args = Array.prototype.slice.call(arguments);
 
 
     context('with no arguments', function() {

@@ -10,7 +10,7 @@ module.exports = async function(userID) {
     
 
     if (typeof userID !== 'number')  {
-        console.log('incorrect userID');
+        // console.log('incorrect userID');
         return false;
     } else {
 

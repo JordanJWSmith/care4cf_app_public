@@ -6,7 +6,7 @@ describe('#userExistsPriv()', function() {
     var args = Array.prototype.slice.call(arguments);
 
     context('with non-number arguments', function() {
-        it('should return error', async function() {
+        it('should return false', async function() {
             expect(
                 await login('test')
                 .then(
@@ -18,7 +18,7 @@ describe('#userExistsPriv()', function() {
         })
     })
 
-    context('with non-existent email', function() {
+    context('with non-existent userID', function() {
         it('should return false', async function() {
             expect(
                 await login(123).then(

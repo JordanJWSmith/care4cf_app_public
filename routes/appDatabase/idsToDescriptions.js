@@ -11,7 +11,7 @@ module.exports = async function(routineResults) {
     
 
     if ((typeof routineResults !== "object") || (Object.keys(routineResults).length < 1)) {
-        console.log('idsToDescriptions not an object')
+        // console.log('idsToDescriptions not an object')
         return false
     }
 

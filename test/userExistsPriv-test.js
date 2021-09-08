@@ -6,7 +6,7 @@ describe('#userExistsPriv()', function() {
     var args = Array.prototype.slice.call(arguments);
 
     context('with non-string arguments', function() {
-        it('should return error', async function() {
+        it('should return false', async function() {
             expect(
                 await login(1)
                 .then(

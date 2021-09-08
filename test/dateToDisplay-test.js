@@ -16,7 +16,7 @@ describe('#dateToDisplay()', function() {
     })
 
     context('with non-date string', function() {
-        it('should return formatted date', function() {
+        it('should return false', function() {
             expect(dateToDisplay('test')).to.be.false
         })
     })

@@ -30,7 +30,7 @@ module.exports = async function(userID) {
 
             return (results.length > 0) 
         } else {
-            console.log('email does not exist')
+            // console.log('email does not exist')
             return false
         }
         

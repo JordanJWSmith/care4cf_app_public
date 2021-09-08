@@ -2,7 +2,7 @@ var getWeekActivities = require('../routes/appDatabase/getWeekActivities.js');
 var expect = require('chai').expect;
 
 describe('#getWeekActivities()', function() {
-    var args = Array.prototype.slice.call(arguments);
+    // var args = Array.prototype.slice.call(arguments);
 
     context('with non-num userID', function() {
         it('should return false', async function() {

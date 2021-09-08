@@ -38,7 +38,7 @@ describe('#idsToDescriptions()', function() {
     })
 
     context('with valid object', function() {
-        it('should return object', async function() {
+        it('should return array', async function() {
             expect(await idsToDescriptions(testRoutine).then((results) => {
                 return results
             })).to.be.an("array");

@@ -12,7 +12,7 @@ module.exports = async function(cookieToken) {
     
 
     if ((!cookieToken) || (typeof cookieToken !== "string")) {
-        console.log('cookieToken not string')
+        // console.log('cookieToken not string')
         return {
             logIn: false
         }
@@ -43,8 +43,8 @@ module.exports = async function(cookieToken) {
                 userID: results[0].userID
             }
         } else {
-            console.log('results not 1');
-            console.log('loginResult: ', results);
+            // console.log('results not 1');
+            // console.log('loginResult: ', results);
             return {
                 logIn: false
             }

@@ -25,11 +25,11 @@ module.exports = async function(userID, date) {
         if (dateResults) {
             // console.log('dateResults: ', dateResults);
             var routineType = dateResults[0].routineType;
-            console.log('routineType: ', routineType);
+            // console.log('routineType: ', routineType);
 
             // CHANGE TO 3?
             if (routineType < 3) {
-                console.log('getRoutine: normal or different');
+                // console.log('getRoutine: normal or different');
                     var getIDs =  `
                         SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = (
                             SELECT scheduleID FROM activities WHERE userID = ? AND date = ?
@@ -79,7 +79,7 @@ module.exports = async function(userID, date) {
                     return descriptionResults;
 
             } else {
-                console.log('getRoutine: no activities');
+                // console.log('getRoutine: no activities');
                 var resDict = {}
                 var activityID = dateResults[0].activityID;
                 var getReason = `
