@@ -25,11 +25,11 @@ describe('#getAllActivities()', function() {
       })
     })
 
-    context('with user number', function() {
-        it('should return object', async function() {
-            expect(await getAllActivities(160).then((values => {
-              return values
-            }))).to.be.an("object")
-        })
-      })
+    // context('with user number', function() {
+    //     it('should return object', async function() {
+    //         expect(await getAllActivities(160).then((values => {
+    //           return values
+    //         }))).to.be.an("object")
+    //     })
+    //   })
   })
