@@ -4,8 +4,8 @@
     "short_name": "CARE4CF",
     "description": "CARE4CF Activity Tracker",
     "start_url": "/",
-    "background_color": "#2FB9CA",
-    "theme_color": "#2FB9CA",        
+    "background_color": "#DEE3EE",
+    "theme_color": "#DEE3EE",        
     "orientation": "any",
     "display": "standalone",
     "icons": [
