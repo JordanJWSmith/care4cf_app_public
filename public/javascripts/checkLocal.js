@@ -5,7 +5,7 @@ function checkLocal() {
     || (!(window.localStorage.getItem('dateList'))))) {
         var firstUpdate = true;
         console.log('firstUpdate');
-        document.cookie = "dataUpdate=true";
+        document.cookie = "dataUpdate=true;";
         document.getElementById('mainSection').innerHTML = 'Please wait...'
         // window.sessionStorage.setItem('dataUpdate', 'true');
         window.location = "/";
