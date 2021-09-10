@@ -66,7 +66,8 @@ workbox.routing.registerRoute(
   // new RegExp('/calendar'),
   '/calendar',
   new workbox.strategies.NetworkFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
 
@@ -74,7 +75,8 @@ workbox.routing.registerRoute(
   // new RegExp('/'),
   '/',
   new workbox.strategies.NetworkFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
 
@@ -82,7 +84,8 @@ workbox.routing.registerRoute(
   // new RegExp('/loginTest'),
   '/loginTest',
   new workbox.strategies.NetworkFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
 
@@ -90,7 +93,8 @@ workbox.routing.registerRoute(
   // new RegExp('/loginUser'),
   '/loginUser',
   new workbox.strategies.NetworkFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
 
@@ -98,7 +102,8 @@ workbox.routing.registerRoute(
   // new RegExp('/myRoutines'),
   '/myRoutines',
   new workbox.strategies.NetworkFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
 
@@ -106,7 +111,8 @@ workbox.routing.registerRoute(
   // new RegExp('/newSchedule'),
   '/newSchedule',
   new workbox.strategies.StaleWhileRevalidate({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
 
@@ -114,7 +120,8 @@ workbox.routing.registerRoute(
   // new RegExp('/normalRoutine'),
   '/normalRoutine',
   new workbox.strategies.NetworkFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
  
@@ -122,7 +129,8 @@ workbox.routing.registerRoute(
   // new RegExp('/somethingDifferent'),
   '/somethingDifferent',
   new workbox.strategies.NetworkFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
+    networkTimeoutSeconds: 8
   })
 );
 
@@ -132,7 +140,7 @@ workbox.routing.registerRoute(
   new RegExp('/images/*'),
   // new workbox.strategies.StaleWhileRevalidate({
     new workbox.strategies.CacheFirst({
-    cacheName: CACHE
+    cacheName: CACHE,
   })
 );
 
