@@ -320,8 +320,10 @@
             * @return {string} The long-formatted date
             */
                 
-                newToday = new Date();
-                console.log('current date: ', newToday);
+                var newToday = new Date();
+                // console.log('current date: ', newToday);
+                // console.log('date: ', date);
+                // console.log('year: ', newToday.getFullYear())
                 if (date == newToday.getFullYear()+'-'+(newToday.getMonth()+1)+'-'+newToday.getDate()) {
                     var displayDate = 'Today <br> &nbsp;' ;
                 } else {

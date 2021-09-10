@@ -1,11 +1,12 @@
 function dateToString(date) {
-    if ((typeof date !== "string") || (!(Date.parse(date)))) {
+    if ((typeof date !== "string") || (!(Date.parse(date.replace(/-/g, "/"))))) {
+        console.log('error in date', date, typeof date)
         return false
     }
 
-    console.log('date parse: ', Date.parse(date));
+    console.log('date parse: ', Date.parse(date.replace(/-/g, "/")));
     
-    convDate = new Date(date.replace(/-/g, "/"));
+    var convDate = new Date(date.replace(/-/g, "/"));
     console.log('convDate: ', convDate);
     var weekDays = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

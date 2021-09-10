@@ -22,14 +22,20 @@ const el = document.createElement('pwa-update');
 document.body.appendChild(el);
 
 
+
 // Ask the user for permission to send push notifications.
 
 navigator.serviceWorker.ready
     .then(function (registration) {
+        console.log('registration: ', registration)
 
         // Check if the user has an existing subscription
-        return registration.pushManager.getSubscription()
+        
+        
+            
+            return registration.pushManager.getSubscription()
             .then(async function (subscription) {
+                
                 if (subscription) {
                     // console.log('subscription: ', subscription);
                     // console.log('options: ', subscription.options.applicationServerKey);
@@ -82,6 +88,7 @@ navigator.serviceWorker.ready
             })
             
     })
+    .catch(err => console.log('notification registration error: ', err));
 
     
 

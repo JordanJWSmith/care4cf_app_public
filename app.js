@@ -99,8 +99,8 @@ webPush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY
 );
 
-// cron.schedule('0 20 * * *', function() {
-  cron.schedule('0 * * * *', function() {
+cron.schedule('0 20 * * *', function() {
+  // cron.schedule('0 * * * *', function() {
   
   sendReminder()
   .then(function(results) {
