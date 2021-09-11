@@ -1,4 +1,3 @@
-/* sum.js */
 
 module.exports = function() {
 
@@ -15,3 +14,4 @@ module.exports = function() {
       return a + b
     }, 0);
 }  
+
