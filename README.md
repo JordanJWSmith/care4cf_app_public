@@ -1,8 +1,10 @@
-# care4cf_ejs
+# CARE4CF Daily Logging App. 
 
 This repository contains source code for the CARE4CF Daily Logging App. It is currently hosted [here](https://care4cf.azurewebsites.net/). 
 
 Sign in with your Microsoft credentials. If you have not already registered for the CARE4CF trial you will be redirected to the [registration site](https://care4cf-register.azurewebsites.net/).
+
+This app is a progressive web app. Feel free to install it to your device's home screen to use locally, or to use it via a browser. 
 
 Once logged in and registered, you will be asked to save your first airway clearance routine. Fill out the details and submit. 
 
