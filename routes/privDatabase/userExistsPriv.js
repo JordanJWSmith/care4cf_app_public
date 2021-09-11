@@ -15,13 +15,9 @@ module.exports = async function(email) {
         }          
     } else {
 
-        // var checkLogin = 'SELECT * FROM users WHERE email = "' + email + '"';
         var checkLogin =  "SELECT userID FROM users WHERE email = ?";
         var data = [email];
         var results = await readPrivData(checkLogin, data);
-        
-        // console.log('userExistsPriv results:', results);
-        // console.log('userExists check: ', results.length > 0);
 
         if (results.length > 0) {
             return { 

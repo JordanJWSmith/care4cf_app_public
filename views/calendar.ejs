@@ -8,10 +8,6 @@
         <link rel='stylesheet' href='/stylesheets/style.css' />
         <link rel="manifest" href="/manifest.json">
         <script type="module" src="/pwabuilder-sw-register.js"></script>
-        <!-- <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth@latest/dist/pwa-auth.min.js"></script>  -->
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-        <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
-        <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
         <script type="text/javascript" src="/javascripts/routineDescription.js"></script> 
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
@@ -51,7 +47,6 @@
 
                 <!-- Modal content -->
                 <div class="modal-content">
-                    <!-- <span class="close">&times;</span> -->
                     <p id="modalText">Please Wait...</p>
                 </div>
             </div>
@@ -162,7 +157,6 @@
 
             $('#left').click(function() {
                 $('table').text('');
-                // $('table').html('<tr></tr>');
                 actualDate = new Date();
                 document.getElementById('right').style.display = "block";
                 document.getElementById('right').innerHTML = "<i> &#8594; </i>";
@@ -181,15 +175,12 @@
                         currentDate = new Date(currentDate.getFullYear() + 1, 0); 
                         if ((currentDate.getMonth() == actualDate.getMonth()) && (currentDate.getFullYear() == actualDate.getFullYear())) {
                             document.getElementById('right').style.display = 'none';
-                            // console.log('remove right button');
-                            // document.getElementById('right').innerHTML = "";
-                            // document.getElementById('right').disabled = "true";
+
                         } 
                         generateCalendar(currentDate);
                     } else {
                         currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
                         if ((currentDate.getMonth() == actualDate.getMonth()) && (currentDate.getFullYear() == actualDate.getFullYear())) {
-                            // document.getElementById('right').innerHTML = "";
                             document.getElementById('right').style.display = 'none';
                         } 
                         generateCalendar(currentDate);

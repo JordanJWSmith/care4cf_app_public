@@ -10,7 +10,6 @@ module.exports = async function(userID) {
     
 
     if (typeof userID !== 'number')  {
-        // console.log('incorrect userID');
         return false;
     } else {
 
@@ -18,14 +17,12 @@ module.exports = async function(userID) {
         var allActivitiesValue = userID;
         var activities = await readData(allActivities, allActivitiesValue)
         .then(function(results) {
-            // console.log('getAllActivities: ', results);
             return results;
         })
 
         var routineDict = {};
 
         for (x=0; x<activities.length; x++) {
-            // var scheduleID = activities[x].scheduleID;
             var date = activities[x].date;
             var dateString = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate());
 
@@ -36,7 +33,6 @@ module.exports = async function(userID) {
 
         }
 
-        // console.log('allActivities routineDict: ', routineDict);
         return routineDict;
     }
 

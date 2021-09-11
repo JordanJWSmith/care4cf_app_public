@@ -18,9 +18,6 @@ router.get('/', function (req, res, next) {
             .then(function(allNormalsResults) {
                 getNormalSchedID(results.userID)
                 .then(function(normalSchedIDResult) {
-                    // var normalSched = normalSchedIDResult[0].scheduleID;
-                    // console.log(normalSched);
-                    // console.log('normal ID: ', normalSchedIDResult.results[0].scheduleID);
                     var normalSched = normalSchedIDResult.results[0].scheduleID;
                     res.render('logFromRoutines', {
                         title: 'My Routines',

@@ -6,8 +6,11 @@ var userExists = require('./appDatabase/userExists');
 const updateToken = require('./appDatabase/updateToken');
 const newUser = require('./appDatabase/newUser');
 
+
+// Display main login page
 router.get('/', function (req, res, next) {
     var cookieToken = req.cookies.accessToken;
+    // Check the user credentials. If already logged in, redirect to home page
     login(cookieToken)
     .then(function(results) {
         console.log('loginUser results: ', results, '. Rendering sign in...');
@@ -19,15 +22,15 @@ router.get('/', function (req, res, next) {
     })
 });
 
-
+// Receive login data
 router.post('/verify', function(req, res, next) {
     const userDetails = req.body;
     var email = userDetails.email;
     var token = userDetails.token;
 
+    // Check whether user exists in private registration database
     userExistsPriv(email)
     .then(function(results) {
-        // console.log(' userExists results (should be false):',  results)
         if (!results.logIn) {
             // User does not exist in private database
             res.redirect('https://care4cf-register.azurewebsites.net/');
@@ -40,7 +43,6 @@ router.post('/verify', function(req, res, next) {
                 if (userResults.logIn) {
                     console.log('user exists in app database');
                     // User exists in app database
-                    // updateToken
                     await updateToken(token, userID)
                     // Then redirect to index
                     .then(res.redirect('/'));
@@ -48,7 +50,7 @@ router.post('/verify', function(req, res, next) {
                 } else {
                     // User does not exist in app database
                     console.log('user does not exist in app database. Creating new row...');
-                    // createUser
+                    // Create a new user
                     await newUser(userID)
                     .then(async function() {
                         await updateToken(token, userID)
@@ -61,19 +63,7 @@ router.post('/verify', function(req, res, next) {
 
         }
 
-
-    // if (results.logIn) {
-    // console.log('Updating token');
-    // updateToken(token, email).then(res.redirect('/'));
-    // } else {
-    // console.log('Create new user');
-    // var lName = name.split(",")[0].trim();
-    // var fName = name.split(",")[1].trim();
-    // res.render('users', {title: 'Welcome', email: email, lName: lName, fName: fName, token: token});
-    // }
     })
-// userExists().then()if userExists, updateToken and redirect to index.
-// if userNotExists, redirect to /new
 
 });
 

@@ -50,7 +50,6 @@
 
                 <!-- Modal content -->
                 <div class="modal-content">
-                    <!-- <span class="close">&times;</span> -->
                     <p id="modalText">Please Wait...</p>
                 </div>
             </div>
@@ -521,7 +520,6 @@
                 console.log('form values: ', techniqueVal, durationVal, frequencyVal)
 
                 if ((techniqueVal) && (durationVal) && (frequencyVal) && (navigator.onLine)) {
-                    // console.log('reason value: ', document.getElementById('reason').value);
                     setTimeout(function() {
                         document.getElementById('loadingModal').style.display = "block";
                     }, 1500)

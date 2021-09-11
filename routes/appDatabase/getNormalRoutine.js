@@ -10,10 +10,6 @@ module.exports = async function(userID) {
 */
     
 
-    // if ((typeof userID !== "number") || (arguments.length !== 1)) {
-    //     return false
-    // }
-
     if (typeof userID !== "number") {
         return false
     }
@@ -37,17 +33,12 @@ module.exports = async function(userID) {
     var normalResults = await readData(getNormal, getNormalValues)
     .then(async function(getNormalResults) {
         if (getNormalResults[0].length < 1) {
-            // console.log('getNormalRoutine: No normal results')
             return false
         }
-        // console.log('idResults: ', getNormalResults);
         descriptions = await idsToDescriptions(getNormalResults)
         .then(async function(descResults) {
-            // console.log('descResults: ', descResults);
-            // return descResults;
             var arranged = await arrangeDescriptions(descResults)
             .then(async function(arrangeResults) {
-                // console.log('arrangeResults: ', arrangeResults);
                 return arrangeResults
             })
             return arranged;
@@ -56,8 +47,6 @@ module.exports = async function(userID) {
         return descriptions;
     })
     
-
-    // console.log('normalResults: ', normalResults);
     return normalResults;
 }
 

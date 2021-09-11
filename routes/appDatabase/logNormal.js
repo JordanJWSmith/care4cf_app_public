@@ -15,7 +15,6 @@ module.exports = async function(userID, date, activityType) {
 
     await readData(findScheduleID, scheduleValues)
     .then(async function(schedResults) {
-        // console.log('scheduleID: ', schedResults[0]['scheduleID']);
         scheduleID = schedResults[0]['scheduleID'];
         var logActivity = "INSERT INTO activities (userID, date, scheduleID, routineType) VALUES (?, ?, ?, ?)";
         var activityValues = [userID, date, scheduleID, activityType];

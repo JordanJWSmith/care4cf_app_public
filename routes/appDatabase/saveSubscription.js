@@ -17,12 +17,9 @@ module.exports = async function(subscription) {
 
     var hash = crypto.createHash('md5').update(subObject).digest("hex"); 
     console.log('save hash: ', hash);
-
-    // console.log('aaccess token: ', token);
     
 
     var loginDetails = await login(token);
-    // console.log('loginDetails: ', loginDetails.logIn);
     if (loginDetails.logIn) {
         var userID = loginDetails.userID;
 
@@ -41,6 +38,4 @@ module.exports = async function(subscription) {
         return false
     }
 
-
-    // console.log('saveSubscription: ', subObject);
 }

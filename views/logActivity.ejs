@@ -60,20 +60,9 @@
 
                 <!-- Modal content -->
                 <div class="modal-content">
-                    <!-- <span class="close">&times;</span> -->
                     <p id="modalText">Please Wait...</p>
                 </div>
             </div>
-
-
-             <!-- <div id="loggingModal" class="modal"> -->
-
-                <!-- Modal content -->
-                <!-- <div class="modal-content"> -->
-                    <!-- <span class="close">&times;</span> -->
-                    <!-- <p id="modalText">Thanks! <br> We're logging that data.</p> -->
-                <!-- </div> -->
-            <!-- </div>  -->
 
        
             <div id="outer">
@@ -134,32 +123,24 @@
             var update = <%- update %>;
 
             var firstUpdate = false;
-            // console.log('dateList: ', dateList);
 
             if (!dateList) {
                 var dateList = getDateList();
             }
 
-            // console.log('dateList: ', dateList);
-
             checkLocal()
-            // .then(function() {
                 if (((navigator.onLine) && (update) && (!offsetPage)) || (firstUpdate)) {
                 console.log('saving to local');
                 window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
                 window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
                 window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
-                // window.localStorage.setItem('dateList', JSON.stringify(dateList));
                 } else {
                     console.log('should retrieve from local');
                     allActivities = JSON.parse(window.localStorage.getItem('allActivities'));
                     if (!offsetPage) {
-                        // console.log('retrieving from local: ', window.localStorage.getItem('routineDict'));
-                        // routineDict = JSON.parse(window.localStorage.getItem('routineDict'));
+
                     }
                 }
-
-            // console.log('using routineDict: ', routineDict);
 
 
             document.getElementById('normalRoutineButton').src = path + "Sample_User_Icon.png";
@@ -223,23 +204,21 @@
                     var dateStringDate = new Date(dateString.replace(/-/g, "/"));
                     var diffDays = Math.round(Math.abs((dateStringDate - currentDay) / oneDay));
                     // UNCOMMENT THIS
-                    // if (diffDays > 3) {
-                    //     document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
-                    //     document.getElementById('mainSection').style.position = "relative";
-                    //     document.getElementById('mainSection').style['margin-top'] = "15vh";
-                    // } else {
+                    if (diffDays > 3) {
+                        document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
+                        document.getElementById('mainSection').style.position = "relative";
+                        document.getElementById('mainSection').style['margin-top'] = "15vh";
+                    } else {
                         document.getElementById('mainSection').style.position = "absolute";
                         document.getElementById('mainSection').style['margin-top'] = "";
                         document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity" onsubmit="return isOnline()" ></form>';
                         document.getElementById('activityForm').innerHTML += '<div id="buttons"></div>';
-                        // document.getElementById('activityForm').innerHTML += '<a id="chosenDate"></a>';
-                        // document.getElementById('activityForm').innerHTML += '<a id="user"></a>';
                         document.getElementById('activityForm').innerHTML += '<div id="chosenDate"></div>';
                         document.getElementById('activityForm').innerHTML += '<div id="user"></div>';
                         document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                         populateButtons();
                         populateForm();
-                    // }                   
+                    }                   
                 }
             }
 
@@ -251,8 +230,6 @@
                 
                 var dateString = dateList[dayCounter];
                 var activities = routineDict[dateString];
-                // var activities = allActivities[dateString];
-                console.log('dateString: ', dateString);
                 document.getElementById('routine').innerHTML += '<p>' + activities.title + '</p>';
                 document.getElementById('routine').innerHTML += '<div id="routineDescription"></div>';
                 document.getElementById('routineDescription').style['background-color'] = 'rgba(222, 227, 238, 0.7)';
@@ -330,9 +307,6 @@
             */
                 
                 var newToday = new Date();
-                // console.log('current date: ', newToday);
-                // console.log('date: ', date);
-                // console.log('year: ', newToday.getFullYear())
                 if (date == newToday.getFullYear()+'-'+(newToday.getMonth()+1)+'-'+newToday.getDate()) {
                     var displayDate = 'Today <br> &nbsp;' ;
                 } else {
@@ -477,11 +451,7 @@
                 window.location = target;
             }
 
-            // function loggingModal() {
-            //     if (navigator.onLine) {
-            //         document.getElementById('loggingModal').style.display = "block";
-            //     }
-            // }
+
 
         </script>
 

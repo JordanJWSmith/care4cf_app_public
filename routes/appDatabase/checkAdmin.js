@@ -11,13 +11,10 @@ module.exports = async function(userID) {
     
 
     if (typeof userID !== "number") {
-        // console.log('userID is not number')
         return false   
     } else {
 
         var emailResult = await getEmailPriv(userID)
-
-        // console.log ('emailResults: ', emailResult)
 
         if (emailResult.logIn) {
             var email = emailResult.email[0].email;
@@ -26,11 +23,8 @@ module.exports = async function(userID) {
             var data = [email];
             var results = await readData(getAdmin, data);
 
-            // console.log('admin results: ', results);
-
             return (results.length > 0) 
         } else {
-            // console.log('email does not exist')
             return false
         }
         

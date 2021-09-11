@@ -11,11 +11,8 @@ module.exports = async function(routineResults) {
     
 
     if ((typeof routineResults !== "object") || (Object.keys(routineResults).length < 1)) {
-        // console.log('idsToDescriptions not an object')
         return false
     }
-
-    // console.log('IDToDescription routineResults: ', routineResults);
 
     var techDescriptions = "SELECT title, subtitle FROM techdescriptions WHERE ";
     var adjunctDescriptions = "SELECT adjunctTitle FROM adjunctdescriptions WHERE ";
@@ -35,7 +32,6 @@ module.exports = async function(routineResults) {
 
     var descriptions = await readData(descQuery)
     .then(function(descriptionResults) {
-        // console.log('descResults: ', descriptionResults);
         return descriptionResults;
     })
 

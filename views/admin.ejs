@@ -68,12 +68,9 @@
                     if (!payload) {
                         alert('Please enter a message to be pushed to users')
                     } else {
-                        // console.log('payload: ', payload)
                         var http = new XMLHttpRequest();
                         http.open("POST", "/sendNotification", true);
                         http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-
-                        // var params = "set=" + document.getElementById("setForm").value + "&user=" + document.getElementById("userForm").value; // probably use document.getElementById(...).value
                         
                         var params = "payload=" + encodeURIComponent(payload);
                         http.send(params);
@@ -99,8 +96,7 @@
             }
 
             function openModal() {
-                // document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+date+'</p>';
-                // routineDescription(activities[date], 'modalText');
+
                 modal.style.display = "block";
             }
         </script>

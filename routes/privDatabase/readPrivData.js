@@ -13,7 +13,6 @@ module.exports = function (query, data){
         db.query( query, data, ( err, rows ) => {
             if ( err )
                 return reject( err );
-            // console.log('rows: ', rows);
             resolve( rows );
         } );
     } );

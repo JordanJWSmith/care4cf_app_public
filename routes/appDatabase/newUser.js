@@ -17,18 +17,8 @@ module.exports = async function(userID) {
     var newUser = 'INSERT INTO users VALUES (?, 1) ';
     newUserValues = [userID];
 
-    // var results = await updateRecords(newUser, userDetails);
-    // console.log('newUser results:', results);
     await readData(newUser, newUserValues)
     .then(async function(results) {
-        // var accessToken = userDetails.msalToken;
-        // var userID = userDetails.userID;
-        // await updateToken(accessToken, userID)
-        // .then(function(results){
-        //     return true;
-        // })
-
-        // console.log('new user results:', results)
         return true;
     })
     .then(function(results) {

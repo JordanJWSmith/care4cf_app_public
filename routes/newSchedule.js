@@ -7,8 +7,10 @@ const getAdjuncts = require('./appDatabase/getAdjuncts');
 const getAdjunctTimes = require('./appDatabase/getAdjunctTimes');
 const getFrequencies = require('./appDatabase/getFrequencies');
 
+// Display the newSchedule form
 router.get('/', function (req, res, next) {
     var cookieToken = req.cookies.accessToken;
+    // Check user credentials
     login(cookieToken)
     .then(function(results) {
         if (!results.logIn) {
@@ -16,6 +18,7 @@ router.get('/', function (req, res, next) {
             res.redirect('/loginUser');
         } else {
 
+            // Get necessary information
             Promise.all([
                 getTechniques(),
                 getDurations(),
@@ -24,7 +27,6 @@ router.get('/', function (req, res, next) {
                 getFrequencies()
               ])
               .then((values) => {
-                // console.log('promise values for new user: ', values);
                 var techniques = values[0];
                 var durations = values[1];
                 var adjuncts = values[2];
@@ -47,39 +49,6 @@ router.get('/', function (req, res, next) {
 
               })
 
-            // getTechniques()
-            // .then(function(techResults) {
-            //     getDurations()
-            //     .then(function(durationResults) {
-            //     getAdjuncts()
-            //     .then(function(adjunctResults) {
-            //         getAdjunctTimes()
-            //         .then(function(adjunctTimeResults) {
-            //         getFrequencies()
-            //         .then(function(frequencyResults) {
-
-            //             res.render('newSchedule', {
-            //             title: 'What\'s your routine?', 
-            //             user: results.userID, 
-            //             techniques: JSON.stringify(techResults),
-            //             durations: JSON.stringify(durationResults),
-            //             adjuncts: JSON.stringify(adjunctResults),
-            //             adjunctTimes: JSON.stringify(adjunctTimeResults),
-            //             frequencies: JSON.stringify(frequencyResults),
-            //             chosenDate: false,
-            //             activityType: false,
-            //             saveAsNormal: true,
-            //             sched: false
-            //             })
-            //         })
-                    
-            //         })
-                    
-            //     })
-                
-            //     })
-                
-            // })
         }
     })
 })

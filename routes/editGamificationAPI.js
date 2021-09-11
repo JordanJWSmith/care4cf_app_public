@@ -1,14 +1,10 @@
 var express = require('express');
 const changeGamif = require('./appDatabase/changeGamif');
-// const saveSubscription = require('./appDatabase/saveSubscription');
 var router = express.Router();
 
+// Change the user's gamification settings and 
+// send the result
 router.post('/', async function(req, res, next) {
-  // console.log('req body: ', req.body);
-//   saveSubscription(req.body)
-//   .then(function(results) {
-//     res.send(results);
-//   })
 
     var body = req.body;
     var set = body.set;

@@ -5,9 +5,10 @@ const getGamifSettings = require('./appDatabase/getGamifSettings');
 var router = express.Router();
 const login = require('./appDatabase/login');
 
-
+// Display the My History page
 router.get('/', function (req, res, next) {
     var cookieToken = req.cookies.accessToken;
+    // Check user credentials
     login(cookieToken)
     .then(function(results) {
         if (!results.logIn) {
@@ -17,25 +18,12 @@ router.get('/', function (req, res, next) {
             
             var userID = results.userID;
 
-            // var start = Date.now();
-            // Promise.all([
-            //     getActivityDates(userID),
-            //     getGamifSettings(userID)
-            // ])
-            // .then((values) => {
-            //     console.log('promise values: ', values);
-            // })
-            // .then(function() {
-            //     var end = Date.now();
-            //     console.log(`Promise.all() execution time: ${end - start} ms`)
-            // })
-
+            // Get necessary info
             Promise.all([
                 getActivityDates(userID),
                 getGamifSettings(userID)
             ])
             .then((values) => {
-                // console.log('promise values: ', values);
                 
                 var currentStreak = values[0].currentStreak;
                 var longestStreak = values[0].longestStreak;
@@ -50,36 +38,6 @@ router.get('/', function (req, res, next) {
                 })
             })
             
-            // getAllActivities(userID)
-            // .then(function(activitiesResults) {
-                // var chainStart = Date.now();
-                // getActivityDates(userID)
-                // .then(function(streakResults) {
-                //     // console.log('streakResults: ', streakResults)
-                //     getGamifSettings(userID)
-                //     .then(function(gamifResults) {
-                //         var chainEnd = Date.now();
-                //         console.log(`Promise chain execution time: ${chainEnd - chainStart} ms`);
-                //         // console.log('gamif Results: ', parseInt(gamifResults));
-                //         // if (parseInt(gamifResults)) {
-                //         //     console.log('gamification active')
-                //         // } else {
-                //         //     console.log('gamification inactive')
-                //         // }
-                //         res.render('calendar', {
-                //             title: 'My History',
-                //             // activities: JSON.stringify(activitiesResults),
-                //             currentStreak: streakResults.currentStreak,
-                //             longestStreak: streakResults.longestStreak,
-                //             gamification: parseInt(gamifResults),
-                //             userID: userID
-                //         })
-                //     })
-                    
-                // })
-                // console.log('activitiesResults: ', activitiesResults);
-                
-            // })
             
         } 
     })

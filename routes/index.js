@@ -1,6 +1,5 @@
 var express = require('express');
 var session = require('express-session');
-// var pushpad = require('pushpad');
 const login = require('./appDatabase/login');
 const checkForNormal = require('./appDatabase/checkForNormal')
 const getTechniques = require('./appDatabase/getTechniques');
@@ -14,8 +13,6 @@ const logDifferent = require('./appDatabase/logDifferent');
 const getRoutineTypes = require('./appDatabase/getRoutineTypes');
 const getNoActivityReasons = require('./appDatabase/getNoActivityReasons');
 const getFrequencies = require('./appDatabase/getFrequencies');
-// const getRoutine = require('./appDatabase/getRoutine');
-// const checkForDate = require('./appDatabase/checkForDate');
 const getWeekActivities = require('./appDatabase/getWeekActivities');
 const promptToEditNormal = require('./appDatabase/promptToEditNormal');
 const getAllNormals = require('./appDatabase/getAllNormals');
@@ -23,38 +20,33 @@ const getAllActivities = require('./appDatabase/getAllActivities');
 var router = express.Router();
 
 
-
+// Display the main logging page
 router.get('/', function(req, res, next) {
   var cookieToken = req.cookies.accessToken;
-  // console.log('integerCheck:', Number.isInteger(parseInt('5')));
+  // Check the user credentials
   login(cookieToken).then(function(results) {
     if (!results.logIn) {
       console.log('user not logged in at index. Redirecting to login...');
       res.redirect('/loginUser');
     } else {
 
+      // Check to see if an update is required
       var updateFlag = req.session.dataUpdate;
       var firstUpdateFlag = req.cookies.dataUpdate;
       console.log('firstUpdateFlag: ', firstUpdateFlag);
-
       if ((updateFlag) || (firstUpdateFlag)) {
         console.log('dataUpdate exists, must update');
         var shouldUpdate = true;
       } else {
         console.log('dataUpdate does not exist. No update needed.');
         var shouldUpdate = false;
-        // var shouldUpdate = true;
       }
-
       req.session.dataUpdate = null;
-      // req.cookies.dataUpdate = "; expires=Thu, 01-Jan-1970 00:00:01 GMT;";
       res.clearCookie('dataUpdate');
-
-      // var scheduleExists, routineTypes, dateList, allNormals, allActivities, routineDict;
-
       
       if (shouldUpdate) {
 
+        // Get the necessary information
         var blockStart = Date.now();
         Promise.all([
           checkForNormal(results.userID),
@@ -64,7 +56,6 @@ router.get('/', function(req, res, next) {
           getAllActivities(results.userID)
         ])
         .then((values) => {
-          // console.log('update values: ', values)
           var blockEnd = Date.now();
           console.log(`update logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
 
@@ -95,6 +86,7 @@ router.get('/', function(req, res, next) {
   
             
           } else {
+            // User has no normal schedule - redirect to newSchedule form
             console.log('schedule does not exist');
             Promise.all([
               getTechniques(),
@@ -131,6 +123,7 @@ router.get('/', function(req, res, next) {
 
       } else {
 
+        // Get minimum information necessaary
         var blockStart = Date.now();
         Promise.all([
           checkForNormal(results.userID),
@@ -138,18 +131,15 @@ router.get('/', function(req, res, next) {
           getWeekActivities(results.userID, 0)
         ])
         .then((values) => {
-          // console.log('non-update vaalues: ', values)
           var blockEnd = Date.now();
           console.log(`non-update logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
 
           var scheduleExists = values[0].scheduleExists;
           var routineTypes = values[1];
           var dateList = JSON.stringify(values[2].dateList);
-          // var dateList = false;
           var allNormals = false;
           var allActivities = false;
           var routineDict = JSON.stringify(values[2].routineDict);
-          // var routineDict = false;
 
           if (scheduleExists) { 
 
@@ -172,6 +162,7 @@ router.get('/', function(req, res, next) {
             
           } else {
             console.log('schedule does not exist');
+            // User has no saved schedule - redirect to newSchedule form
             Promise.all([
               getTechniques(),
               getDurations(),
@@ -204,88 +195,37 @@ router.get('/', function(req, res, next) {
         })
       }
 
-        // scheduleExists = values[0].scheduleExists;
-
-        // if (scheduleExists) { 
-
-        //   var prevDay = "decrementDate()";
-        //   var nextDay = "incrementDate()";
-
-        //   res.render('logActivity', {
-        //     title: 'Welcome user '+ results.userID, 
-        //     user: results.userID,
-        //     routineTypes: JSON.stringify(routineTypes),
-        //     dateList: JSON.stringify(dateList),
-        //     routineDict: routineDict,
-        //     prevDay: prevDay,
-        //     nextDay: nextDay,
-        //     allNormals: allNormals,
-        //     allActivities: allActivities,
-        //     update: shouldUpdate
-        //   })
-
-          
-        // } else {
-        //   console.log('schedule does not exist');
-        //   Promise.all([
-        //     getTechniques(),
-        //     getDurations(),
-        //     getAdjuncts(),
-        //     getAdjunctTimes(),
-        //     getFrequencies()
-        //   ])
-        //   .then((values) => {
-        //     var techniques = values[0];
-        //     var durations = values[1];
-        //     var adjuncts = values[2];
-        //     var adjunctTimes = values[3];
-        //     var frequencies = values[4];
-
-        //     res.render('newSchedule', {
-        //       title: 'Welcome! What\'s your normal airway clearance routine?', 
-        //       user: results.userID, 
-        //       techniques: JSON.stringify(techniques),
-        //       durations: JSON.stringify(durations),
-        //       adjuncts: JSON.stringify(adjuncts),
-        //       adjunctTimes: JSON.stringify(adjunctTimes),
-        //       frequencies: JSON.stringify(frequencies),
-        //       chosenDate: false,
-        //       activityType: false,
-        //       saveAsNormal: true,
-        //       sched: false
-        //     })
-        //   })
-        // }
-      // })
     }
   })
 });
 
 
-
+// Receive the schedule form data
 router.post('/scheduleData', async function(req, res, next) {
   const scheduleDetails = req.body;
-  // console.log('scheduleDetails: ', scheduleDetails);
 
   req.session.chosenDate = null;
   req.session.activityType = null;
   req.session.saveAsNormal = null;
 
+  // save the schedule
   await saveSchedule(scheduleDetails)
 
   .then(async function(results) {
     req.session.dataUpdate = true;
 
+    // If we're logging an activity...
     if ((Object.keys(scheduleDetails).includes('activityType')) && (Object.keys(scheduleDetails).includes('chosenDate'))) {
-      // console.log('index schedID: ', results[1][0]['LAST_INSERT_ID()']);
       var scheduleID = results[1][0]['LAST_INSERT_ID()'];
       
+      // Log the activity
       await logDifferent(scheduleDetails.user, scheduleDetails.chosenDate, scheduleID, scheduleDetails.activityType)
       .then(async function() {
+
+        // Check whether the user needs prompting to edit their schedule
         await promptToEditNormal(scheduleDetails.user) 
         .then(function(promptResults) {
           console.log('setting dataUpdate cookie')
-          // changeCookie here
           if (promptResults) {
             res.redirect('/?np=true')
           } else {
@@ -293,21 +233,19 @@ router.post('/scheduleData', async function(req, res, next) {
           }
         })
       })
-      // res.redirect('/')
-      // .then(res.redirect('/'))
+
     } else {
+      // Not logging an activity, just redirect
       res.redirect('/');
     }
   })
 });
 
-
+// Receive option for logging, take action accordingle
 router.post('/logNewActivity', async function(req, res, next) {
   const details = req.body;
-  // console.log('activity type: ', details.activityType);
-  // console.log('(index) date: ', details.chosenDate, typeof details.chosenDate);
-  // console.log('user: ', details.user);
 
+  // Log a normal activity
   if (details.activityType == 1) {
     console.log('logging normal activity');
     await logNormal(details.user, details.chosenDate, details.activityType)
@@ -316,18 +254,17 @@ router.post('/logNewActivity', async function(req, res, next) {
       req.session.dataUpdate = true;
       res.redirect('/')
     });
-    // changeCookie here
 
+    // Log something different
   } else if (details.activityType == 2) {
-    // console.log('logging something different');
     req.session.chosenDate = JSON.stringify(details.chosenDate);
     req.session.activityType =  details.activityType;
     req.session.saveAsNormal = false;
     req.session.savedScheds = true;
     res.redirect('/somethingDifferent');
     
+    // Log no activities
   } else if (details.activityType == 3) {
-    // console.log('logging no activities');
     await getNoActivityReasons()
     .then(function(results) {
       res.render('noActivity', {
@@ -340,10 +277,10 @@ router.post('/logNewActivity', async function(req, res, next) {
 });
 
 
+// Receive 'no activities' form data
 router.post('/noActivities', async function(req, res, next) {
   var reasonID = req.body.reasonID;
   var details = JSON.parse(req.body.details);
-  // changeCookie here
   await logNoActivities(details.user, details.chosenDate, details.activityType, reasonID)
   .then(function() {
     console.log('setting dataUpdate cookie');
@@ -352,43 +289,37 @@ router.post('/noActivities', async function(req, res, next) {
   })
 })
 
+// Paginate through week's activities with dynamic routing
 router.get('/w/:offset', function(req, res, next) {
   var offset = req.params.offset;
   if (!(Number.isInteger(parseInt(offset)))) {
-    console.log('incorrect offset');
+    // console.log('incorrect offset');
     res.redirect('/');
   } else {
-
     var r = req.query.r;
-    console.log('r: ', r);
-
-    // console.log(typeof offset);
-    // res.send(offset);
     var cookieToken = req.cookies.accessToken;
+
+    // Check credentials
     login(cookieToken).then(function(results) {
       if (!results.logIn) {
         console.log('user not logged in at index. Redirecting to login...')
         res.redirect('/loginUser');
       } else {
 
+        // Get information needed
         Promise.all([
           checkForNormal(results.userID),
           getRoutineTypes(),
           getWeekActivities(results.userID, parseInt(offset)),
-          // getAllNormals(results.userID),
-          // getAllActivities(results.userID)
+
         ])
         .then((values) => {
-          // console.log('blockPromise values: ', values)
         
           var routineTypes = values[1];
-          // var weekActivities = values[2].routine;
-          // var dateList = values[2].dateList;
-          // var startDate = values[2].startDate;
-          var routineDict = JSON.stringify(values[2].routineDict);
-          // var allNormals = JSON.stringify(values[3]);
-          // var allActivities = JSON.stringify(values[4]);
 
+          var routineDict = JSON.stringify(values[2].routineDict);
+
+          // Reverse the dateList if we're going forwards through time
           if (r) {
             var dateList = values[2].dateList.reverse();
             var prevDay = "incrementDate()";
@@ -403,9 +334,7 @@ router.get('/w/:offset', function(req, res, next) {
             title: 'Welcome user '+ results.userID, 
             user: results.userID,
             routineTypes: JSON.stringify(routineTypes),
-            // weekActivities: JSON.stringify(weekResults.routine),
             dateList: JSON.stringify(dateList),
-            // startDate: JSON.stringify(weekResults.startDate),
             routineDict: routineDict,
             prevDay: prevDay,
             nextDay: nextDay,
@@ -415,49 +344,6 @@ router.get('/w/:offset', function(req, res, next) {
           })
         })
 
-        // checkForNormal(results.userID)
-        // .then(function(checkResults) {
-        //   if (checkResults.scheduleExists) {
-        //     getRoutineTypes()
-        //     .then(function(routineResults) {
-        //       getWeekActivities(results.userID, parseInt(offset))
-        //         .then(function(weekResults) {
-        //           getAllNormals(results.userID)
-        //         .then(function(allNormalsResults) {
-        //           getAllActivities(results.userID)
-        //           .then(function(allActivitiesResults){
-        //             // console.log('weekResults: ', weekResults);
-        //             if (r) {
-        //               // console.log('r true');
-        //               var dateList = weekResults.dateList.reverse()
-        //               var prevDay = "incrementDate()";
-        //               var nextDay = "decrementDate()";
-                      
-        //             } else {
-        //               var dateList = weekResults.dateList
-        //               var prevDay = "decrementDate()";
-        //               var nextDay = "incrementDate()";
-        //             }
-
-        //             res.render('logActivity', {
-        //               title: 'Welcome user '+ results.userID, 
-        //               user: results.userID,
-        //               routineTypes: JSON.stringify(routineResults),
-        //               weekActivities: JSON.stringify(weekResults.routine),
-        //               dateList: JSON.stringify(dateList),
-        //               startDate: JSON.stringify(weekResults.startDate),
-        //               routineDict: JSON.stringify(weekResults.routineDict),
-        //               prevDay: prevDay,
-        //               nextDay: nextDay,
-        //               allNormals: JSON.stringify(allNormalsResults),
-        //               allActivities: JSON.stringify(allActivitiesResults)
-        //               })
-        //           })
-        //         })
-        //       })
-        //     })
-        //   }
-        // })
       }
     })
   }

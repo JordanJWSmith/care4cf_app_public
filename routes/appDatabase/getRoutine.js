@@ -15,21 +15,16 @@ module.exports = async function(userID, date) {
     
 
     if ((typeof userID !== 'number') || (typeof date !== "string") || (arguments.length !== 2)) {
-        // console.log('incorrect userID');
         return false;
     }
 
     var dateCheck = await checkForDate(userID, date)
     .then(async function(dateResults) {
-        // console.log('dateResults getRoutine: ', dateResults)
         if (dateResults) {
-            // console.log('dateResults: ', dateResults);
             var routineType = dateResults[0].routineType;
-            // console.log('routineType: ', routineType);
 
             // CHANGE TO 3?
             if (routineType < 3) {
-                // console.log('getRoutine: normal or different');
                     var getIDs =  `
                         SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = (
                             SELECT scheduleID FROM activities WHERE userID = ? AND date = ?
@@ -45,18 +40,13 @@ module.exports = async function(userID, date) {
                     `;
             
                     var getIDValues = [userID, date, userID, date, userID, date];
-            
-                    // console.log('getRoutine');
-            
+                        
                     var descriptionResults = await readData(getIDs, getIDValues)
                     .then(async function(idResults) {
-                        // console.log('idResults: ', idResults);
                         descriptions = await idsToDescriptions(idResults)
                         .then(async function(descResults) {
-                            // console.log('descResults: ', descResults);
                             var arranged = await arrangeDescriptions(descResults)
                             .then(async function(arrangeResults) {
-                                // console.log('arrangeResults: ', arrangeResults);
                                 return arrangeResults
                             })
                             return arranged;
@@ -69,17 +59,13 @@ module.exports = async function(userID, date) {
                     var routineTypeValue = [routineType];
                     var routineTypeResults = await readData(getRoutineType, routineTypeValue)
                     .then(function(routineTypeResults) {
-                        // console.log('routineTypeResults: ', routineTypeResults)
                         return routineTypeResults;
                     })
 
                     descriptionResults['title'] = routineTypeResults[0].routine;
-                    // console.log('routineTypeResults: ', routineTypeResults[0].routine)
-                    // console.log('descriptionResults: ', descriptionResults);
                     return descriptionResults;
 
             } else {
-                // console.log('getRoutine: no activities');
                 var resDict = {}
                 var activityID = dateResults[0].activityID;
                 var getReason = `
@@ -91,23 +77,16 @@ module.exports = async function(userID, date) {
                 var getReasonValue = [activityID, routineType];
                 var getReasonResults = await readData(getReason, getReasonValue)
                 .then(function(reasonResults) {
-                    // console.log('reasonResults: ', reasonResults[0]);
-                    // console.log('activityType: ', reasonResults[1]);
-                    // console.log('reasonResults: ', reasonResults);
                     resDict['title'] = reasonResults[1][0].routine;
                     resDict['description'] = reasonResults[0][0].description;
-                    // console.log('getRoutine resDict for no activity: ', date,  resDict);
                     return resDict;
                 })
-                // console.log('getRoutine getReasonResults for no activity:', date, getReasonResults);
                 return getReasonResults;
             }
         } else {
-            // console.log('dateResult failed');
             return false
         }
     })
-    // console.log('dateCheck result: ', dateCheck);
     return dateCheck
 
 }

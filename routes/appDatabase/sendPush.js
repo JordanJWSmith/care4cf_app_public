@@ -10,7 +10,6 @@ module.exports = async function(subscription, payload) {
 * @return {object} An object containing the results of the web-push
 */
     
-    // console.log('webpush details: ', webPush.generateRequestDetails(subscription, payload));
     var push = webPush.sendNotification(subscription, payload)
     .then(function(results){
         return results;

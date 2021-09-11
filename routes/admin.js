@@ -5,23 +5,21 @@ const checkAdmin = require('./appDatabase/checkAdmin');
 var router = express.Router();
 
 
-
+// Display the admin page
 router.get('/', function(req, res, next) {
     var cookieToken = req.cookies.accessToken;
+    // Check the users credentials
     login(cookieToken).then(function(results) {
         if (!results.logIn) {
-            // console.log('user not logged in at index. Redirecting to login...')
             res.redirect('/loginUser');
         } else {
+            // Check the user is listed as admin
             checkAdmin(results.userID)
             .then(function(adminResults) {
-                // console.log('adminResults: ', adminResults)
                 if (adminResults) {
-                    // console.log('emaail: ', results)
                     res.render('admin', {title: 'Admin Page'});
                 }
                 else {
-                    // alert("You don't have permission to access this page");
                     res.redirect('/');
                 }
                 

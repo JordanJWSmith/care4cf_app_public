@@ -7,7 +7,6 @@ function generateCalendar(d) {
     
         
         function monthDays(month, year) {
-            // console.log('monthDays month: ', month);
             var result = [];
             var days = new Date(year, month, 0).getDate();
             for (var i = 1; i <= days; i++) {
@@ -20,15 +19,11 @@ function generateCalendar(d) {
             return d.getDate();
         };
         var details = {
-            // totalDays: monthDays(d.getMonth(), d.getFullYear()),
             totalDays: d.monthDays(),
             weekDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
             months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         };
         var start = new Date(d.getFullYear(), d.getMonth()).getDay();
-        // console.log(d.getFullYear());
-        // console.log(d.getMonth());
-
         var cal = [];
         var day = 1;
         for (var i = 0; i <= 6; i++) {
@@ -43,10 +38,8 @@ function generateCalendar(d) {
                     if (i === 1 && j < start) {
                         cal[i].push('<td id="caltd">&nbsp;</td>');
                     } else {
-                        // console.log('day? ', day);
-                        // console.log(d.getFullYear() + '-' + (d.getMonth() +1) + "-" + day);
+                       
                         var interDate = d.getFullYear() + '-' + (d.getMonth()+1) + "-" + day;
-                        // console.log(activities[interDate]);
                         if (activities[interDate]) {
                        
                                 cal[i].push('<td id="caltd" class="day dot" onclick="openModal('+"'" + interDate + "'" + ')">' + day++ + '</td>');

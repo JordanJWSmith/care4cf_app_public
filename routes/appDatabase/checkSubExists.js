@@ -8,14 +8,9 @@ module.exports = async function(subscription) {
 * @return {Boolean} True if the given subscription exists, false otherwise
 */
     
-
-    // console.log('received subscription: ', subscription);
-
     var sub = JSON.stringify(subscription.subscription);
-    // console.log('received subscription: ', sub);
 
     var hash = crypto.createHash('md5').update(sub).digest("hex"); 
-    // console.log('hash: ', hash);
 
     var checkSub = "SELECT hashSubscription FROM subscriptions WHERE hashSubscription = ?";
     var checkSubValue = [hash];

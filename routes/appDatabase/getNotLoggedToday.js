@@ -20,10 +20,8 @@ module.exports = async function() {
     ON s.userID = u.userID
     `
     var getSubsValues = [todayString];
-        // var getUsers =  "SELECT * FROM users";
-        // var data = ['Device-Free', 'Device-Dependent'];
     var subsResults = await readData(getSubs, todayString);
-    // console.log('subsResults: ', subsResults);
+
     return { 
            subsResults
     }
