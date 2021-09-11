@@ -151,6 +151,9 @@
 
 
             var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+            if (!activities) {
+                console.log('no activities');
+            }
             console.log('activities: ', activities)
 
             var currentDate = new Date();

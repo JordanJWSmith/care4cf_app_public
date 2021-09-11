@@ -50,7 +50,7 @@ router.get('/', function(req, res, next) {
       // req.cookies.dataUpdate = "; expires=Thu, 01-Jan-1970 00:00:01 GMT;";
       res.clearCookie('dataUpdate');
 
-      var scheduleExists, routineTypes, dateList, allNormals, allActivities, routineDict;
+      // var scheduleExists, routineTypes, dateList, allNormals, allActivities, routineDict;
 
       
       if (shouldUpdate) {
@@ -68,12 +68,12 @@ router.get('/', function(req, res, next) {
           var blockEnd = Date.now();
           console.log(`update logPage Promise.all() execution time: ${blockEnd - blockStart} ms`)
 
-          scheduleExists = values[0].scheduleExists;
-          routineTypes = values[1];
-          dateList = values[2].dateList;
-          allNormals = JSON.stringify(values[3]);
-          allActivities = JSON.stringify(values[4]);
-          routineDict = JSON.stringify(values[2].routineDict);
+          var scheduleExists = values[0].scheduleExists;
+           var routineTypes = values[1];
+          var dateList = values[2].dateList;
+          var allNormals = JSON.stringify(values[3]);
+          var allActivities = JSON.stringify(values[4]);
+          var routineDict = JSON.stringify(values[2].routineDict);
 
           if (scheduleExists) { 
 
