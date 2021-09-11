@@ -56,6 +56,15 @@
                 </div>
             </div>
 
+            <div id="loadingModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <span class="close">&times;</span> -->
+                    <p id="modalText">Please Wait...</p>
+                </div>
+            </div>
+
 
              <!-- <div id="loggingModal" class="modal"> -->
 
@@ -90,13 +99,13 @@
             <br><br>
 
             <div id="navButtonContainer">
-                    <button class="navButton" style="margin-right: 5vw" onclick='window.location="/normalRoutine"'>
+                    <button class="navButton" style="margin-right: 5vw" onclick='loadAndRedirect("/normalRoutine")'>
                         <img id="normalRoutineButton" alt="my normal routine" style="height:4vh">
                     </button>
                     <button id="mainNavButton" class="navButtonDisabled" style="margin: auto; height: 13vh; width: 13vh; border: #2FB9CA;border-width: thick;border-style: solid;">
                         <img id="mainButton" alt="main page" style="height:5vh">
                     </button>
-                    <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'>
+                    <button class="navButton" style="margin-left: 5vw" onclick='loadAndRedirect("/calendar")'>
                         <img id="calendarButton" alt="my history" style="height:4vh">
                     </button>
                 
@@ -214,11 +223,11 @@
                     var dateStringDate = new Date(dateString.replace(/-/g, "/"));
                     var diffDays = Math.round(Math.abs((dateStringDate - currentDay) / oneDay));
                     // UNCOMMENT THIS
-                    if (diffDays > 3) {
-                        document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
-                        document.getElementById('mainSection').style.position = "relative";
-                        document.getElementById('mainSection').style['margin-top'] = "15vh";
-                    } else {
+                    // if (diffDays > 3) {
+                    //     document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
+                    //     document.getElementById('mainSection').style.position = "relative";
+                    //     document.getElementById('mainSection').style['margin-top'] = "15vh";
+                    // } else {
                         document.getElementById('mainSection').style.position = "absolute";
                         document.getElementById('mainSection').style['margin-top'] = "";
                         document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity" onsubmit="return isOnline()" ></form>';
@@ -230,7 +239,7 @@
                         document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                         populateButtons();
                         populateForm();
-                    }                   
+                    // }                   
                 }
             }
 
@@ -294,7 +303,7 @@
             */
 
                 for (var i = 0; i < routineTypes['results'].length; i++) {
-                document.getElementById('buttons').innerHTML += '<div class="buttonContainer"><button class="routineButton" name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit">'+routineTypes['results'][i]['routine']+'</button></div>';
+                document.getElementById('buttons').innerHTML += '<div class="buttonContainer"><button class="routineButton" name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit" onclick="loadingModal()">'+routineTypes['results'][i]['routine']+'</button></div>';
                 console.log(routineTypes['results'][i]['routineID']);
                 }
 
@@ -369,6 +378,7 @@
                     disableButton(newDay);
                     populateMainSection()
                 } else {
+                        loadingModal();
                         var newDay = new Date(dateList[dayCounter-1].replace(/-/g, "/"));
                         var diffDays = Math.round(Math.abs((newDay - currentDay) / oneDay)) + 1;
                         var weeklyOffset = Math.floor((diffDays)/7);
@@ -392,9 +402,11 @@
                     var url = new URL(url_string);
                     var r = url.searchParams.get("r");
                     if (r) {
+                        loadingModal();
                         var weeklyOffset = (Math.floor((diffDays)/7));
                         window.location = '/w/'+ weeklyOffset;
                     } else {
+                        loadingModal();
                         var weeklyOffset = (Math.floor((diffDays)/7) - 1);
                         window.location = '/w/'+ weeklyOffset + '?r=1';
                     }
@@ -444,6 +456,25 @@
             * Open the prompt modal
             */
                 updateNormalModal.style.display = "block";
+            }
+
+            function loadingModal() {
+            /** 
+            * Open the prompt modal
+            */
+                setTimeout(function() {
+                    if (navigator.onLine) {
+                            document.getElementById('loadingModal').style.display = "block";
+                        } 
+                }, 1500)
+                  
+                
+            }
+
+            function loadAndRedirect(target) {
+                loadingModal();
+                console.log('target: ', target);
+                window.location = target;
             }
 
             // function loggingModal() {

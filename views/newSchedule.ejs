@@ -45,11 +45,20 @@
                     <p id="modalText" style="letter-spacing: 0; cursor:default" onclick="">Are we missing a part of your routine? <br> Let us know: <br> e.main@ucl.ac.uk</p>
                 </div>
             </div>
+
+            <div id="loadingModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <span class="close">&times;</span> -->
+                    <p id="modalText">Please Wait...</p>
+                </div>
+            </div>
             
 
             <div id="mainAction" style="max-width: 400px; margin: auto" >
                 
-                <form action="/scheduleData" method="POST" id="activityForm">
+                <form action="/scheduleData" method="POST" id="activityForm" onsubmit="return isOnline()">
 
                     <div id='techniques'>
                         <div id="formBox0">
@@ -125,7 +134,7 @@
                     
                     <br><br>
 
-                    <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit">
+                    <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit" onclick="loadingModal()">
                         <img id="tickButton" alt="confirm" style="height:4vh">
                     </button>
                 </form>
@@ -502,6 +511,34 @@
 
             function openHelpModal() {
                 helpModal.style.display = "block";
+            }
+
+            function loadingModal() {
+                var techniqueVal = document.getElementById('dropdown0').value;
+                var durationVal = document.getElementById('durationDropdown').value;
+                var frequencyVal = document.getElementById('frequencyDropdown').value;
+                
+                console.log('form values: ', techniqueVal, durationVal, frequencyVal)
+
+                if ((techniqueVal) && (durationVal) && (frequencyVal) && (navigator.onLine)) {
+                    // console.log('reason value: ', document.getElementById('reason').value);
+                    setTimeout(function() {
+                        document.getElementById('loadingModal').style.display = "block";
+                    }, 1500)
+                    
+                }
+            }
+
+            function isOnline() {
+                /** 
+                * Check if browser is current online, return false if not
+                * @return {Boolean} false
+                */
+                
+                if (!(navigator.onLine)) {
+                    alert("Cannot update while offline");
+                    return false;
+                }
             }
 
 

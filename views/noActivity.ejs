@@ -20,19 +20,28 @@
 
             <h1 style="margin-top: 9vh"><%= title %></h1>
 
+            <div id="loadingModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <span class="close">&times;</span> -->
+                    <p id="modalText">Please Wait...</p>
+                </div>
+            </div>
+
             <div style="max-width: 400px; margin: auto; margin-top: 30vh;">
-                <form method="POST" action="/noActivities">
+                <form method="POST" action="/noActivities" onsubmit="return isOnline()">
                     <select id="reason" name="reasonID" required>
                         <option value="" selected disabled hidden>Reason for no activities</option>
                     </select>
                     
                     <a id="details"></a>
                     <br>
-                    <div id="navButtonContainer">
-                        <button class="navButton" style="margin-bottom: 3vh;" type="submit" value="Submit">
+                    <!-- <div id="navButtonContainer"> -->
+                        <button class="navButton" style="margin-top: 25vh;" type="submit" value="Submit" onclick="loadingModal()">
                             <img src="images/tickIcon.png" alt="confirm" style="height: 100%">
                         </button>
-                    </div>
+                    <!-- </div> -->
                     
                 </form>
             </div>
@@ -58,6 +67,34 @@
             }
 
             document.getElementById('details').innerHTML = "<input type='hidden' name='details' value='" + JSON.stringify(details) + "'>";
+
+            function isOnline() {
+                /** 
+                * Check if browser is current online, return false if not
+                * @return {Boolean} false
+                */
+                
+                if (!(navigator.onLine)) {
+                    alert("Cannot update while offline");
+                    return false;
+                }
+            }
+
+            function loadingModal() {
+            /** 
+            * Open the prompt modal
+            */
+                var reasonVal =  document.getElementById('reason').value;
+                // console.log('reasonVal1: ', reasonVal);
+                if ((reasonVal) && (navigator.onLine)) {
+                    // console.log('reason value: ', document.getElementById('reason').value);
+                    setTimeout(function() {
+                        document.getElementById('loadingModal').style.display = "block";
+                    }, 1500)
+                    
+                }
+                
+            }
 
         </script>
         

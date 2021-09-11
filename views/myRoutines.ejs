@@ -74,13 +74,22 @@
                 </div>
             </div>
 
+            <div id="loadingModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <span class="close">&times;</span> -->
+                    <p id="modalText">Please Wait...</p>
+                </div>
+            </div>
+
             <% if (!somethingDifferent) { %>
-                    <button class="navButton" style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;" onclick='window.location="/newSchedule"'>
+                    <button class="navButton" style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;" onclick='isOnline()'>
                         <img id="myRoutinesButton" alt="my routines" src="./images/plusIcon.png" style="height:4vh">
                     </button>
                 
                 <% } else { %>
-                    <button class="optionButton" onclick='window.location="/somethingDifferent/logNew"' style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;">Something Different</button>
+                    <button class="optionButton" onclick='directToForm()' style="margin: auto; margin-top: 4vh; margin-bottom: 3vh;">Something Different</button>
                 <% } %>
 
             <% if (!somethingDifferent) { %>
@@ -111,13 +120,28 @@
             * @return {Boolean} False
             */
                 
-            if (!(navigator.onLine)) {
-                alert("Cannot update while offline");
-                return false;
-            } else {
-                window.location="/newSchedule";
+                if (!(navigator.onLine)) {
+                    alert("Cannot update while offline");
+                    return false;
+                } else {
+                    loadingModal();
+                    window.location="/newSchedule";
+                }
             }
-            }
+
+            // function directToNewSchedule() {
+            // /** 
+            // * @summary Check to see if browser is online, return false if not
+            // * @return {Boolean} False
+            // */
+                
+            //     if (!(navigator.onLine)) {
+            //         alert("Cannot update while offline");
+            //         return false;
+            //     } else {
+            //         window.location="/newSchedule";
+            //     }
+            // }
 
             var routines = JSON.parse(window.localStorage.getItem('allNormals'));
 
@@ -216,6 +240,7 @@
             */
                 
                 if (navigator.onLine) {
+                    loadingModal();
                     document.getElementById('newNormalUser').innerHTML = "<input type='hidden' name='user' value='" + user + "'>";
                     document.getElementById('newNormalSchedule').innerHTML = "<input type='hidden' name='scheduleID' value='" + schedID + "'>";
                     document.forms['newNormal'].submit();
@@ -234,6 +259,7 @@
                 
 
                 if (navigator.onLine) {
+                    loadingModal();
                     document.getElementById('logChosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + chosenDate[0] + "'>";
                     document.getElementById('logScheduleID').innerHTML = "<input type='hidden' name='scheduleID' value = '" + schedID +"'>";
                     document.getElementById('logUserID').innerHTML = "<input type='hidden' name='userID' value = '" + user +"'>";
@@ -277,6 +303,29 @@
 
             function openModal() {
                 modal.style.display = "block";
+            }
+
+            function directToForm() {
+                if (!(navigator.onLine)) {
+                    alert("Cannot update while offline");
+                    return false;
+                } else {
+                    loadingModal();
+                    window.location="/somethingDifferent/logNew";
+                }
+            }
+
+            function loadingModal() {
+            /** 
+            * Open the prompt modal
+            */
+                setTimeout(function() {
+                    if (navigator.onLine) {
+                            document.getElementById('loadingModal').style.display = "block";
+                        } 
+                }, 1500)
+                  
+                
             }
 
         </script>

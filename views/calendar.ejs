@@ -46,7 +46,15 @@
                     
                 </div>
             </div>
+            
+            <div id="loadingModal" class="modal">
 
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <span class="close">&times;</span> -->
+                    <p id="modalText">Please Wait...</p>
+                </div>
+            </div>
         
             <!-- Calendar adapted from https://codepen.io/nitroduck/pen/pmQoOY -->
 
@@ -117,10 +125,10 @@
             </div>
 
             <div id="navButtonContainer">
-                    <button class="navButton" style="margin-right: 5vw;" onclick='window.location="/normalRoutine"'>
+                    <button class="navButton" style="margin-right: 5vw;" onclick='loadAndRedirect("/normalRoutine")'>
                         <img id="normalRoutineButton" alt="my normal routine" src="./images/Sample_User_Icon.png" style="height:4vh">
                     </button>
-                    <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/"'>
+                    <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='loadAndRedirect("/")'>
                         <img id="mainButton" alt="main page" src="./images/circleIcon.png" style="height:5vh">
                     </button>
                     <button class="navButtonDisabled" style="margin-left: 5vw; border: #2FB9CA; border-width: thick; border-style: solid;">
@@ -278,12 +286,28 @@
             }
 
             var firstDate = new Date((Object.keys(activities)[0]).replace(/-/g, "/"));
-            // console.log('firstDate', firstDate, typeof firstDate);
-            // console.log('currentDate', currentDate, typeof currentDate);
-            // console.log('object type: ', Object.prototype.toString.call(firstDate));
             var dateDiff = dateDifference(firstDate, currentDate);
+            document.getElementById('progressBar').innerHTML = "<p style='margin: 1vh'>You are on day " + dateDiff + " of 365</p>";   
+            
+            function loadingModal() {
+            /** 
+            * Open the prompt modal
+            */
+                setTimeout(function() {
+                    if (navigator.onLine) {
+                            document.getElementById('loadingModal').style.display = "block";
+                        } 
+                }, 1500)
+            }
 
-            document.getElementById('progressBar').innerHTML = "<p style='margin: 1vh'>You are on day " + dateDiff + " of 365</p>";            
+            function loadAndRedirect(target) {
+                loadingModal();
+                console.log('target: ', target);
+                window.location = target;
+            }
+
+
+
 
         </script>
 
