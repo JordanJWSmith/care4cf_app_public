@@ -41,15 +41,23 @@
                 </div>
             </div>
 
+            <div id="loadingModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <p id="loadingModalText">Please Wait...</p>
+                </div>
+            </div>
+
             <div id="navButtonContainer">
                     <button class="navButtonDisabled" style="margin-right: 5vw; border: #2FB9CA; border-width: thick; border-style: solid;">
                         <img id="normalRoutineButton" alt="my normal routine" src="./images/Sample_User_Icon.png" style="height:4vh">
                     </button>
                 
-                    <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='window.location="/"'>
+                    <button class="navButton" style="margin: auto; height: 13vh; width: 13vh" onclick='loadAndRedirect("/")'>
                         <img id="mainButton" alt="main page" src="./images/circleIcon.png" style="height:5vh">
                     </button>
-                    <button class="navButton" style="margin-left: 5vw" onclick='window.location="/calendar"'>
+                    <button class="navButton" style="margin-left: 5vw" onclick='loadAndRedirect("/calendar")'>
                         <img id="calendarButton" alt="my history" src="./images/Calendar_Icon.png" style="height:4vh">
                     </button>
                 
@@ -126,6 +134,23 @@
 
             function openModal() {
                 modal.style.display = "block";
+            }
+
+            function loadingModal() {
+            /** 
+            * Open the prompt modal
+            */
+                setTimeout(function() {
+                    if (navigator.onLine) {
+                            document.getElementById('loadingModal').style.display = "block";
+                        } 
+                }, 1500)
+            }
+
+            function loadAndRedirect(target) {
+                loadingModal();
+                console.log('target: ', target);
+                window.location = target;
             }
         
         </script>
