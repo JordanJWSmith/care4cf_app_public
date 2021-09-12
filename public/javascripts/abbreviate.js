@@ -1,4 +1,11 @@
 function abbreviate(stringList) {
+
+  /** 
+* 
+* @summary Takes a list of strings. If string is more than one word, abbreviate it. Return a composite short-title made from the strings. 
+* @param {Array} stringList - An array of strings listing technique titles
+* @return {String} A short title made from the technique titles
+*/
   
   var abb = "";
   if ((!stringList) || (stringList.length == 0) || (typeof stringList !== "object")) {

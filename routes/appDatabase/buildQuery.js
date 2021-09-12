@@ -1,6 +1,5 @@
 module.exports = function(sql, index, colName, res) {
 /** 
-* Brief description of the function here.
 * @summary Dynamically builds SQL queries depending on a column name. Used for converting technique IDs into descriptions
 * @param {string} sql - The first half of a SQL query, finishing at the 'WHERE' clause
 * @param {number} index - An index to indicate which technique you are querying within the 'res' object

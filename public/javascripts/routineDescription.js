@@ -2,6 +2,13 @@
 
 function routineDescription(description, element) {
 
+        /** 
+    * 
+    * @summary Populate an element with an activity description
+    * @param {Object} description - An object containing details of an activity
+    * @param {string} element - The ID of the HTML element to populate
+    */
+
 
     var table = document.createElement('table');
     table.setAttribute("id", "routineTable");
@@ -11,7 +18,7 @@ function routineDescription(description, element) {
     var keys = Object.keys(description);
 
     for (var i = 0; i < keys.length; i++) {
-        title = keys[i];
+        var title = keys[i];
 
         if ((title !== 'title') && (description[title])) {
             document.getElementById('routineTable').innerHTML += '<tr><td><img src="./images/'+title+'Icon.png" alt="'+title+'" style="max-height: 6vh;"></td><td><div id="'+ title +'"></div></td></tr>';
@@ -21,7 +28,7 @@ function routineDescription(description, element) {
             document.getElementById(title).style['padding'] = '1vh';
 
             if (description[title][0] == '[') {
-                activitiesList = JSON.parse(description[title]);
+                var activitiesList = JSON.parse(description[title]);
                 for (var j = 0; j < activitiesList.length; j++) {
                     if (typeof activitiesList[j] == "object") {
                         document.getElementById(title).innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + activitiesList[j][0] + ' (' + activitiesList[j][1] + ') ' + '</dd>';

@@ -32,6 +32,7 @@
     "pushpad": "^0.9.0",
     "serve-favicon": "^2.5.0",
     "set-cookie-parser": "^2.4.8",
+    "sloc": "^0.2.1",
     "web-push": "^3.4.5"
   },
   "devDependencies": {

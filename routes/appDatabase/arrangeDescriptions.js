@@ -1,6 +1,6 @@
 module.exports = async function(routineResults) {
 /** 
-* Takes an array of objects 
+* 
 * @summary Takes an array of objects and returns an object containing key:value pairs representing a complete description of one routine
 * @param {Array} routineResults - An array of objects, where each object is a different element of a routine (techniques, frequency, duration, adjuncts)
 * @return {JSON} A JSON-formatted object containing an accurate description of one routine

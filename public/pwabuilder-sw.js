@@ -192,6 +192,7 @@ const checkLocal = "javascripts/checkLocal.js";
 const generateCalendar = "javascripts/generateCalendar.js";
 const getDateList = "javascripts/getDateList.js";
 const dateDifference = "javascripts/dateDifference.js";
+const logout = "javascripts/logout.js";
 const jquery = "jquery/jquery-3.6.0.min.js";
 
 
@@ -209,6 +210,7 @@ self.addEventListener('install', async (event) => {
       cache.add(getDateList);
       cache.add(dateDifference);
       cache.add(jquery);
+      cache.add(logout);
     }) 
 
   );

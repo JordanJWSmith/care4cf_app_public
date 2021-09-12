@@ -1,4 +1,11 @@
 function logout() {
+      /** 
+    * 
+    * @summary Log out of the site by removing cookies and clearing local storage
+    * @param {String} cookiename - Name of the desired cookie
+    * @return {String} The contents of the desired cookie
+    */
+   
     var cookies = document.cookie.split("; ");
     // console.log(cookies);
     for (var c = 0; c < cookies.length; c++) {
