@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
             var updateFlag = req.cookies.dataUpdate;
             var userID = results.userID;
 
-            if (updateFlag) {
+            // if (updateFlag) {
                 
                 req.session.dataUpdate = null;
                 res.clearCookie('dataUpdate');
@@ -47,31 +47,31 @@ router.get('/', function (req, res, next) {
                         activities: JSON.stringify(allActivities)
                     })
                 })
-            } else {
-                console.log('no calendar update needed');
-                // var userID = results.userID;
+            // } else {
+            //     console.log('no calendar update needed');
+            //     // var userID = results.userID;
 
-                // Get necessary info
-                Promise.all([
-                    getActivityDates(userID),
-                    getGamifSettings(userID)
-                ])
-                .then((values) => {
+            //     // Get necessary info
+            //     Promise.all([
+            //         getActivityDates(userID),
+            //         getGamifSettings(userID)
+            //     ])
+            //     .then((values) => {
                     
-                    var currentStreak = values[0].currentStreak;
-                    var longestStreak = values[0].longestStreak;
-                    var gamification = values[1];
+            //         var currentStreak = values[0].currentStreak;
+            //         var longestStreak = values[0].longestStreak;
+            //         var gamification = values[1];
 
-                    res.render('calendar', {
-                        title: 'My History',
-                        currentStreak: currentStreak,
-                        longestStreak: longestStreak,
-                        gamification: parseInt(gamification),
-                        userID: userID,
-                        activities: false
-                    })
-                })
-            }
+            //         res.render('calendar', {
+            //             title: 'My History',
+            //             currentStreak: currentStreak,
+            //             longestStreak: longestStreak,
+            //             gamification: parseInt(gamification),
+            //             userID: userID,
+            //             activities: false
+            //         })
+            //     })
+            // }
 
 
             
