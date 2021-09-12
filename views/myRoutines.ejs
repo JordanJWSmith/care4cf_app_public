@@ -143,12 +143,12 @@
             var user = <%- user %>;
             
             // check whether devices are out of sync, update if so 
-            if (!(routines[normalSched])) {
-                document.getElementById('titleSection').innerHTML = "Updating...";
-                loadingModal();
-                document.cookie = "dataUpdate=true;";
-                window.location = '/';
-            }
+            // if (!(routines[normalSched])) {
+            //     document.getElementById('titleSection').innerHTML = "Updating...";
+            //     loadingModal();
+            //     document.cookie = "dataUpdate=true;";
+            //     window.location = '/';
+            // }
 
 
             function populateRoutineSection() {

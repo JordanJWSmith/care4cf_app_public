@@ -137,7 +137,7 @@
                 } else {
                     console.log('should retrieve from local');
                     allActivities = JSON.parse(window.localStorage.getItem('allActivities'));
-                    
+
                     if (!offsetPage) {
 
                     }
@@ -205,11 +205,11 @@
                     var dateStringDate = new Date(dateString.replace(/-/g, "/"));
                     var diffDays = Math.round(Math.abs((dateStringDate - currentDay) / oneDay));
                     // UNCOMMENT THIS
-                    if (diffDays > 3) {
-                        document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
-                        document.getElementById('mainSection').style.position = "relative";
-                        document.getElementById('mainSection').style['margin-top'] = "15vh";
-                    } else {
+                    // if (diffDays > 3) {
+                    //     document.getElementById('mainSection').innerHTML = '<p> You did not log anything. <br> You are unable to log information more than three days in the past.</p>';
+                    //     document.getElementById('mainSection').style.position = "relative";
+                    //     document.getElementById('mainSection').style['margin-top'] = "15vh";
+                    // } else {
                         document.getElementById('mainSection').style.position = "absolute";
                         document.getElementById('mainSection').style['margin-top'] = "";
                         document.getElementById('mainSection').innerHTML = '<form method="POST" id="activityForm" action="/logNewActivity" onsubmit="return isOnline()" ></form>';
@@ -219,7 +219,7 @@
                         document.getElementById('chosenDate').innerHTML = "<input type='hidden' name='chosenDate' value='" + dateList[dayCounter] + "'>";
                         populateButtons();
                         populateForm();
-                    }                   
+                    // }                   
                 }
             }
 

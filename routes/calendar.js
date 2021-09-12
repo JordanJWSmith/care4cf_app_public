@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
 
                 Promise.all([
                     getActivityDates(userID),
-                    getAllActivities(userID),
+                    // getAllActivities(userID),
                     getGamifSettings(userID)
                 ])
                 .then((values) => {
@@ -35,8 +35,8 @@ router.get('/', function (req, res, next) {
                 
                     var currentStreak = values[0].currentStreak;
                     var longestStreak = values[0].longestStreak;
-                    var allActivities = values[1];
-                    var gamification = values[2];
+                    // var allActivities = values[1];
+                    var gamification = values[1];
     
                     res.render('calendar', {
                         title: 'My History',
@@ -44,7 +44,7 @@ router.get('/', function (req, res, next) {
                         longestStreak: longestStreak,
                         gamification: parseInt(gamification),
                         userID: userID,
-                        activities: JSON.stringify(allActivities)
+                        // activities: JSON.stringify(allActivities)
                     })
                 })
             // } else {
