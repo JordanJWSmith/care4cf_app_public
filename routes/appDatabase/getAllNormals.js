@@ -26,7 +26,7 @@ module.exports = async function(userID) {
 
     var schedDict = {}
 
-    for (i=0; i < allNormalsResults.length; i++) {
+    for (var i=0; i < allNormalsResults.length; i++) {
         var scheduleID = allNormalsResults[i].scheduleID;
         var getIDs =  `
             SELECT t.scheduleID, t.techniqueID FROM techniques t WHERE t.scheduleID = ?;

@@ -84,7 +84,7 @@
 
                 document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/techniquesIcon.png' alt='techniques' style='max-height: 6vh;'><td><td><div id='techniques'></div></td></tr>";
 
-                for (i=0; i<techniques.length; i++) {
+                for (var i=0; i<techniques.length; i++) {
                     document.getElementById("techniques").innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + techniques[i] + '</dd>';
                 }
 
@@ -96,7 +96,7 @@
 
                 if (adjuncts) {
                     document.getElementById("routineTable").innerHTML += "<tr><td><img src='./images/adjunctsIcon.png' alt='adjuncts' style='max-height: 6vh;'><td><td><div id='adjuncts'></div></td></tr>";
-                    for (i=0; i<adjuncts.length; i++) {
+                    for (var i=0; i<adjuncts.length; i++) {
                         document.getElementById("adjuncts").innerHTML += '<dd style="font-size: 10pt; margin-top:10px">' + adjuncts[i][0] + ' ('+ adjuncts[i][1] +')</dd>';
 
                     }

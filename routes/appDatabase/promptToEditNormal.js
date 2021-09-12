@@ -23,7 +23,7 @@ module.exports = async function(userID) {
 
     function typeCheck(a) {
         if (a.length == 3) {
-            for (i=0; i<a.length; i++) {
+            for (var i=0; i<a.length; i++) {
                 if (a[i].routineType !== 2) {
                     return false
                 }

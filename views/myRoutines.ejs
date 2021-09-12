@@ -57,7 +57,7 @@
 
            
 
-            <h1 style="margin-top: 9vh"><%= title %></h1>
+            <h1 style="margin-top: 9vh" id="titleSection"><%= title %></h1>
         
             <div>
                 <div id="routineSection" style="max-width: 400px; margin: auto; margin-top: 10vh; width: 90%">
@@ -140,8 +140,16 @@
             <% } %>
 
             var normalSched = <%- normalSched %>;
-
             var user = <%- user %>;
+            
+            // check whether devices are out of sync, update if so 
+            if (!(routines[normalSched])) {
+                document.getElementById('titleSection').innerHTML = "Updating...";
+                loadingModal();
+                document.cookie = "dataUpdate=true;";
+                window.location = '/';
+            }
+
 
             function populateRoutineSection() {
             /** 
@@ -149,8 +157,8 @@
             */
                 
                 var keys = Object.keys(routines);
-                console.log('keys: ', keys);
-                for (i=0; i<keys.length; i++) {
+                // console.log('keys: ', keys);
+                for (var i=0; i<keys.length; i++) {
                     var schedID = keys[i];
                     var normalFlag = "";
                     if (schedID == normalSched) {

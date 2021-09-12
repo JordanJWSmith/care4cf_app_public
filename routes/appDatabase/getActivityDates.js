@@ -20,7 +20,7 @@ module.exports = async function(userID) {
     var results = await readData(getDates, getDatesValue);
 
     var dateArr = []
-    for (i=0; i<results.length; i++) {
+    for (var i=0; i<results.length; i++) {
         var dateFormat = moment(results[i].date).add(1, 'days');
         dateArr.push(dateFormat);
     }

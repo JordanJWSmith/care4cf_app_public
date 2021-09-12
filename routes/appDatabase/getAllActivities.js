@@ -22,7 +22,7 @@ module.exports = async function(userID) {
 
         var routineDict = {};
 
-        for (x=0; x<activities.length; x++) {
+        for (var x=0; x<activities.length; x++) {
             var date = activities[x].date;
             var dateString = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate());
 

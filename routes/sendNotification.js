@@ -15,7 +15,7 @@ router.post('/', async function(req, res) {
 
     await getSubscriptions()
     .then(function(subs) {
-        for (i=0; i<subs.results.length; i++) {
+        for (var i=0; i<subs.results.length; i++) {
             var subscription = subs.results[i].subscription
             sendPush(JSON.parse(subscription), payload);
             counter++;

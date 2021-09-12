@@ -14,7 +14,7 @@ var counter = 0;
 
 await getNotLoggedToday()
 .then(function(subs) {
-    for (i=0; i<subs.subsResults.length; i++) {
+    for (var i=0; i<subs.subsResults.length; i++) {
         var subscription = subs.subsResults[i].subscription
         var payload = 'Don\'t forget to log your activities today!';
         sendPush(JSON.parse(subscription), payload);
