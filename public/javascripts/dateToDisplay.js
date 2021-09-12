@@ -1,10 +1,15 @@
 function dateToString(date) {
+      /** 
+    * 
+    * @summary Convert a short formatted date into a long formatted date
+    * @param {String} date - A date string
+    * @return {String} A string containing a long formatted date
+    */
+   
     if ((typeof date !== "string") || (!(Date.parse(date.replace(/-/g, "/"))))) {
         console.log('error in date', date, typeof date)
         return false
     }
-
-    console.log('date parse: ', Date.parse(date.replace(/-/g, "/")));
     
     var convDate = new Date(date.replace(/-/g, "/"));
     var weekDays = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
