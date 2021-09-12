@@ -26,26 +26,49 @@ router.get('/', function (req, res, next) {
             res.redirect('/loginUser');
         } else {
 
-                // Get the user's normal schedule
-                getNormalSchedID(results.userID)
-                .then(function(normalSchedIDResult) {
+            Promise.all([
+                getNormalSchedID(results.userID),
+                getAllNormals(results.userID)
+            ])
+            .then((values) =>  {
+                promptToEditNormal(results.userID)
+                .then(function(promptResults) {
+                    var normalSched = values[0].results[0].scheduleID;
+                    var allNormals = values[1];
 
-                    // See if the user needs prompting to update normal schedule
-                    promptToEditNormal(results.userID)
-                    .then(function(promptResults) {
-                        var normalSched = normalSchedIDResult.results[0].scheduleID;
-                        res.render('myRoutines', {
-                            title: 'Which activities did you do?',
-                            normalSched: normalSched,
-                            user: results.userID,
-                            chosenDate: chosenDate,
-                            activityType: activityType,
-                            somethingDifferent: true,
-                            prompt: promptResults
-                        })
+                    res.render('myRoutines', {
+                        title: 'Which activities did you do?',
+                        normalSched: normalSched,
+                        normalRoutines: JSON.stringify(allNormals),
+                        user: results.userID,
+                        chosenDate: chosenDate,
+                        activityType: activityType,
+                        somethingDifferent: true,
+                        prompt: promptResults
                     })
+                })
+            })
+
+                // // Get the user's normal schedule
+                // getNormalSchedID(results.userID)
+                // .then(function(normalSchedIDResult) {
+
+                //     // See if the user needs prompting to update normal schedule
+                //     promptToEditNormal(results.userID)
+                //     .then(function(promptResults) {
+                //         var normalSched = normalSchedIDResult.results[0].scheduleID;
+                //         res.render('myRoutines', {
+                //             title: 'Which activities did you do?',
+                //             normalSched: normalSched,
+                //             user: results.userID,
+                //             chosenDate: chosenDate,
+                //             activityType: activityType,
+                //             somethingDifferent: true,
+                //             prompt: promptResults
+                //         })
+                //     })
                    
-                })                
+                // })                
             // })           
         }
     })

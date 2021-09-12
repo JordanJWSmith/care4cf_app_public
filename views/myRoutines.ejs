@@ -129,7 +129,7 @@
             }
 
 
-            var routines = JSON.parse(window.localStorage.getItem('allNormals'));
+            // var routines = JSON.parse(window.localStorage.getItem('allNormals'));
 
             <% if (somethingDifferent) { %>
                 var somethingDifferent = true;
@@ -139,8 +139,13 @@
                 }
             <% } %>
 
+            var routines = <%- normalRoutines %>;
             var normalSched = <%- normalSched %>;
             var user = <%- user %>;
+
+            // var routines = normalRoutines;
+
+            console.log('normal routines: ', routines);
             
             // check whether devices are out of sync, update if so 
             // if (!(routines[normalSched])) {

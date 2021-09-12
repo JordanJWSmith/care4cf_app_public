@@ -16,15 +16,24 @@ router.get('/', function (req, res, next) {
             res.redirect('/loginUser');
         } else {
 
+            Promise.all([
+                getNormalSchedID(results.userID),
+                getAllNormals(results.userID)
+            ])
+            .then((values) => {
                 // Find their normal schedule
-                getNormalSchedID(results.userID)
-                .then(function(normalSchedIDResult) {
+                // getNormalSchedID(results.userID)
+                // .then(function(normalSchedIDResult) {
+                    console.log('routinevalues: ', values);
+                    var normalSched = values[0].results[0].scheduleID;
+                    var normalRoutines = values[1];
 
-                    var normalSched = normalSchedIDResult.results[0].scheduleID;
+                    // var normalSched = normalSchedIDResult.results[0].scheduleID;
                     res.render('myRoutines', {
                         title: 'Routines',
                         normalSched: normalSched,
                         user: results.userID,
+                        normalRoutines: JSON.stringify(normalRoutines),
                         somethingDifferent: false
                     })
                 })                

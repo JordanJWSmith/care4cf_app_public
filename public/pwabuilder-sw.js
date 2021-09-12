@@ -93,12 +93,12 @@ workbox.routing.registerRoute(
     cacheName: CACHE,
     networkTimeoutSeconds: 8
   })
-);
+); 
 
 workbox.routing.registerRoute(
   // new RegExp('/myRoutines'),
   '/myRoutines',
-  new workbox.strategies.NetworkFirst({
+  new workbox.strategies.StaleWhileRevalidate({
     cacheName: CACHE,
     networkTimeoutSeconds: 8
   })
@@ -221,7 +221,7 @@ if (workbox.navigationPreload.isSupported()) {
 
 
 self.addEventListener('fetch', (event) => {
-  console.log('event: ', event)
+  // console.log('event: ', event)
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
