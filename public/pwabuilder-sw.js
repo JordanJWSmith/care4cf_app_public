@@ -61,7 +61,8 @@ self.addEventListener('activate', function(event) {
 workbox.routing.registerRoute(
   // new RegExp('/calendar'),
   '/calendar',
-  new workbox.strategies.NetworkFirst({
+  // new workbox.strategies.NetworkFirst({
+  new workbox.strategies.StaleWhileRevalidate({
     cacheName: CACHE,
     networkTimeoutSeconds: 8
   })

@@ -146,7 +146,8 @@
 
             
 
-            var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+            // var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+            var activities = <%- activities %>;
             var weekActivities = JSON.parse(window.localStorage.getItem('routineDict'));
             if (!activities) {
                 console.log('no activities');
