@@ -144,8 +144,17 @@
                 window.location.href = "/loginUser"
             }
 
+            var activCheck = <%- activities %>;
 
-            var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+            if (activCheck) {
+                var activities = activCheck;
+                window.localStorage.setItem('allActivities', JSON.stringify(activities));
+            } else {
+                console.log('saving calendar to storage')
+                var activities = JSON.parse(window.localStorage.getItem('allActivities'));
+            }
+
+            
             var weekActivities = JSON.parse(window.localStorage.getItem('routineDict'));
             if (!activities) {
                 console.log('no activities');
@@ -159,7 +168,7 @@
                         document.getElementById('titleSection').innerHTML = "Updating...";
                         loadingModal();
                         document.cookie = "dataUpdate=true;";
-                        window.location = '/';
+                        window.location = '/calendar';
                     }
                 }
             }
