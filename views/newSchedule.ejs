@@ -161,21 +161,17 @@
 
             var saveAsNormal = <%- saveAsNormal %>;
 
-            console.log('saveAsNormal: ', saveAsNormal);
 
             // Add these to forms
             var activityType = <%- activityType %>;
             var chosenDate = <%- chosenDate %>;
-            console.log('activityType and Date: ', activityType, chosenDate);
 
             var savedSched = <%- sched %>;
             
             if (activityType) {
-                console.log('activityType: ', activityType);
                 document.getElementById("activityType").innerHTML += "<input type='hidden' name='activityType' value='" + activityType + "'>";
             }
             if (chosenDate) {
-                console.log('chosenDate:', chosenDate);
                 document.getElementById("chosenDate").innerHTML += "<input type='hidden' name='chosenDate' value='" +chosenDate + "'>";
             }
             
@@ -456,7 +452,6 @@
             * @summary Increment the adjuncts counter and add another adjuncts dropdown
             */
                 adjunctCounter++;
-                console.log('adjunctCounter: ', adjunctCounter);
                 addAdjunctBox(adjunctCounter);
                 document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
                 if (adjunctCounter > 0) {
@@ -475,7 +470,6 @@
                     document.getElementById("adjunctTimeDiv"+adjunctCounter).remove();
                     adjunctCounter--;
                     document.getElementById("maxCounter").innerHTML = "<input type='hidden' name='maxCounter' value='" + Math.max(counter, adjunctCounter) + "'>";
-                    console.log('adjunctCounter: ', adjunctCounter);
                     if (adjunctCounter == 0) {
                         document.getElementById("removeAdjunctButtonDiv").innerHTML = "";
                         document.getElementById("removeAdjunctButtonDiv").style.display = "none";

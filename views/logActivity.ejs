@@ -108,7 +108,6 @@
 
         <script>
 
-            console.log(navigator.platform);
 
             var url = new URL(document.URL);
             if (url.pathname.slice(0, 2) == "/w") {
@@ -135,17 +134,11 @@
 
             checkLocal()
                 if (((navigator.onLine) && (update) && (!offsetPage)) || (firstUpdate)) {
-                console.log('saving to local');
                 window.localStorage.setItem('routineDict', JSON.stringify(routineDict));
                 window.localStorage.setItem('allNormals', JSON.stringify(allNormals));
                 window.localStorage.setItem('allActivities', JSON.stringify(allActivities));
                 } else {
-                    console.log('should retrieve from local');
                     allActivities = JSON.parse(window.localStorage.getItem('allActivities'));
-
-                    if (!offsetPage) {
-
-                    }
                 }
 
 
@@ -156,7 +149,6 @@
             document.getElementById('mainButton').src = path + "circleIcon.png";
 
             if (url.searchParams.get('np')) {
-                console.log('open modal');
                 document.getElementById("updateNormalModal").style.display = "block";
                
             }
@@ -287,7 +279,6 @@
 
                 for (var i = 0; i < routineTypes['results'].length; i++) {
                 document.getElementById('buttons').innerHTML += '<div class="buttonContainer"><button class="routineButton" name="activityType" value ='+routineTypes['results'][i]['routineID']+' type="submit" onclick="loadingModal()">'+routineTypes['results'][i]['routine']+'</button></div>';
-                console.log(routineTypes['results'][i]['routineID']);
                 }
 
             }
@@ -404,7 +395,6 @@
 
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close");
-            // console.log('span', span);
 
             // When the user clicks on <span> (x), close the modal
             span[0].onclick = function() {

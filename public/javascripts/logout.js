@@ -7,7 +7,6 @@ function logout() {
     */
    
     var cookies = document.cookie.split("; ");
-    // console.log(cookies);
     for (var c = 0; c < cookies.length; c++) {
         var d = window.location.hostname.split(".");
         while (d.length > 0) {
