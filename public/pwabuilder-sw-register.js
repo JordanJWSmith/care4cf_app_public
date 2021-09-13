@@ -27,19 +27,12 @@ document.body.appendChild(el);
 
 navigator.serviceWorker.ready
     .then(function (registration) {
-        console.log('registration: ', registration)
 
         // Check if the user has an existing subscription
-        
-        
-            
             return registration.pushManager.getSubscription()
             .then(async function (subscription) {
                 
-                if (subscription) {
-                    // console.log('subscription: ', subscription);
-                    // console.log('options: ', subscription.options.applicationServerKey);
-                  
+                if (subscription) {                
                     if (navigator.onLine) {
                         var subExistResponse = await fetch('/checkSubscriptionAPI', {
                             method: 'POST',
@@ -66,7 +59,6 @@ navigator.serviceWorker.ready
                             })
                         })
                         var saveSubContent = await saveSubResponse.json();
-                        console.log(saveSubContent);
                     } else {
                         console.log('subscription already saved');
                     }

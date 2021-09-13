@@ -23,7 +23,7 @@ module.exports = async function(userID, offset) {
         var routineDict = {};
 
         for (var i = 0; i < 7; i++) {
-            newDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate())
+            var newDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate())
             await getRoutine(userID, newDate)
             .then(function(routineResult) {
                 dateList.push(newDate);

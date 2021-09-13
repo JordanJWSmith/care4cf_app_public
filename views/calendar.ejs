@@ -147,25 +147,12 @@
 
             
 
-            // var activities = JSON.parse(window.localStorage.getItem('allActivities'));
             var activities = <%- activities %>;
-            // var weekActivities = JSON.parse(window.localStorage.getItem('routineDict'));
             if (!activities) {
                 console.log('no activities');
             }
             
 
-            // check to see if devices are out of sync, update if so
-            // for (const actDate in weekActivities) {
-            //     if (weekActivities[actDate]) {
-            //         if (!activities[actDate]) {
-            //             document.getElementById('titleSection').innerHTML = "Updating...";
-            //             loadingModal();
-            //             document.cookie = "dataUpdate=true;";
-            //             window.location = '/';
-            //         }
-            //     }
-            // }
 
             var currentDate = new Date();
 
@@ -238,7 +225,6 @@
             */
                 var displayDate = dateToString(date);
                 document.getElementById('modalText').innerHTML = '<p style="text-align: center">'+displayDate+'</p>';
-                console.log('populate modal');
                 routineDescription(activities[date], 'modalText');
                 modal.style.display = "block";
             }

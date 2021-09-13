@@ -15,9 +15,7 @@ module.exports = async function(subscription) {
     var subObject = subscription.subscription;
     var token = subscription.token;
 
-    var hash = crypto.createHash('md5').update(subObject).digest("hex"); 
-    console.log('save hash: ', hash);
-    
+    var hash = crypto.createHash('md5').update(subObject).digest("hex");     
 
     var loginDetails = await login(token);
     if (loginDetails.logIn) {

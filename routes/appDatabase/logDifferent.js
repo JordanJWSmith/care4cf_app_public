@@ -11,7 +11,6 @@ module.exports = async function(userID, date, scheduleID, activityType) {
     var diffValues = [userID, date, scheduleID, activityType];
     await readData(insertDiffActivity, diffValues)
     .then(function(results) {
-        console.log('logDifferent Results: ', results)
         return true;
     })
 

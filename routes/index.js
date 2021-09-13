@@ -33,12 +33,9 @@ router.get('/', function(req, res, next) {
       // Check to see if an update is required
       var updateFlag = req.session.dataUpdate;
       var firstUpdateFlag = req.cookies.dataUpdate;
-      console.log('firstUpdateFlag: ', firstUpdateFlag);
       if ((updateFlag) || (firstUpdateFlag)) {
-        console.log('dataUpdate exists, must update');
         var shouldUpdate = true;
       } else {
-        console.log('dataUpdate does not exist. No update needed.');
         var shouldUpdate = false;
       }
       req.session.dataUpdate = null;
@@ -87,7 +84,6 @@ router.get('/', function(req, res, next) {
             
           } else {
             // User has no normal schedule - redirect to newSchedule form
-            console.log('schedule does not exist');
             Promise.all([
               getTechniques(),
               getDurations(),
@@ -161,7 +157,6 @@ router.get('/', function(req, res, next) {
   
             
           } else {
-            console.log('schedule does not exist');
             // User has no saved schedule - redirect to newSchedule form
             Promise.all([
               getTechniques(),
@@ -225,7 +220,6 @@ router.post('/scheduleData', async function(req, res, next) {
         // Check whether the user needs prompting to edit their schedule
         await promptToEditNormal(scheduleDetails.user) 
         .then(function(promptResults) {
-          console.log('setting dataUpdate cookie')
           if (promptResults) {
             res.redirect('/?np=true')
           } else {
@@ -247,10 +241,8 @@ router.post('/logNewActivity', async function(req, res, next) {
 
   // Log a normal activity
   if (details.activityType == 1) {
-    console.log('logging normal activity');
     await logNormal(details.user, details.chosenDate, details.activityType)
     .then(function() {
-      console.log('setting dataUpdate cookie');
       req.session.dataUpdate = true;
       res.redirect('/')
     });
@@ -283,7 +275,6 @@ router.post('/noActivities', async function(req, res, next) {
   var details = JSON.parse(req.body.details);
   await logNoActivities(details.user, details.chosenDate, details.activityType, reasonID)
   .then(function() {
-    console.log('setting dataUpdate cookie');
     req.session.dataUpdate = true;
     res.redirect('/')
   })
@@ -293,7 +284,6 @@ router.post('/noActivities', async function(req, res, next) {
 router.get('/w/:offset', function(req, res, next) {
   var offset = req.params.offset;
   if (!(Number.isInteger(parseInt(offset)))) {
-    // console.log('incorrect offset');
     res.redirect('/');
   } else {
     var r = req.query.r;
