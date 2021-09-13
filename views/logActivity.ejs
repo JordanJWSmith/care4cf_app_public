@@ -439,6 +439,7 @@
                 /** 
                 * Open the prompt modal
                 */
+                document.getElementById('date').innerHTML = "loading...";
                 setTimeout(function() {
                     if (navigator.onLine) {
                             document.getElementById('loadingModal').style.display = "block";
@@ -451,10 +452,10 @@
                 window.location = target;
             }
 
-            var newScript = document.createElement("script");
-            newScript.type="text/javascript";
-            newScript.src = "/javascripts/iosTimer.js";
-            document.head.appendChild(newScript);
+            // var newScript = document.createElement("script");
+            // newScript.type="text/javascript";
+            // newScript.src = "/javascripts/iosTimer.js";
+            // document.head.appendChild(newScript);
 
             
 

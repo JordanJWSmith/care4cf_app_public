@@ -300,6 +300,7 @@
             document.getElementById('progressBar').innerHTML = "<p style='margin: 1vh'>You are on day " + dateDiff + " of 365</p>";   
             
             function loadingModal() {
+                document.getElementById('titleSection').innerHTML = "loading...";
             /** 
             * Open the prompt modal
             */
@@ -312,9 +313,14 @@
 
             function loadAndRedirect(target) {
                 loadingModal();
-                console.log('target: ', target);
+                // console.log('target: ', target);
                 window.location = target;
             }
+
+            // var newScript = document.createElement("script");
+            // newScript.type="text/javascript";
+            // newScript.src = "/javascripts/iosTimer.js";
+            // document.head.appendChild(newScript);
 
 
 
