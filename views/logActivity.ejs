@@ -435,16 +435,33 @@
                 updateNormalModal.style.display = "block";
             }
 
+            function iOS() {
+                return [
+                    'iPad Simulator',
+                    'iPhone Simulator',
+                    'iPod Simulator',
+                    'iPad',
+                    'iPhone',
+                    'iPod'
+                ].includes(navigator.platform)
+                // iPad on iOS 13 detection
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+            }
+
             function loadingModal() {
                 /** 
                 * Open the prompt modal
                 */
-                document.getElementById('date').innerHTML = "loading...";
-                setTimeout(function() {
-                    if (navigator.onLine) {
+                if (iOS()) {
+                    // document.getElementById('titleSection').innerHTML = "loading...";
+                    document.getElementById('loadingModal').style.display = "block";
+                } else {
+                    setTimeout(function() {
+                        if (navigator.onLine) {
                             document.getElementById('loadingModal').style.display = "block";
                         } 
-                }, 1500);
+                    }, 1500)
+                }
             }
 
             function loadAndRedirect(target) {
@@ -459,18 +476,7 @@
 
             
 
-            // function iOS() {
-            //     return [
-            //         'iPad Simulator',
-            //         'iPhone Simulator',
-            //         'iPod Simulator',
-            //         'iPad',
-            //         'iPhone',
-            //         'iPod'
-            //     ].includes(navigator.platform)
-            //     // iPad on iOS 13 detection
-            //     || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-            // }
+            
 
             // if (iOS()) {
             //     var newScript = document.createElement("script");

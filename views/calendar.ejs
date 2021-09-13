@@ -299,16 +299,34 @@
             var dateDiff = dateDifference(firstDate, currentDate);
             document.getElementById('progressBar').innerHTML = "<p style='margin: 1vh'>You are on day " + dateDiff + " of 365</p>";   
             
+            function iOS() {
+                return [
+                    'iPad Simulator',
+                    'iPhone Simulator',
+                    'iPod Simulator',
+                    'iPad',
+                    'iPhone',
+                    'iPod'
+                ].includes(navigator.platform)
+                // iPad on iOS 13 detection
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+            }
+
             function loadingModal() {
-                document.getElementById('titleSection').innerHTML = "loading...";
-            /** 
-            * Open the prompt modal
-            */
-                setTimeout(function() {
-                    if (navigator.onLine) {
+                /** 
+                * Open the prompt modal
+                */
+                if (iOS()) {
+                    // document.getElementById('titleSection').innerHTML = "loading...";
+                    document.getElementById('loadingModal').style.display = "block";
+                } else {
+                    setTimeout(function() {
+                        if (navigator.onLine) {
                             document.getElementById('loadingModal').style.display = "block";
                         } 
-                }, 1500)
+                    }, 1500)
+                }
+                
             }
 
             function loadAndRedirect(target) {
