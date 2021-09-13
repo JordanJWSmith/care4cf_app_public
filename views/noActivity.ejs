@@ -86,10 +86,7 @@
             */
                 var reasonVal =  document.getElementById('reason').value;
                 if ((reasonVal) && (navigator.onLine)) {
-                    setTimeout(function() {
-                        document.getElementById('loadingModal').style.display = "block";
-                    }, 1500)
-                    
+                    document.getElementById('loadingModal').style.display = "block";
                 }
                 
             }

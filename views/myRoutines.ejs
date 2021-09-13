@@ -11,6 +11,7 @@
         <script type="text/javascript" src="/javascripts/getCook.js"></script> 
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/abbreviate.js"></script> 
+        <script type="text/javascript" src="/javascripts/loadingModal.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
         <link rel="apple-touch-icon" href="/images/icon512.png">
     </head>
@@ -129,8 +130,6 @@
             }
 
 
-            // var routines = JSON.parse(window.localStorage.getItem('allNormals'));
-
             <% if (somethingDifferent) { %>
                 var somethingDifferent = true;
                 var chosenDate = [ <%- chosenDate %> ];
@@ -143,24 +142,10 @@
             var normalSched = <%- normalSched %>;
             var user = <%- user %>;
 
-            // var routines = normalRoutines;
-
-            console.log('normal routines: ', routines);
-            
-            // check whether devices are out of sync, update if so 
-            // if (!(routines[normalSched])) {
-            //     document.getElementById('titleSection').innerHTML = "Updating...";
-            //     loadingModal();
-            //     document.cookie = "dataUpdate=true;";
-            //     window.location = '/';
-            // }
-
-
             function populateRoutineSection() {
             /** 
             * Display a description of a routine
             */
-                
                 var keys = Object.keys(routines);
                 // console.log('keys: ', keys);
                 for (var i=0; i<keys.length; i++) {
@@ -312,20 +297,6 @@
                 }
             }
 
-            function loadingModal() {
-            /** 
-            * Open the prompt modal
-            */
-                setTimeout(function() {
-                    if (navigator.onLine) {
-                            document.getElementById('loadingModal').style.display = "block";
-                        } 
-                }, 1500)
-                  
-                
-            }
-
-            
 
         </script>
 

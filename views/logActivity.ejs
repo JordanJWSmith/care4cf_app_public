@@ -15,6 +15,7 @@
         <script type="text/javascript" src="/javascripts/dateToDisplay.js"></script> 
         <script type="text/javascript" src="/javascripts/checkLocal.js"></script> 
         <script type="text/javascript" src="/javascripts/getDateList.js"></script> 
+        <script type="text/javascript" src="/javascripts/loadingModal.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
         <link rel="canonical" href="https://care4cf.azurewebsites.net"/>
         <link rel="apple-touch-icon" href="/images/icon512.png">
@@ -106,6 +107,8 @@
         
 
         <script>
+
+            console.log(navigator.platform);
 
             var url = new URL(document.URL);
             if (url.pathname.slice(0, 2) == "/w") {
@@ -435,56 +438,13 @@
                 updateNormalModal.style.display = "block";
             }
 
-            function iOS() {
-                return [
-                    'iPad Simulator',
-                    'iPhone Simulator',
-                    'iPod Simulator',
-                    'iPad',
-                    'iPhone',
-                    'iPod'
-                ].includes(navigator.platform)
-                // iPad on iOS 13 detection
-                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-            }
-
-            function loadingModal() {
-                /** 
-                * Open the prompt modal
-                */
-                if (iOS()) {
-                    // document.getElementById('titleSection').innerHTML = "loading...";
-                    document.getElementById('loadingModal').style.display = "block";
-                } else {
-                    setTimeout(function() {
-                        if (navigator.onLine) {
-                            document.getElementById('loadingModal').style.display = "block";
-                        } 
-                    }, 1500)
-                }
-            }
 
             function loadAndRedirect(target) {
                 loadingModal();
                 window.location = target;
             }
 
-            // var newScript = document.createElement("script");
-            // newScript.type="text/javascript";
-            // newScript.src = "/javascripts/iosTimer.js";
-            // document.head.appendChild(newScript);
-
-            
-
-            
-
-            // if (iOS()) {
-            //     var newScript = document.createElement("script");
-            //     newScript.type="text/javascript";
-            //     newScript.src = "/javascripts/iosTimer.js";
-            //     document.head.appendChild(newScript);
-            // }
-            
+     
 
 
 

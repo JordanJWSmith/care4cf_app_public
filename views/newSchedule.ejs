@@ -517,13 +517,8 @@
                 var durationVal = document.getElementById('durationDropdown').value;
                 var frequencyVal = document.getElementById('frequencyDropdown').value;
                 
-                console.log('form values: ', techniqueVal, durationVal, frequencyVal)
-
                 if ((techniqueVal) && (durationVal) && (frequencyVal) && (navigator.onLine)) {
-                    setTimeout(function() {
-                        document.getElementById('loadingModal').style.display = "block";
-                    }, 1500)
-                    
+                    document.getElementById('loadingModal').style.display = "block";
                 }
             }
 

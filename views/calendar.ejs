@@ -14,6 +14,7 @@
         <script type="text/javascript" src="/javascripts/logout.js"></script> 
         <script type="text/javascript" src="/javascripts/dateDifference.js"></script> 
         <script type="text/javascript" src="/javascripts/generateCalendar.js"></script>
+        <script type="text/javascript" src="/javascripts/loadingModal.js"></script>
         <link href='https://fonts.googleapis.com/css?family=Roboto&display=swap' rel='stylesheet'>
         <script src="./jquery/jquery-3.6.0.min.js"></script>
         <link rel="apple-touch-icon" href="/images/icon512.png">
@@ -298,47 +299,13 @@
             var firstDate = new Date((Object.keys(activities)[0]).replace(/-/g, "/"));
             var dateDiff = dateDifference(firstDate, currentDate);
             document.getElementById('progressBar').innerHTML = "<p style='margin: 1vh'>You are on day " + dateDiff + " of 365</p>";   
-            
-            function iOS() {
-                return [
-                    'iPad Simulator',
-                    'iPhone Simulator',
-                    'iPod Simulator',
-                    'iPad',
-                    'iPhone',
-                    'iPod'
-                ].includes(navigator.platform)
-                // iPad on iOS 13 detection
-                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-            }
+ 
 
-            function loadingModal() {
-                /** 
-                * Open the prompt modal
-                */
-                if (iOS()) {
-                    // document.getElementById('titleSection').innerHTML = "loading...";
-                    document.getElementById('loadingModal').style.display = "block";
-                } else {
-                    setTimeout(function() {
-                        if (navigator.onLine) {
-                            document.getElementById('loadingModal').style.display = "block";
-                        } 
-                    }, 1500)
-                }
-                
-            }
 
             function loadAndRedirect(target) {
                 loadingModal();
-                // console.log('target: ', target);
                 window.location = target;
             }
-
-            // var newScript = document.createElement("script");
-            // newScript.type="text/javascript";
-            // newScript.src = "/javascripts/iosTimer.js";
-            // document.head.appendChild(newScript);
 
 
 
