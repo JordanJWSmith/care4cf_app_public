@@ -86,21 +86,21 @@ app.get('*', function(req, res) {
 })
 
 // insert public key here
-const VAPID_PUBLIC_KEY = "BCrvW3Wqnj6Af3rcTamZLtzMvJX0gMCQLvmemsPQ9fruTTIFsQGoODQ1Zjn-6TRrV9bUtkpQAPQFSDQwSFGBnKg"
+const VAPID_PUBLIC_KEY = "VAPID_PUBLIC_KEY"
 
 // insert private key here
-const VAPID_PRIVATE_KEY = "ZnA0fY9H320xTpzTCWck1XJAbE9s9gTQ5ljOtoQq9eY";
+const VAPID_PRIVATE_KEY = "VAPID_PRIVATE_KEY";
 
 process.env.VAPID_PUBLIC_KEY = VAPID_PUBLIC_KEY;
 process.env.VAPID_PRIVATE_KEY = VAPID_PRIVATE_KEY;
 
 
 // insert GCM API key here
-webPush.setGCMAPIKey('AIzaSyBjJ9i9OfBGzplXujpb-ft_452zF17BIjc');
+webPush.setGCMAPIKey('GCM_API_KEY');
 
 // insert mailto link below
 webPush.setVapidDetails(
-  'mailto:jordan.smith.20@ucl.ac.uk',
+  'mailto:EMAIL_ADDRESS',
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
