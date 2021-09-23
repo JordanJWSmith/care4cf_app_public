@@ -18,3 +18,7 @@ Once you've saved your routine, you're free to use the app to log each day's act
 You may also view and edit your normal and saved routines, and view your logging history in a calendar format along with your logging streaks. 
 
 
+## Credits
+This project was developed solely by Jordan Smith for Microsoft and Great Ormond Street Institute for Child Health as part of the MSc Computer Science degree at UCL.
+
+
