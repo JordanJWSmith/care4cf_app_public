@@ -2,7 +2,7 @@
 
 This repository contains source code for the CARE4CF Daily Logging App. It is currently hosted [here](https://care4cf.azurewebsites.net/). 
 
-Sign in with your Microsoft credentials. If you have not already registered for the CARE4CF trial you will be redirected to the [registration site](https://care4cf-register.azurewebsites.net/).
+Sign in with your Microsoft credentials. If you have not already registered for the CARE4CF trial you will be redirected to the [registration site](https://care4cf-register.azurewebsites.net/). The registration site's repository can be found [here](https://github.com/JordanJWSmith/care4cf_registration_public).
 
 This app is a progressive web app. Feel free to install it to your device's home screen to use locally, or to use it via a browser. 
 
@@ -10,4 +10,6 @@ Once logged in and registered, you will be asked to save your first airway clear
 
 Once you've saved your routine, you're free to use the app to log each day's activities. You are presented each day with the option to log your normal routine, something different or no activities. 
 
-You may also view and edit your normal and saved routines, and view your logging history in a calendar format along with your logging streaks.  
+You may also view and edit your normal and saved routines, and view your logging history in a calendar format along with your logging streaks. 
+
+
